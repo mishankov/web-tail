@@ -1,0 +1,40 @@
+{
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv ./dist/public --no-clear",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "server": "nodemon src/server/index.js -w src/server/",
+    "gen": "node generate_logs.js"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@tsconfig/svelte": "^2.0.0",
+    "@types/express-ws": "^3.0.1",
+    "@types/ws": "^8.2.2",
+    "nodemon": "^2.0.15",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.0.0",
+    "svelte-check": "^2.0.0",
+    "svelte-preprocess": "^4.0.0",
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-ws": "^5.0.2",
+    "sirv-cli": "^2.0.0",
+    "ssh2": "^1.5.0",
+    "tail-file": "^1.4.15",
+    "ws": "^8.4.2"
+  }
+}
