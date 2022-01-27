@@ -9,7 +9,7 @@ const app = express();
 const wss = new ws.WebSocketServer({ noServer: true });
 
 function getConfig() {
-    let raw = fs.readFileSync('');
+    let raw = fs.readFileSync('/Users/mishankov/Documents/Git/web-tail/src/server/config.json');
     let config = JSON.parse(raw);
     return config
 }
@@ -55,11 +55,14 @@ wss.on('connection', function connection(ws, req) {
                             console.log('STDERR: ' + data);
                         });
                     });
+                }).on('keyboard-interactive', function(name, descr, lang, promts, finish) {
+                    return finish([source.password]);
                 }).connect({
                     host: source.host,
                     port: source.port,
                     username: source.username,
-                    password: source.password
+                    password: source.password,
+                    tryKeyboard: true
                 });
             }
         }
