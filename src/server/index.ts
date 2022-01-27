@@ -18,11 +18,10 @@ function getConfig() {
 }
 
 function getSourceClassFromConfig(config: SourceConfig) {
-    if (config.type === "local") {
-        return LocalFileSource
-    } else if (config.type === "sftp") {
-        return SFTPFileSource
-    }
+    return {
+        local: LocalFileSource,
+        sftp: SFTPFileSource
+    }[config.type]
 }
 
 function heartbeat() {
