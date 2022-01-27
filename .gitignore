@@ -1,4 +1,5 @@
 /node_modules/
-/public/build/
+/dist/*.js
+/dist/*.json
 
 .DS_Store

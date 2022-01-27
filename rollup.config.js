@@ -31,14 +31,14 @@ function serve() {
 }
 
 export default [{
-    // input: ['src/server/index.ts'],
-    // output: [
-    //     { file: 'dist/index.js', format: 'cjs' },
-    // ],
-    // plugins: [
-    //     resolve(), 
-    //     typescript({sourceMap: false, moduleResolution: "node"})
-    // ]
+    input: ['src/server/index.ts'],
+    output: [
+        { file: 'dist/index.js', format: 'cjs' },
+    ],
+    plugins: [
+        resolve(), 
+        typescript({sourceMap: false, moduleResolution: "node"})
+    ]
 },{
 	input: 'src/client/main.ts',
 	output: {

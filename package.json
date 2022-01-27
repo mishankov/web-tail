@@ -7,7 +7,7 @@
     "dev": "rollup -c -w",
     "start": "sirv ./dist/public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "server": "nodemon src/server/index.js -w src/server/",
+    "server": "nodemon dist/index.js -w dist/index.js",
     "gen": "node generate_logs.js"
   },
   "devDependencies": {

@@ -46,6 +46,7 @@
         <option value="" selected>Select source</option>
         <option value="myfile">myfile</option>
         <option value="af6">af6</option>
+        <option value="af6st">af6st</option>
       </select>
 
     {#each $logs.toArray() as logLine(logLine)}
