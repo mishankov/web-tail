@@ -49,6 +49,8 @@
         background-color: var(--color-dark-100);
         color: var(--color-light-100);
         box-sizing: content-box;
+        padding: 0;
+        padding-left: .5rem;
     }
 
     .top-panel-input:hover {
