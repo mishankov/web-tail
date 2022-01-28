@@ -1,15 +1,22 @@
 <script lang="ts">
+    import { regexFilter } from "../stores/settings";
+
     export let line: string;
     export let selectLine: string;
 
     let splittedLine: Array<string>;
     $: {
         if (selectLine.length > 0) {
-            try {
+            if ($regexFilter){
+                try {
                 splittedLine = line.split(new RegExp(selectLine, 'g'));
-            } catch {
-                splittedLine = [line];
+                } catch {
+                    splittedLine = [line];
+                }
+            } else {
+                splittedLine = line.split(selectLine);
             }
+            
         } else {
             splittedLine = [line];
         }

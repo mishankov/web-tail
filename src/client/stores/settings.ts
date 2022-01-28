@@ -6,6 +6,12 @@ filterLogs.subscribe((value) =>
   localStorage.setItem("WebTailFilterLogs", value.toString())
 );
 
+const storedRegexFilter = localStorage.getItem("WebTailRegexFilter");
+export const regexFilter = writable(storedRegexFilter === "true" || false);
+regexFilter.subscribe((value) =>
+  localStorage.setItem("WebTailRegexFilter", value.toString())
+);
+
 const storedReverseLogs = localStorage.getItem("WebTailReverseLogs");
 export const reverseLogs = writable(storedReverseLogs === "true" || false);
 reverseLogs.subscribe((value) =>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import fetchSources from "../stores/sources";
-    import { filterLogs, reverseLogs, logWindow } from "../stores/settings";
+    import { filterLogs, reverseLogs, regexFilter, logWindow } from "../stores/settings";
 
     const { sources, loadingSources } = fetchSources();
 
@@ -18,6 +18,7 @@
         </select>
         <input type="text" placeholder="Search" class="top-panel-input search-input" bind:value={searchString}/>
         <label class="top-panel-checkbox"> <input type="checkbox" bind:checked={$filterLogs}/> Filter </label> 
+        <label class="top-panel-checkbox"> <input type="checkbox" bind:checked={$regexFilter}/> Regex </label> 
         <label class="top-panel-checkbox"> <input type="checkbox" bind:checked={$reverseLogs}/> Reverse </label> 
         <input type="number" placeholder="Max lines" class="top-panel-input max-lines-input" bind:value={$logWindow}/>
     </nav>
