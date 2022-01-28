@@ -1,5 +1,4 @@
 <script lang="ts">
-    // import { fade, fly } from "svelte/transition";
     export let line: string;
     export let selectLine: string;
 

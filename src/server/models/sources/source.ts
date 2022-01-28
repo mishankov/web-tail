@@ -1,6 +1,5 @@
 import type { SourceConfig } from "../config";
 
-
 abstract class Source {
     config: SourceConfig;
     newLineCallback: CallableFunction;

@@ -1,4 +1,4 @@
-const { Client, ConnectConfig } = require('ssh2');
+const { Client } = require('ssh2');
 const { readFileSync } = require('fs');
 
 import type { SourceConfig } from "../config";

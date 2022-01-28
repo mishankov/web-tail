@@ -3,10 +3,7 @@
     import LogLines from "./components/LogLines.svelte";
     import { logs } from "./stores/logs";
     import { logWindow } from "./stores/settings";
-    import fetchSources from "./stores/sources";
     import { CircularBuffer } from "./types/CircularBuffer";
-
-    const { sources, loadingSources } = fetchSources();
 
     let searchString = "";
     let source = "";

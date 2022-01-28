@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { CircularBuffer } from "../types/CircularBuffer";
     import LogLine from "./LogLine.svelte";
     import { logs } from "../stores/logs";
     import { filterLogs, reverseLogs } from "../stores/settings";
