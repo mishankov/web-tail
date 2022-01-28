@@ -2,9 +2,12 @@
     import LogLine from "./components/LogLine.svelte";
     import { logs } from "./stores/logs";
     import { logWindow } from "./stores/settings";
+    import fetchSources from "./stores/sources";
+
+    const { sources, loadingSources } = fetchSources();
 
     let searchString = "";
-    let source = "myfile";
+    let source = "";
     let socket: WebSocket;
     let filterLogs = false;
     let reverseLogs = false;
@@ -16,7 +19,7 @@
         }
 
         if (source !== "") {
-            socket = new WebSocket(`ws://localhost:8081/${source}/${$logWindow}`);
+            socket = new WebSocket(`ws://${location.host}/${source}/${$logWindow}`);
 
             socket.addEventListener("open", function (event) {
                 console.log('Socket opened', source);
@@ -43,14 +46,18 @@
     }
 </script>
 
+<svelte:head>
+    <title>Web tail | {source}</title>
+</svelte:head>
+
 <main>
 
     <nav class="top-panel">
         <select class="top-panel-input source-select" bind:value={source}>
-            <option value="">Select source</option>
-            <option value="myfile" selected>myfile</option>
-            <option value="af6">af6</option>
-            <option value="af6st">af6st</option>
+            <option value="" selected>Select source</option>
+            {#each $sources as source(source)}
+                <option value="{source}">{source}</option>
+            {/each}
         </select>
 
         <input type="text" placeholder="Search" class="top-panel-input search-input" bind:value={searchString}/>

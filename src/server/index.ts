@@ -1,6 +1,8 @@
 import type { Config, SourceConfig } from "./models/config";
 import { Source, LocalFileSource, SFTPFileSource } from "./models/sources";
 
+import { join } from "path";
+
 const express = require('express');
 const ws = require('ws');
 const fs = require('fs');
@@ -31,7 +33,7 @@ let LogSource: Source;
 wss.on('connection', function connection(ws, req) {
     let sourceName = req.url.split('/')[1];
     let initialLinesAmount = req.url.split('/')[2];
-    console.log('Connection established', sourceName);
+    console.log('Connection established', sourceName, initialLinesAmount);
 
     for (let source of getConfig()["sources"]) {
         if (sourceName === source.name) {
@@ -73,10 +75,14 @@ wss.on('close', function close() {
     clearInterval(interval);
 });
 
+app.use(express.static(join(__dirname, "public")));
+
+app.get("/sources", (req, res) => {
+    res.status(200).send(getConfig()["sources"].map(value => {return value["name"]}));
+})
 
 
-
-const server = app.listen(8081);
+const server = app.listen(8080);
 server.on('upgrade', (request, socket, head) => {
     wss.handleUpgrade(request, socket, head, socket => {
         wss.emit('connection', socket, request);
