@@ -26,9 +26,14 @@ export class CircularBuffer<ItemType> {
     }
 
     setLength(newLength: number) {
-        // lazy implementation
-        this.items = [];
-        this.lastPosition = -1;
-        this.length = newLength || 0;
+        if (newLength > 0) {
+            this.items = this.toArray();
+            this.lastPosition = this.items.length - 1;
+            this.length = newLength;
+        } else {
+            this.items = [];
+            this.lastPosition = -1;
+            this.length = 0;
+        }
     }
 }
