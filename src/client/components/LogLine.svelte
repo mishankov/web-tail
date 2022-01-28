@@ -33,15 +33,15 @@
 
 <style>
     .line {
-        /* display: flex; */
-        margin-bottom: -2px;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        border: 2px solid black;
+        font-size: 1rem;
+        padding: .3em;
+        color: var(--text-color);
+        border-bottom: 1px solid var(--bg-color);
     }
 
     .selected-log-line {
-        background-color: coral;
+        background-color: var(--accent-color);
+        color: var(--bg-color);
         padding: 2px;
         border: 1px solid black;
         border-radius: 10px;
