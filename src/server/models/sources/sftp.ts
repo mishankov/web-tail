@@ -1,4 +1,5 @@
-const { Client } = require('ssh2');
+const { Client, ConnectConfig } = require('ssh2');
+const { readFileSync } = require('fs');
 
 import type { SourceConfig } from "../config";
 import { Source } from "./source";
@@ -31,13 +32,18 @@ class SFTPFileSource extends Source {
     }
 
     startReading() {
-        this.connection.connect({
+        const connectionParams: any = {
             host: this.config.host,
             port: this.config.port,
             username: this.config.username,
             password: this.config.password,
-            tryKeyboard: true
-        });
+        }
+
+        if (this.config.privateKeyPath !== undefined) {
+            connectionParams.privateKey = readFileSync(this.config.privateKeyPath)
+        }
+
+        this.connection.connect(connectionParams);
     }
 
     closeConnection() {

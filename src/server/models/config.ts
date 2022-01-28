@@ -11,6 +11,7 @@ interface SourceConfig {
     port?: number
     username?: string
     password?: string
+    privateKeyPath?: string
 }
 
 export type {Config, SourceConfig}
