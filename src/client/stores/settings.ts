@@ -2,11 +2,15 @@ import { writable } from "svelte/store";
 
 const storedFilterLogs = localStorage.getItem("WebTailFilterLogs");
 export const filterLogs = writable(storedFilterLogs === "true" || false);
-filterLogs.subscribe((value) => localStorage.setItem("WebTailFilterLogs", value.toString()));
+filterLogs.subscribe((value) =>
+  localStorage.setItem("WebTailFilterLogs", value.toString())
+);
 
 const storedReverseLogs = localStorage.getItem("WebTailReverseLogs");
-export const reverseLogs = writable(storedReverseLogs === "true"  || false);
-reverseLogs.subscribe((value) => localStorage.setItem("WebTailReverseLogs", value.toString()));
+export const reverseLogs = writable(storedReverseLogs === "true" || false);
+reverseLogs.subscribe((value) =>
+  localStorage.setItem("WebTailReverseLogs", value.toString())
+);
 
 const storedLogWindow = localStorage.getItem("WebTailLogWindow");
 export const logWindow = writable(storedLogWindow || "10");

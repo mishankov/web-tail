@@ -8,6 +8,7 @@
     "start": "sirv ./dist/public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "server": "cd dist && nodemon index.js -w index.js",
+    "style": "prettier --write .",
     "gen": "node generate_logs.js"
   },
   "devDependencies": {
@@ -19,6 +20,7 @@
     "@types/ssh2": "^0.5.51",
     "@types/ws": "^8.2.2",
     "nodemon": "^2.0.15",
+    "prettier": "2.5.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
