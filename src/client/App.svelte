@@ -4,15 +4,13 @@
     import { logs } from "./stores/logs";
     import { logWindow } from "./stores/settings";
     import fetchSources from "./stores/sources";
+    import { CircularBuffer } from "./types/CircularBuffer";
 
     const { sources, loadingSources } = fetchSources();
 
     let searchString = "";
     let source = "";
     let socket: WebSocket;
-    let filterLogs = false;
-    let reverseLogs = false;
-    let filteredLogs: Array<string>;
 
     $: {
         if (socket !== undefined) {
@@ -20,6 +18,7 @@
         }
 
         if (source !== "") {
+            logs.update(buff => {return new CircularBuffer<string>(parseInt($logWindow))});
             socket = new WebSocket(`ws://${location.host}/${source}/${$logWindow}`);
 
             socket.addEventListener("open", function (event) {
