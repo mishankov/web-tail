@@ -16,7 +16,7 @@
         }
 
         if (source !== "") {
-            socket = new WebSocket(`ws://localhost:8081/${source}`);
+            socket = new WebSocket(`ws://localhost:8081/${source}/${$logWindow}`);
 
             socket.addEventListener("open", function (event) {
                 console.log('Socket opened', source);
@@ -25,8 +25,10 @@
             socket.addEventListener("message", function (event) {
                 if (event.data.length > 0) {
                     logs.update(buff =>  {
-                        buff.push(event.data);
-                        return buff;
+                        for (let line of event.data.split("\n")) {
+                            if (line.length > 0) buff.push(line);   
+                        }
+                        return buff;                   
                     });
                 }
             });
@@ -77,6 +79,10 @@
         --color-light-100: rgb(250, 250, 248);
         
         --color-accent-100: yellow;
+    }
+
+    :global(body) {
+        background-color: var(--color-dark-80);
     }
 
     label {

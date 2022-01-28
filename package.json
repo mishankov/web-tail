@@ -16,6 +16,7 @@
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^2.0.0",
     "@types/express-ws": "^3.0.1",
+    "@types/ssh2": "^0.5.51",
     "@types/ws": "^8.2.2",
     "nodemon": "^2.0.15",
     "rollup": "^2.3.4",

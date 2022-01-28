@@ -2,10 +2,8 @@ import type { Config, SourceConfig } from "./models/config";
 import { Source, LocalFileSource, SFTPFileSource } from "./models/sources";
 
 const express = require('express');
-const Tail = require('tail-file');
 const ws = require('ws');
 const fs = require('fs');
-const { Client } = require('ssh2');
 
 const app = express();
 
@@ -32,12 +30,13 @@ let LogSource: Source;
 
 wss.on('connection', function connection(ws, req) {
     let sourceName = req.url.split('/')[1];
+    let initialLinesAmount = req.url.split('/')[2];
     console.log('Connection established', sourceName);
 
     for (let source of getConfig()["sources"]) {
         if (sourceName === source.name) {
             const SourceClass = getSourceClassFromConfig(source);
-            LogSource = new SourceClass(source, function(line: string) {
+            LogSource = new SourceClass(source, initialLinesAmount, function(line: string) {
                 ws.send(line);
             });
         }

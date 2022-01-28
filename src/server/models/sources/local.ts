@@ -6,8 +6,8 @@ import { Source } from "./source";
 class LocalFileSource extends Source {
     tail: typeof Tail;
 
-    constructor(config: SourceConfig, newLineCallback: CallableFunction) {
-        super(config, newLineCallback);
+    constructor(config: SourceConfig, initialLinesAmount: number, newLineCallback: CallableFunction) {
+        super(config, initialLinesAmount, newLineCallback);
         this.tail = new Tail(this.config.path);
     }
 
