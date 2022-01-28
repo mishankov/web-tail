@@ -141,7 +141,7 @@
 
     .logs {
         min-height: 100vh;
-        padding-top: 2rem;
+        padding-top: 2.6rem;
         background-color: var(--bg-selected-color);
     }
 	
