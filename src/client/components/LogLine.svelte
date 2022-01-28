@@ -35,15 +35,15 @@
     .line {
         font-size: 1rem;
         padding: .3em;
-        color: var(--text-color);
-        border-bottom: 1px solid var(--bg-color);
+        color: var(--color-light-100);
+        border-bottom: 1px solid var(--color-dark-100);
     }
 
     .selected-log-line {
-        background-color: var(--accent-color);
-        color: var(--bg-color);
+        background-color: var(--color-accent-100);
+        color: var(--color-dark-100);
         padding: 2px;
-        border: 1px solid black;
+        border: 1px solid var(--color-dark-100);
         border-radius: 10px;
     }
 </style>

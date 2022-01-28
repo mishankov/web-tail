@@ -71,10 +71,12 @@
 <style>
 
     :global(:root) {
-        --bg-color: rgb(45,42,46);
-        --bg-selected-color: rgb(64,62,65);
-        --text-color: rgb(250, 250, 248);
-        --accent-color: yellow;
+        --color-dark-100: rgb(45,42,46);
+        --color-dark-80: rgb(64,62,65);
+
+        --color-light-100: rgb(250, 250, 248);
+        
+        --color-accent-100: yellow;
     }
 
     label {
@@ -86,38 +88,37 @@
         position: fixed;
         top: 0;
         left: 0;
-        min-width: 100vw;
+        min-width: calc(100vw - .8rem);
         height: 2rem;
         display: flex;
         align-items: center;
-        padding-right: 1em;
         gap: 0.5em;
-        border: 0.3em solid var(--bg-color);
-        background-color: var(--bg-color);
+        border: 0.4rem solid var(--color-dark-100);
+        background-color: var(--color-dark-100);
     }
 
     .top-panel-input {
         font-size: 1.25rem;
         height: 2rem;
         border: 0;
-        background-color: var(--bg-color);
-        color: var(--text-color);
+        background-color: var(--color-dark-100);
+        color: var(--color-light-100);
         box-sizing: content-box;
     }
 
     .top-panel-input:hover {
-        background-color: var(--bg-selected-color);
+        background-color: var(--color-dark-80);
     }
 
     .top-panel-input:focus {
-        background-color: var(--bg-selected-color);
+        background-color: var(--color-dark-80);
         outline: none;
     }
 
     .top-panel-checkbox {
         font-size: 1.25rem;
         height: 2rem;
-        color: var(--text-color);
+        color: var(--color-light-100);
         padding-right: .5em;
         box-sizing: content-box;
     }
@@ -128,7 +129,7 @@
     }
 
     .top-panel-checkbox:hover {
-        background-color: var(--bg-selected-color);
+        background-color: var(--color-dark-80);
     }
 
     .search-input {
@@ -140,9 +141,14 @@
     }
 
     .logs {
-        min-height: 100vh;
-        padding-top: 2.6rem;
-        background-color: var(--bg-selected-color);
+        position: fixed;
+        left: 0;
+        top: 2.8rem;
+        min-height: calc(100vh - 2.8rem);
+        width: 100%;
+        max-height: calc(100vh - 2.8rem);
+        background-color: var(--color-dark-80);
+        overflow: auto;
     }
 	
 </style>
