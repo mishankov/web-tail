@@ -15,7 +15,7 @@ class SFTPFileSource extends Source {
         this.connection.on('ready', () => {
             console.log('Client :: ready');
             this.connection.exec(`tail -f -n ${this.initialLinesAmount} ${this.config.path}`, (err, stream) => {
-                if (err) throw err;
+                // if (err) throw err;
                 stream.on('close', (code, signal) => {
                     console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
                     this.connection.end();
