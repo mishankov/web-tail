@@ -14,12 +14,6 @@
     
 </script>
 
-<!-- {#if selectLine.length > 0}
-    <p>{@html line.replace(new RegExp(selectLine, 'gi'), `<span style="color: red;">${selectLine}</span>`)}</p>
-{:else}
-    <p>{line}</p>
-{/if} -->
-
 <div class="line">
     {#if selectLine !== undefined && selectLine.length > 0}
         {#each splittedLine as linePart, i(i)}
