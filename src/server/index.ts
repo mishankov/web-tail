@@ -12,7 +12,7 @@ const app = express();
 const wss = new ws.WebSocketServer({ noServer: true });
 
 function getConfig() {
-    let raw = fs.readFileSync('/Users/mishankov/Documents/Git/web-tail/dist/config.json');
+    let raw = fs.readFileSync('config.json');
     let config: Config = JSON.parse(raw);
     return config
 }
