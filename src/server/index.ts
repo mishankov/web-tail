@@ -81,6 +81,10 @@ app.get("/sources", (req, res) => {
     res.status(200).send(getConfig()["sources"].map(value => {return value["name"]}));
 })
 
+app.get('*', function (request, response) {
+    response.sendFile(join(__dirname, "public", 'index.html'));
+});
+
 
 const server = app.listen(8080);
 server.on('upgrade', (request, socket, head) => {
