@@ -3,8 +3,8 @@ export class CircularBuffer<ItemType> {
     items: Array<ItemType> = [];
     lastPosition = -1;
 
-    constructor(size: number) {
-        this.length = size;
+    constructor(length: number) {
+        this.length = length;
     }
 
     push(item: ItemType) {

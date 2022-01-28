@@ -13,7 +13,6 @@ class LocalFileSource extends Source {
 
     configConnection() {
         this.tail.on("line", line => {
-            console.log(line);
             this.newLineCallback(line);
         });
     }
