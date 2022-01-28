@@ -5,7 +5,11 @@
     let splittedLine: Array<string>;
     $: {
         if (selectLine.length > 0) {
-            splittedLine = line.split(new RegExp(selectLine, 'gi'));
+            try {
+                splittedLine = line.split(new RegExp(selectLine, 'g'));
+            } catch {
+                splittedLine = [line];
+            }
         } else {
             splittedLine = [line];
         }
