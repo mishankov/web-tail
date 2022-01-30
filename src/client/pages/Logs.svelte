@@ -54,18 +54,5 @@
 </main>
 
 <style>
-
-    :global(:root) {
-        --color-dark-100: rgb(45,42,46);
-        --color-dark-80: rgb(64,62,65);
-
-        --color-light-100: rgb(250, 250, 248);
-        
-        --color-accent-100: yellow;
-    }
-
-    :global(body) {
-        background-color: var(--color-dark-80);
-    }
 	
 </style>
