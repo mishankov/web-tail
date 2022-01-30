@@ -10,7 +10,7 @@
 
 <header>
     <nav class="top-panel">
-        <select class="top-panel-input source-select" bind:value={source}>
+        <select class="source-select" bind:value={source}>
             <option value="" selected>Select source</option>
             {#each $sources as source(source)}
                 <option value="{source}">{source}</option>
@@ -43,18 +43,19 @@
         background-color: var(--color-dark-100);
     }
 
-    .top-panel-input {
+    .top-panel > * {
+        color: var(--color-light-100);
+        background-color: var(--color-dark-100);
+        border: 0;
+        border-radius: 100vh;
         font-size: 1.25rem;
         height: 2rem;
-        border: 0;
-        background-color: var(--color-dark-100);
-        color: var(--color-light-100);
-        box-sizing: content-box;
-        padding: 0;
         padding-left: .5rem;
+        padding-right: .5rem;
+        /* box-sizing: content-box; */
     }
 
-    .top-panel-input:hover {
+    .top-panel > *:hover {
         background-color: var(--color-dark-80);
     }
 
@@ -63,21 +64,17 @@
         outline: none;
     }
 
-    .top-panel-checkbox {
-        font-size: 1.25rem;
-        height: 2rem;
-        color: var(--color-light-100);
-        padding-right: .5em;
-        box-sizing: content-box;
+    .top-panel-input:focus::placeholder {
+        color: transparent;
     }
 
     .top-panel-checkbox > input {
         margin-right: .5em;
         box-sizing: content-box;
     }
-
-    .top-panel-checkbox:hover {
-        background-color: var(--color-dark-80);
+    
+    .source-select {
+        outline: none;
     }
 
     .search-input {
