@@ -8,7 +8,7 @@
     "start": "sirv ./dist/public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "server": "cd dist && nodemon index.js -w index.js",
-    "style": "prettier --write .",
+    "format": "prettier --write .",
     "gen": "node generate_logs.js"
   },
   "devDependencies": {

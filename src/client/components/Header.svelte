@@ -1,6 +1,7 @@
 <script lang="ts">
     import fetchSources from "../stores/sources";
     import { filterLogs, reverseLogs, regexFilter, logWindow } from "../stores/settings";
+import Toggle from "./Toggle.svelte";
 
     const { sources, loadingSources } = fetchSources();
 
@@ -17,18 +18,14 @@
             {/each}
         </select>
         <input type="text" placeholder="Search" class="top-panel-input search-input" bind:value={searchString}/>
-        <label class="top-panel-checkbox"> <input type="checkbox" bind:checked={$filterLogs}/> Filter </label> 
-        <label class="top-panel-checkbox"> <input type="checkbox" bind:checked={$regexFilter}/> Regex </label> 
-        <label class="top-panel-checkbox"> <input type="checkbox" bind:checked={$reverseLogs}/> Reverse </label> 
+        <Toggle label="Filter" bind:value={$filterLogs}/>
+        <Toggle label="Regex" bind:value={$regexFilter}/>
+        <Toggle label="Reverse" bind:value={$reverseLogs}/>
         <input type="number" placeholder="Max lines" class="top-panel-input max-lines-input" bind:value={$logWindow}/>
     </nav>
 </header>
 
 <style>
-    label {
-        display: flex;
-        align-items: center;
-    }
 
     .top-panel {
         position: fixed;
@@ -52,6 +49,7 @@
         height: 2rem;
         padding-left: .5rem;
         padding-right: .5rem;
+        transition: background-color .1s;
         /* box-sizing: content-box; */
     }
 
@@ -66,11 +64,6 @@
 
     .top-panel-input:focus::placeholder {
         color: transparent;
-    }
-
-    .top-panel-checkbox > input {
-        margin-right: .5em;
-        box-sizing: content-box;
     }
     
     .source-select {
