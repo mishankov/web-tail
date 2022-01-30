@@ -15,7 +15,7 @@
         }
 
         if (source !== "") {
-            logs.update(buff => {return new CircularBuffer<string>(parseInt($logWindow))});
+            logs.update(buff => {return new CircularBuffer<string>($logWindow)});
             socket = new WebSocket(`ws://${location.host}/${source}/${$logWindow}`);
 
             socket.addEventListener("open", function (event) {
@@ -37,7 +37,7 @@
 
     // $: {
         logs.update(buff => {
-            buff.setLength(parseInt($logWindow));
+            buff.setLength($logWindow);
             return buff;
         })
     }

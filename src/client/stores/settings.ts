@@ -1,23 +1,48 @@
 import { writable } from "svelte/store";
 
-const storedFilterLogs = localStorage.getItem("WebTailFilterLogs");
-export const filterLogs = writable(storedFilterLogs === "true" || false);
-filterLogs.subscribe((value) =>
-  localStorage.setItem("WebTailFilterLogs", value.toString())
-);
+interface Settings {
+  filterLogs: boolean;
+  regexFilter: boolean;
+  reverseLogs: boolean;
+  logWindow: number;
+}
 
-const storedRegexFilter = localStorage.getItem("WebTailRegexFilter");
-export const regexFilter = writable(storedRegexFilter === "true" || false);
-regexFilter.subscribe((value) =>
-  localStorage.setItem("WebTailRegexFilter", value.toString())
-);
+const defaultSettings: Settings = {
+  filterLogs: false,
+  regexFilter: false,
+  reverseLogs: false,
+  logWindow: 100,
+};
 
-const storedReverseLogs = localStorage.getItem("WebTailReverseLogs");
-export const reverseLogs = writable(storedReverseLogs === "true" || false);
-reverseLogs.subscribe((value) =>
-  localStorage.setItem("WebTailReverseLogs", value.toString())
-);
+function getSettingsFromStorage(): Settings {
+  try {
+    return JSON.parse(localStorage.getItem("WebTailSettings"));
+  } catch {
+    return defaultSettings;
+  }
+}
 
-const storedLogWindow = localStorage.getItem("WebTailLogWindow");
-export const logWindow = writable(storedLogWindow || "10");
-logWindow.subscribe((value) => localStorage.setItem("WebTailLogWindow", value));
+function saveSettingsToStorage(name: string, value: any) {
+  localStorage.setItem(
+    "WebTailSettings",
+    JSON.stringify(() => {
+      const settings = getSettingsFromStorage();
+      settings[name] = value;
+      return settings;
+    })
+  );
+}
+
+const settingsFromStorage = getSettingsFromStorage();
+
+export const filterLogs = writable(settingsFromStorage.filterLogs);
+filterLogs.subscribe((value) => saveSettingsToStorage("filterLogs", value));
+
+export const regexFilter = writable(settingsFromStorage.regexFilter);
+regexFilter.subscribe((value) => saveSettingsToStorage("regexFilter", value));
+
+export const reverseLogs = writable(settingsFromStorage.reverseLogs);
+reverseLogs.subscribe((value) => saveSettingsToStorage("reverseLogs", value));
+
+export const logWindow = writable(settingsFromStorage.logWindow);
+logWindow.subscribe((value) => saveSettingsToStorage("logWindow", value));
