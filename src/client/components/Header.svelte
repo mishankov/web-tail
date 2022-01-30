@@ -47,6 +47,7 @@ import Toggle from "./Toggle.svelte";
         border-radius: 100vh;
         font-size: 1.25rem;
         height: 2rem;
+        padding: 0;
         padding-left: .5rem;
         padding-right: .5rem;
         transition: background-color .1s;
