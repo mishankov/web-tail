@@ -17,7 +17,7 @@ import Toggle from "./Toggle.svelte";
                 <option value="{source}">{source}</option>
             {/each}
         </select>
-        <input type="text" placeholder="Search" class="top-panel-input search-input" bind:value={searchString}/>
+        <input type="text" placeholder="Search" class="top-panel-input search-input" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
         <Toggle label="Filter" bind:value={$filterLogs}/>
         <Toggle label="Regex" bind:value={$regexFilter}/>
         <Toggle label="Reverse" bind:value={$reverseLogs}/>
@@ -58,7 +58,7 @@ import Toggle from "./Toggle.svelte";
     }
 
     .top-panel-input:focus {
-        background-color: var(--color-dark-80);
+        background-color: var(--color-dark-60);
         outline: none;
     }
 
@@ -76,5 +76,9 @@ import Toggle from "./Toggle.svelte";
 
     .max-lines-input {
         width: 7ch;
+    }
+
+    .has-value {
+        background-color: var(--color-dark-80);
     }
 </style>
