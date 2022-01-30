@@ -1,6 +1,10 @@
+function getUniqueId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+
 export class CircularBuffer<ItemType> {
   length: number;
-  items: Array<ItemType> = [];
+  items: Array<{ id: string; item: ItemType }> = [];
   lastPosition = -1;
 
   constructor(length: number) {
@@ -11,13 +15,13 @@ export class CircularBuffer<ItemType> {
     this.lastPosition = (this.lastPosition + 1) % this.length;
 
     if (this.items.length === this.length) {
-      this.items[this.lastPosition] = item;
+      this.items[this.lastPosition].item = item;
     } else {
-      this.items.push(item);
+      this.items.push({ id: getUniqueId(), item: item });
     }
   }
 
-  toArray(): Array<ItemType> {
+  toArray(): Array<{ id: string; item: ItemType }> {
     if (this.lastPosition === this.items.length - 1) {
       return this.items;
     } else {

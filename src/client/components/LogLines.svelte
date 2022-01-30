@@ -5,11 +5,11 @@
 
     export let searchString: string;
 
-    let filteredLogs: string[] = [];
+    let filteredLogs: {id: string, item: string}[] = [];
 
     $: {
         filteredLogs = $logs.toArray().filter((log) => {
-            return !$filterLogs || $filterLogs && log.includes(searchString)
+            return !$filterLogs || $filterLogs && log.item.includes(searchString)
         });
 
         if ($reverseLogs) filteredLogs.reverse();
@@ -19,8 +19,8 @@
 
 
 <div class="logs">
-    {#each filteredLogs as logLine(logLine)}
-        <LogLine line={logLine} selectLine={searchString}/>
+    {#each filteredLogs as logLine(logLine.id)}
+        <LogLine line={logLine.item} selectLine={searchString}/>
     {/each}
 </div>
 
