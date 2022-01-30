@@ -18,19 +18,15 @@ function getSettingsFromStorage(): Settings {
   try {
     return JSON.parse(localStorage.getItem("WebTailSettings"));
   } catch {
-    return defaultSettings;
+    localStorage.setItem("WebTailSettings", JSON.stringify(defaultSettings));
+    return getSettingsFromStorage();
   }
 }
 
 function saveSettingsToStorage(name: string, value: any) {
-  localStorage.setItem(
-    "WebTailSettings",
-    JSON.stringify(() => {
-      const settings = getSettingsFromStorage();
-      settings[name] = value;
-      return settings;
-    })
-  );
+  const settings = getSettingsFromStorage();
+  settings[name] = value;
+  localStorage.setItem("WebTailSettings", JSON.stringify(settings));
 }
 
 const settingsFromStorage = getSettingsFromStorage();
