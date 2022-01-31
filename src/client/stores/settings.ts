@@ -3,6 +3,7 @@ import { writable } from "svelte/store";
 interface Settings {
   filterLogs: boolean;
   regexFilter: boolean;
+  caseSensitive: boolean;
   reverseLogs: boolean;
   logWindow: number;
 }
@@ -10,6 +11,7 @@ interface Settings {
 const defaultSettings: Settings = {
   filterLogs: false,
   regexFilter: false,
+  caseSensitive: false,
   reverseLogs: false,
   logWindow: 100,
 };
@@ -36,6 +38,11 @@ filterLogs.subscribe((value) => saveSettingsToStorage("filterLogs", value));
 
 export const regexFilter = writable(settingsFromStorage.regexFilter);
 regexFilter.subscribe((value) => saveSettingsToStorage("regexFilter", value));
+
+export const caseSensitive = writable(settingsFromStorage.caseSensitive);
+caseSensitive.subscribe((value) =>
+  saveSettingsToStorage("caseSensitive", value)
+);
 
 export const reverseLogs = writable(settingsFromStorage.reverseLogs);
 reverseLogs.subscribe((value) => saveSettingsToStorage("reverseLogs", value));

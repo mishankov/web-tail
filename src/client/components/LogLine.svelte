@@ -1,22 +1,25 @@
 <script lang="ts">
-    import { regexFilter } from "../stores/settings";
+    import { escapeRegExp } from "../utils";
+    import { regexFilter, caseSensitive } from "../stores/settings";
 
     export let line: string;
     export let selectLine: string;
 
     let selectRegex: RegExp;
-
-    function escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-    }
     
     $: {
+        let regexFlags = "gi";
+
+        if ($caseSensitive) regexFlags = "g";
+
         if ($regexFilter) {
             try {
-                selectRegex = new RegExp(selectLine, "g");
+                selectRegex = new RegExp(selectLine, regexFlags);
             } catch {
-                selectRegex = new RegExp(escapeRegExp(selectLine), "g");
+                selectRegex = new RegExp(escapeRegExp(selectLine), regexFlags);
             }
+        } else {
+            selectRegex = new RegExp(escapeRegExp(selectLine), regexFlags);
         }
     }
     
@@ -25,11 +28,7 @@
 
 <div class="line">
     {#if selectLine.length > 0}
-        {#if $regexFilter}
-            <span>{@html line.replaceAll(selectRegex, '<span class="selected-log-line">$&</span>')}</span>
-        {:else}
-            <span>{@html line.replaceAll(selectLine, '<span class="selected-log-line">$&</span>')}</span>
-        {/if}
+        <span>{@html line.replaceAll(selectRegex, '<span class="selected-log-line">$&</span>')}</span>
     {:else}
         <span>{line}</span>
     {/if}

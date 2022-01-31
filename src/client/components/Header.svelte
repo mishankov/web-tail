@@ -1,6 +1,6 @@
 <script lang="ts">
     import fetchSources from "../stores/sources";
-    import { filterLogs, reverseLogs, regexFilter, logWindow } from "../stores/settings";
+    import { filterLogs, reverseLogs, regexFilter, logWindow, caseSensitive } from "../stores/settings";
 import Toggle from "./Toggle.svelte";
 
     const { sources, loadingSources } = fetchSources();
@@ -19,7 +19,8 @@ import Toggle from "./Toggle.svelte";
         </select>
         <input type="text" placeholder="Search" class="top-panel-input search-input" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
         <Toggle label="Filter" bind:value={$filterLogs}/>
-        <Toggle label="Regex" bind:value={$regexFilter}/>
+        <Toggle label=".*" bind:value={$regexFilter}/>
+        <Toggle label="Aa" bind:value={$caseSensitive}/>
         <Toggle label="Reverse" bind:value={$reverseLogs}/>
         <input type="number" placeholder="Max lines" class="top-panel-input max-lines-input" bind:value={$logWindow}/>
     </nav>
