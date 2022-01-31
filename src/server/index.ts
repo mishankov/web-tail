@@ -50,10 +50,6 @@ wss.on("connection", function connection(ws, req) {
   ws.isAlive = true;
   ws.on("pong", heartbeat);
 
-  ws.on("message", function message(data) {
-    console.log("received: %s", data);
-  });
-
   ws.on("close", function () {
     console.log("Connection closed");
     LogSource.closeConnection();
