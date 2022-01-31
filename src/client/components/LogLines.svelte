@@ -7,11 +7,11 @@
     export let searchString: string;
 
     let filteredLogs: {id: string, item: string}[] = [];
+    let selectRegex: RegExp;
 
     $: {
         filteredLogs = $logs.toArray().filter((log) => {
             let regexFlags = "gi";
-            let selectRegex: RegExp;
 
             if ($caseSensitive) regexFlags = "g";
 
@@ -36,7 +36,7 @@
 
 <div class="logs">
     {#each filteredLogs as logLine(logLine.id)}
-        <LogLine line={logLine.item} selectLine={searchString}/>
+        <LogLine line={logLine.item} selectRegex={selectRegex}/>
     {/each}
 </div>
 
