@@ -38,6 +38,7 @@
 
 <style>
     .line {
+        font-family: monospace;
         font-size: 1rem;
         padding: .3em;
         color: var(--color-light-100);
