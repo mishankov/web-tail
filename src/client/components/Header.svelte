@@ -19,10 +19,10 @@ import Toggle from "./Toggle.svelte";
         </select>
         <input type="text" placeholder="Search" class="top-panel-input search-input" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
         <Toggle label="Filter" bind:value={$filterLogs}/>
-        <Toggle label=".*" bind:value={$regexFilter}/>
-        <Toggle label="Aa" bind:value={$caseSensitive}/>
+        <Toggle title="Regex" label=".*" bind:value={$regexFilter}/>
+        <Toggle title="Case sensitive" label="Aa" bind:value={$caseSensitive}/>
         <Toggle label="Reverse" bind:value={$reverseLogs}/>
-        <input type="number" placeholder="Max lines" class="top-panel-input max-lines-input" bind:value={$logWindow}/>
+        <input title="Max Lines" type="number" placeholder="Max lines" class="top-panel-input max-lines-input" bind:value={$logWindow}/>
     </nav>
 </header>
 

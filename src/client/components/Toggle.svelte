@@ -1,5 +1,6 @@
 <script lang="ts">
     export let label: string;
+    export let title = "";
     export let value: boolean;
 
 
@@ -8,7 +9,7 @@
     }
 </script>
 
-<div class:selected="{value}" on:click={toggle}>{label}</div>
+<div title="{title}" class:selected="{value}" on:click={toggle}>{label}</div>
 
 <style>
     div {
