@@ -17,11 +17,12 @@ const defaultSettings: Settings = {
 };
 
 function getSettingsFromStorage(): Settings {
-  try {
-    return JSON.parse(localStorage.getItem("WebTailSettings"));
-  } catch {
+  let settings = JSON.parse(localStorage.getItem("WebTailSettings"));
+  if (settings === null) {
     localStorage.setItem("WebTailSettings", JSON.stringify(defaultSettings));
     return getSettingsFromStorage();
+  } else {
+    return settings;
   }
 }
 
