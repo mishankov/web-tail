@@ -10,7 +10,7 @@ const open = require("open");
 
 const app = express();
 const wss = new ws.WebSocketServer({ noServer: true });
-const PORT = getConfig().port || 8080;
+const PORT = getConfig().port || 4444;
 
 function getConfig() {
   let raw = fs.readFileSync("config.json");
