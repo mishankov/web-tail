@@ -1,5 +1,7 @@
 interface Config {
   sources: Array<SourceConfig>;
+  openBrowserOnStart?: boolean;
+  port?: number;
 }
 
 interface SourceConfig {

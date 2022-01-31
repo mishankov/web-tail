@@ -6,10 +6,11 @@ import { join } from "path";
 const express = require("express");
 const ws = require("ws");
 const fs = require("fs");
+const open = require("open");
 
 const app = express();
-
 const wss = new ws.WebSocketServer({ noServer: true });
+const PORT = getConfig().port || 8080;
 
 function getConfig() {
   let raw = fs.readFileSync("config.json");
@@ -91,9 +92,13 @@ app.get("*", function (request, response) {
   response.sendFile(join(__dirname, "public", "index.html"));
 });
 
-const server = app.listen(8080);
+const server = app.listen(PORT);
 server.on("upgrade", (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, (socket) => {
     wss.emit("connection", socket, request);
   });
 });
+
+if (getConfig().openBrowserOnStart) {
+  open(`http://localhost:${PORT}/`);
+}

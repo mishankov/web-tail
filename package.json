@@ -35,6 +35,7 @@
   "dependencies": {
     "express": "^4.17.2",
     "express-ws": "^5.0.2",
+    "open": "^8.4.0",
     "sirv-cli": "^2.0.0",
     "ssh2": "^1.5.0",
     "tail-file": "^1.4.15",
