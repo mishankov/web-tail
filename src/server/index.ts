@@ -13,7 +13,7 @@ const wss = new ws.WebSocketServer({ noServer: true });
 const PORT = getConfig().port || 4444;
 
 function getConfig() {
-  let raw = fs.readFileSync("config.json");
+  let raw = fs.readFileSync(join(__dirname, "config.json"));
   let config: Config = JSON.parse(raw);
   return config;
 }

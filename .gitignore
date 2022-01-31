@@ -2,5 +2,6 @@
 /dist/*
 !/dist/public
 *.zip
+web-tail-*/
 
 .DS_Store
