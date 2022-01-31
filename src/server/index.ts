@@ -92,7 +92,9 @@ app.get("*", function (request, response) {
   response.sendFile(join(__dirname, "public", "index.html"));
 });
 
-const server = app.listen(PORT);
+const server = app.listen(PORT, () =>
+  console.log(`Web Tail is up => http://localhost:${PORT}`)
+);
 server.on("upgrade", (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, (socket) => {
     wss.emit("connection", socket, request);
