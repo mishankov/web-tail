@@ -1,6 +1,7 @@
 /node_modules/
-/dist/*.js
-/dist/*.json
+/dist/*
+!/dist/public
 *.zip
+web-tail-*/
 
 .DS_Store

@@ -1,15 +1,21 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
+  "name": "web-tail",
+  "version": "0.1.0",
   "private": true,
+  "bin": "dist/index.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && pkg . --out-path dist",
     "dev": "rollup -c -w",
-    "start": "sirv ./dist/public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "server": "cd dist && nodemon index.js -w index.js",
     "format": "prettier --write .",
-    "gen": "node generate_logs.js"
+    "gen": "node utils/generate_logs.js"
+  },
+  "pkg": {
+    "assets": [
+      "dist/public/**/*"
+    ],
+    "output": "dist"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -20,6 +26,7 @@
     "@types/ssh2": "^0.5.51",
     "@types/ws": "^8.2.2",
     "nodemon": "^2.0.15",
+    "pkg": "^5.5.2",
     "prettier": "2.5.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
@@ -36,7 +43,6 @@
     "express": "^4.17.2",
     "express-ws": "^5.0.2",
     "open": "^8.4.0",
-    "sirv-cli": "^2.0.0",
     "ssh2": "^1.5.0",
     "tail-file": "^1.4.15",
     "ws": "^8.4.2"
