@@ -4,11 +4,20 @@ import { Source, LocalFileSource, SFTPFileSource } from "./models/sources";
 import { join, dirname } from "path";
 
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 const ws = require("ws");
 const fs = require("fs");
 const open = require("open");
 
 const app = express();
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
+
 const wss = new ws.WebSocketServer({ noServer: true });
 const PORT = getConfig().port || 4444;
 
