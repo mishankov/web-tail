@@ -4,7 +4,6 @@ Web application to view lines from file on local system or on remote server buil
 
 ![](images/image-1.png)
 
-
 ## Installation
 Download and unpack `web-tail-x.x.x-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest)
 
@@ -24,13 +23,15 @@ In unpacked folder edit `web-tail.config.json` file
     - `privateKeyPath` - path to file with private key to authenticate on remote server. Either this or `password` is mandatory for source type `sftp`
 
 ## Run
-You can run Web tail with node using command
+Launch executable for your platform: macOS, Windows or Linux
 
-```bash
-node index.js
+Or you can download source code and run commands
+
+```console
+npm install
+npm run build
+npm run start
 ```
-
-Or you can download and run executable for macOS, Windows or Linux
 
 ## Usage
 ![](images/image-2.png)

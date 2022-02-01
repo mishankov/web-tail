@@ -1,13 +1,13 @@
 {
   "name": "web-tail",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "bin": "dist/index.js",
   "scripts": {
     "build": "rollup -c && pkg . --out-path dist",
+    "start": "node dist/index.js",
     "dev": "rollup -c -w",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "server": "cd dist && nodemon index.js -w index.js",
     "format": "prettier --write .",
     "gen": "node utils/generate_logs.js"
   },
