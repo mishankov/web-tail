@@ -16,9 +16,11 @@ function getConfig() {
   let raw: string;
 
   try {
-    raw = fs.readFileSync(join(dirname(process.execPath), "config.json"));
+    raw = fs.readFileSync(
+      join(dirname(process.execPath), "web-tail.config.json")
+    );
   } catch {
-    raw = fs.readFileSync(join(__dirname, "config.json"));
+    raw = fs.readFileSync(join(__dirname, "web-tail.config.json"));
   }
   let config: Config = JSON.parse(raw);
   return config;

@@ -9,7 +9,7 @@ Web application to view lines from file on local system or on remote server buil
 Download and unpack `web-tail-x.x.x-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest)
 
 ## Configuration
-In unpacked folder edit `config.json` file
+In unpacked folder edit `web-tail.config.json` file
 
 - `port` - Port that Web tail will run on. Defaults value is `4444`
 - `openBrowserOnStart` - automatically open tab with Web tail in your default browser on start. Default value is `false`
@@ -36,7 +36,7 @@ Or you can download and run executable for macOS, Windows or Linux
 ![](images/image-2.png)
 
 Options from left to right:
-- Dropdown to select one of files from `config.json`
+- Dropdown to select one of files from `web-tail.config.json`
 - Search field. Matching results will be selected. Search is case insensitive by default
 - `Filter` toggle. If enabled only lines with matching results are shown
 - `.*` toggle. If enabled treats text in search field as regular expression
