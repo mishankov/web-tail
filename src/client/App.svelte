@@ -7,10 +7,6 @@
         {
             location: "/",
             component: Logs
-        },
-        {
-            location: "/settings",
-            component: Settings
         }
     ]
 </script>

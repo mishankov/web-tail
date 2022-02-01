@@ -1,19 +1,36 @@
 import type { Config, SourceConfig } from "./models/config";
 import { Source, LocalFileSource, SFTPFileSource } from "./models/sources";
 
-import { join } from "path";
+import { join, dirname } from "path";
 
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 const ws = require("ws");
 const fs = require("fs");
 const open = require("open");
 
 const app = express();
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
+
 const wss = new ws.WebSocketServer({ noServer: true });
 const PORT = getConfig().port || 4444;
 
 function getConfig() {
-  let raw = fs.readFileSync(join(__dirname, "config.json"));
+  let raw: string;
+
+  try {
+    raw = fs.readFileSync(
+      join(dirname(process.execPath), "web-tail.config.json")
+    );
+  } catch {
+    raw = fs.readFileSync(join(__dirname, "web-tail.config.json"));
+  }
   let config: Config = JSON.parse(raw);
   return config;
 }
