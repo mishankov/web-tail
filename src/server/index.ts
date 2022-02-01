@@ -1,7 +1,7 @@
 import type { Config, SourceConfig } from "./models/config";
 import { Source, LocalFileSource, SFTPFileSource } from "./models/sources";
 
-import { join } from "path";
+import { join, dirname } from "path";
 
 const express = require("express");
 const ws = require("ws");
@@ -13,7 +13,13 @@ const wss = new ws.WebSocketServer({ noServer: true });
 const PORT = getConfig().port || 4444;
 
 function getConfig() {
-  let raw = fs.readFileSync(join(__dirname, "config.json"));
+  let raw: string;
+
+  try {
+    raw = fs.readFileSync(join(dirname(process.execPath), "config.json"));
+  } catch {
+    raw = fs.readFileSync(join(__dirname, "config.json"));
+  }
   let config: Config = JSON.parse(raw);
   return config;
 }
