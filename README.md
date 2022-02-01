@@ -37,7 +37,7 @@ npm run start
 ![](images/image-2.png)
 
 Options from left to right:
-- Dropdown to select one of files from `web-tail.config.json`
+- Dropdown to select one of sources from `web-tail.config.json`
 - Search field. Matching results will be selected. Search is case insensitive by default
 - `Filter` toggle. If enabled only lines with matching results are shown
 - `.*` toggle. If enabled treats text in search field as regular expression
