@@ -9,8 +9,8 @@ function getSourceClassFromConfig(
   newLineCallback: CallableFunction
 ): Source {
   return new {
-    "local:file": LocalDockerSource,
-    "local:docker": LocalFileSource,
+    "local:file": LocalFileSource,
+    "local:docker": LocalDockerSource,
     "ssh:file": SSHFileSource,
     "ssh:docker": SSHDockerSource,
   }[config.type](config, initialLinesAmount, newLineCallback);

@@ -45,7 +45,8 @@ class LocalDockerSource extends Source {
   configConnection() {}
 
   startReading() {
-    this.process = spawn("docker logs", [
+    this.process = spawn("docker", [
+      "logs",
       "-f",
       "-n",
       this.initialLinesAmount.toString(),
