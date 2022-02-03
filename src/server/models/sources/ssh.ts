@@ -4,6 +4,14 @@ const { readFileSync } = require("fs");
 import type { SourceConfig } from "../config";
 import { Source } from "./source";
 
+interface SSHConnectionParams {
+  host: string;
+  port: number;
+  username: string;
+  password?: string;
+  privateKey?: string;
+}
+
 abstract class SSHSource extends Source {
   connection: typeof Client;
   tailCommand: string;
@@ -43,7 +51,7 @@ abstract class SSHSource extends Source {
   }
 
   startReading() {
-    const connectionParams: any = {
+    const connectionParams: SSHConnectionParams = {
       host: this.config.host,
       port: this.config.port,
       username: this.config.username,
