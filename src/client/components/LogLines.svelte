@@ -50,5 +50,6 @@
         max-height: calc(100vh - 2.8rem);
         background-color: var(--color-dark-80);
         overflow: auto;
+        overflow-wrap: break-word;
     }
 </style>
