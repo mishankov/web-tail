@@ -26,7 +26,7 @@ function getSettingsFromStorage(): Settings {
   }
 }
 
-function saveSettingsToStorage(name: string, value: any) {
+function saveSettingsToStorage(name: string, value: number | boolean) {
   const settings = getSettingsFromStorage();
   settings[name] = value;
   localStorage.setItem("WebTailSettings", JSON.stringify(settings));
