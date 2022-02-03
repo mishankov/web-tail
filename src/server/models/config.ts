@@ -14,6 +14,8 @@ interface SourceConfig {
   username?: string;
   password?: string;
   privateKeyPath?: string;
+
+  containerId?: string;
 }
 
 export type { Config, SourceConfig };

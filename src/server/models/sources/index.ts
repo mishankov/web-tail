@@ -1,5 +1,5 @@
 import type { Source } from "./source";
-import { SSHFileSource } from "./ssh";
+import { SSHDockerSource, SSHFileSource } from "./ssh";
 import { LocalFileSource } from "./local";
 import type { SourceConfig } from "../config";
 
@@ -11,6 +11,7 @@ function getSourceClassFromConfig(
   return new {
     "local:file": LocalFileSource,
     "ssh:file": SSHFileSource,
+    "ssh:docker": SSHDockerSource,
   }[config.type](config, initialLinesAmount, newLineCallback);
 }
 
