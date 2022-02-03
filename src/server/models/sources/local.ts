@@ -1,5 +1,5 @@
 const Tail = require("tail-file");
-const { spawn } = require("child_process");
+const { spawn, ChildProcess } = require("child_process");
 
 import type { SourceConfig } from "../config";
 import { Source } from "./source";
@@ -32,7 +32,7 @@ class LocalFileSource extends Source {
 }
 
 class LocalDockerSource extends Source {
-  process: any;
+  process: typeof ChildProcess;
 
   constructor(
     config: SourceConfig,
