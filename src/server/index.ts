@@ -1,5 +1,6 @@
-import type { Config, SourceConfig } from "./models/config";
-import { Source, LocalFileSource, SFTPFileSource } from "./models/sources";
+import type { Config } from "./models/config";
+import type { Source } from "./models/sources";
+import { getSourceClassFromConfig } from "./models/sources";
 
 import { join, dirname } from "path";
 
@@ -35,13 +36,6 @@ function getConfig() {
   return config;
 }
 
-function getSourceClassFromConfig(config: SourceConfig) {
-  return {
-    local: LocalFileSource,
-    sftp: SFTPFileSource,
-  }[config.type];
-}
-
 function heartbeat() {
   this.isAlive = true;
 }
@@ -55,12 +49,13 @@ wss.on("connection", function connection(ws, req) {
 
   for (let source of getConfig()["sources"]) {
     if (sourceName === source.name) {
-      const SourceClass = getSourceClassFromConfig(source);
-      LogSource = new SourceClass(source, initialLinesAmount, function (
-        line: string
-      ) {
-        ws.send(line);
-      });
+      LogSource = getSourceClassFromConfig(
+        source,
+        initialLinesAmount,
+        function (line: string) {
+          ws.send(line);
+        }
+      );
     }
   }
 

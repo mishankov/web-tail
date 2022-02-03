@@ -4,7 +4,7 @@ const { readFileSync } = require("fs");
 import type { SourceConfig } from "../config";
 import { Source } from "./source";
 
-class SFTPFileSource extends Source {
+class SSHFileSource extends Source {
   connection: typeof Client;
 
   constructor(
@@ -64,4 +64,4 @@ class SFTPFileSource extends Source {
   }
 }
 
-export { SFTPFileSource };
+export { SSHFileSource };

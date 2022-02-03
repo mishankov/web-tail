@@ -6,7 +6,7 @@ interface Config {
 
 interface SourceConfig {
   name: string;
-  type: "local" | "sftp";
+  type: "local:file" | "local:docker" | "ssh:file" | "ssh:docker";
   path: string;
 
   host?: string;
