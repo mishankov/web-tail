@@ -24,10 +24,8 @@
     "@rollup/plugin-run": "^2.1.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^2.0.0",
-    "@types/express-ws": "^3.0.1",
     "@types/ssh2": "^0.5.51",
     "@types/ws": "^8.2.2",
-    "nodemon": "^2.0.15",
     "pkg": "^5.5.2",
     "prettier": "2.5.1",
     "rollup": "^2.3.4",
@@ -44,7 +42,6 @@
   "dependencies": {
     "express": "^4.17.2",
     "express-rate-limit": "^6.2.0",
-    "express-ws": "^5.0.2",
     "open": "^8.4.0",
     "ssh2": "^1.5.0",
     "tail-file": "^1.4.15",
