@@ -16,13 +16,14 @@ In unpacked folder edit `web-tail.config.json` file
 - `openBrowserOnStart` - automatically open tab with Web tail in your default browser on start. Default value is `false`
 - `sources` - list of sources to tail lines from
   - `name` - name of source. Mandatory field
-  - `type` - type of source `local` or `sftp`. Mandatory field
-  - `path` - path to file. Mandatory field
-  - `host` - host of remote server. Mandatory field for source type `sftp`
-  - `port` - port of remote server. Mandatory field for source type `sftp`
-  - `username` - username for ssh connection to remote server. Mandatory for source type `sftp`
-  - `password` - password to authenticate on remote server. Either this or `privateKeyPath` is mandatory for source type `sftp`
-  - `privateKeyPath` - path to file with private key to authenticate on remote server. Either this or `password` is mandatory for source type `sftp`
+  - `type` - type of source. Possible values: `local:file`, `local:docker`, `ssh:file`, `ssh:docker`. Mandatory field
+  - `path` - path to file. Mandatory field for source types `*:file`
+  - `containerId` - Docker container ID. Mandatory field for source types `*:docker`
+  - `host` - host of remote server. Mandatory field for source types `ssh:*`
+  - `port` - port of remote server. Mandatory field for source types `ssh:*`
+  - `username` - username for ssh connection to remote server. Mandatory for source types `ssh:*`
+  - `password` - password to authenticate on remote server. Either this or `privateKeyPath` is mandatory for source types `ssh:*`
+  - `privateKeyPath` - path to file with private key to authenticate on remote server. Either this or `password` is mandatory for source types `ssh:*`
 
 ## Run
 
