@@ -1,4 +1,5 @@
 # Web tail
+[![CodeFactor](https://www.codefactor.io/repository/github/mishankov/web-tail/badge)](https://www.codefactor.io/repository/github/mishankov/web-tail)
 
 Web application to view lines from file on local system or on remote server built with [Svelte](https://github.com/sveltejs/svelte)
 
