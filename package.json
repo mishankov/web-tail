@@ -23,6 +23,7 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-run": "^2.1.0",
     "@rollup/plugin-typescript": "^8.0.0",
+    "@rollup/plugin-wasm": "^5.1.2",
     "@tsconfig/svelte": "^2.0.0",
     "@types/ssh2": "^0.5.51",
     "@types/ws": "^8.2.2",
@@ -45,6 +46,7 @@
     "open": "^8.4.0",
     "ssh2": "^1.5.0",
     "tail-file": "^1.4.15",
+    "web-tail-wasm": "file:src/common/wasm/pkg",
     "ws": "^8.4.2"
   }
 }

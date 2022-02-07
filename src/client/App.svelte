@@ -1,6 +1,6 @@
 <script lang="ts">
     import Logs from "./pages/Logs.svelte";
-    import Settings from "./pages/Settings.svelte";
+    // import Settings from "./pages/Settings.svelte";
     import SimpleRouter from "./components/SimpleRouter.svelte";
 
     const routes = [
@@ -9,9 +9,15 @@
             component: Logs
         }
     ]
+
+    import { greet } from "web-tail-wasm";
+
+    greet();
+    
 </script>
 
 <SimpleRouter routes={routes}/>
+<Logs/>
 
 <style>
     :global(:root) {
