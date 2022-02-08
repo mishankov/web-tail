@@ -5,7 +5,7 @@
   "bin": "dist/index.js",
   "scripts": {
     "build:wasm": "node scripts/build_wasm.js && npm run install:wasm",
-    "install:wasm": "npm install src/common/wasm/pkg",
+    "install:wasm": "npm install src/common/wasm/pkg --no-save",
     "build:js": "rollup -c",
     "build:exec": "pkg . --out-path dist",
     "build": "npm run build:wasm && npm run build:js && npm run build:exec",
