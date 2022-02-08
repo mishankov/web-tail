@@ -1,10 +1,3 @@
-# Notes. Remove before merge
-
-```console
-wasm-pack build --target web
-```
-
-
 # Web tail
 
 [![CodeFactor](https://www.codefactor.io/repository/github/mishankov/web-tail/badge)](https://www.codefactor.io/repository/github/mishankov/web-tail)
