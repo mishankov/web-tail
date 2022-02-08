@@ -1,2 +1,5 @@
 dist
 web-tail-*/
+src/common/wasm/pkg/*
+src/common/wasm/target/*
+src/common/wasm/build/*
