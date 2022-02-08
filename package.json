@@ -49,7 +49,6 @@
     "open": "^8.4.0",
     "ssh2": "^1.5.0",
     "tail-file": "^1.4.15",
-    "web-tail-wasm": "file:src/common/wasm/pkg",
     "ws": "^8.4.2"
   }
 }
