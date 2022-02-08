@@ -1,5 +1,7 @@
+import { get_uuid } from "web-tail-wasm";
+
 function getUniqueId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+  return get_uuid();
 }
 
 export class CircularBuffer<ItemType> {

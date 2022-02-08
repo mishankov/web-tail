@@ -4,7 +4,11 @@
   "private": true,
   "bin": "dist/index.js",
   "scripts": {
-    "build": "rollup -c && pkg . --out-path dist",
+    "build:wasm": "node scripts/build_wasm.js && npm run install:wasm",
+    "install:wasm": "npm install src/common/wasm/pkg --no-save",
+    "build:js": "rollup -c",
+    "build:exec": "pkg . --out-path dist",
+    "build": "npm run build:wasm && npm run build:js && npm run build:exec",
     "start": "node dist/index.js",
     "dev": "rollup -c -w",
     "check": "svelte-check --tsconfig ./tsconfig.json",

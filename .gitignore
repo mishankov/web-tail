@@ -3,5 +3,6 @@
 !/dist/public
 *.zip
 web-tail-*/
+src/common/wasm/target/*
 
 .DS_Store

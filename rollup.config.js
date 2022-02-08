@@ -1,5 +1,4 @@
 import svelte from "rollup-plugin-svelte";
-import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import run from "@rollup/plugin-run";
 import livereload from "rollup-plugin-livereload";
@@ -24,9 +23,10 @@ export default [
     input: "src/client/main.ts",
     output: {
       sourcemap: true,
-      format: "iife",
+      format: "cjs",
       name: "app",
-      file: "dist/public/build/bundle.js",
+      dir: "dist/public/build/",
+      exports: "auto",
     },
     plugins: [
       svelte({
@@ -49,7 +49,7 @@ export default [
         browser: true,
         dedupe: ["svelte"],
       }),
-      commonjs(),
+      // commonjs(),
       typescript({
         sourceMap: !production,
         inlineSources: !production,
