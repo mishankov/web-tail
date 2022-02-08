@@ -9,11 +9,6 @@
             component: Logs
         }
     ]
-
-    import { greet } from "web-tail-wasm";
-
-    greet();
-    
 </script>
 
 <SimpleRouter routes={routes}/>

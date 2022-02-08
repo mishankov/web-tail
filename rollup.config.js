@@ -1,8 +1,6 @@
 import svelte from "rollup-plugin-svelte";
-import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import run from "@rollup/plugin-run";
-import { wasm } from "@rollup/plugin-wasm";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
@@ -50,10 +48,6 @@ export default [
       resolve({
         browser: true,
         dedupe: ["svelte"],
-      }),
-      wasm({
-        publicPath: "src/common/wasm/pkg/",
-        // sync: ["src/common/wasm/pkg/web_tail_wasm_bg.wasm"],
       }),
       // commonjs(),
       typescript({
