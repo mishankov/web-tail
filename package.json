@@ -1,6 +1,6 @@
 {
   "name": "web-tail",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "private": true,
   "bin": "dist/index.js",
   "scripts": {
@@ -8,8 +8,10 @@
     "install:wasm": "npm install src/common/wasm/pkg --no-save",
     "build:js": "rollup -c",
     "build:exec": "pkg . --out-path dist",
-    "build": "npm run build:wasm && npm run build:js && npm run build:exec",
+    "build:docker": "docker build . -t mishankov/web-tail",
+    "build": "npm run build:wasm && npm run build:js && npm run build:exec && npm run build:docker",
     "start": "node dist/index.js",
+    "start:docker": "docker run -p 4444:4444 -d mishankov/web-tail",
     "dev": "rollup -c -w",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "prettier --check .",
