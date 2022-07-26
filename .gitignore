@@ -1,7 +1,9 @@
 /node_modules/
 /dist/*
 !/dist/public
+/dist/public/build
 *.zip
+*.log
 web-tail-*/
 src/common/wasm/target/*
 
