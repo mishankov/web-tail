@@ -6,8 +6,8 @@ export default function () {
 
   async function get() {
     loadingSources.set(true);
-    let response = await fetch("/sources");
-    let data: Array<string> = await response.json();
+    const response = await fetch("/sources");
+    const data: Array<string> = await response.json();
     sources.set(data);
     loadingSources.set(false);
   }

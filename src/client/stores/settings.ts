@@ -17,7 +17,7 @@ const defaultSettings: Settings = {
 };
 
 function getSettingsFromStorage(): Settings {
-  let settings = JSON.parse(localStorage.getItem("WebTailSettings"));
+  const settings = JSON.parse(localStorage.getItem("WebTailSettings"));
   if (settings === null) {
     localStorage.setItem("WebTailSettings", JSON.stringify(defaultSettings));
     return getSettingsFromStorage();
