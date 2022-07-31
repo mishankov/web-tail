@@ -13,12 +13,16 @@ class LocalFileSource extends Source {
     newLineCallback: CallableFunction
   ) {
     super(config, initialLinesAmount, newLineCallback);
-    this.tail = new Tail(this.config.path);
+    this.tail = new Tail(this.config.path, { force: true });
   }
 
   configConnection() {
     this.tail.on("line", (line) => {
       this.newLineCallback(line);
+    });
+
+    this.tail.on("error", (error) => {
+      this.newLineCallback(error.toString());
     });
   }
 
