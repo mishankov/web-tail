@@ -32,7 +32,7 @@ function getConfig() {
   } catch {
     raw = fs.readFileSync(join(__dirname, "web-tail.config.json"));
   }
-  let config: Config = JSON.parse(raw);
+  const config: Config = JSON.parse(raw);
   return config;
 }
 
@@ -43,11 +43,11 @@ function heartbeat() {
 let LogSource: Source;
 
 wss.on("connection", function connection(ws, req) {
-  let sourceName = req.url.split("/")[1];
-  let initialLinesAmount = req.url.split("/")[2];
+  const sourceName = req.url.split("/")[1];
+  const initialLinesAmount = req.url.split("/")[2];
   console.log("Connection established", sourceName, initialLinesAmount);
 
-  for (let source of getConfig()["sources"]) {
+  for (const source of getConfig()["sources"]) {
     if (sourceName === source.name) {
       LogSource = getSourceClassFromConfig(
         source,
