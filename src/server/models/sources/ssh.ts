@@ -41,7 +41,7 @@ abstract class SSHSource extends Source {
               this.newLineCallback(data.toString());
             })
             .stderr.on("data", (data) => {
-              console.log("STDERR: " + data);
+              this.newLineCallback(data.toString());
             });
         });
       })
