@@ -1,4 +1,4 @@
-const Tail = require("tail-file");
+const Tail = require("tail").Tail;
 const { spawn, ChildProcess } = require("child_process");
 
 import type { SourceConfig } from "../config";
@@ -13,7 +13,7 @@ class LocalFileSource extends Source {
     newLineCallback: CallableFunction
   ) {
     super(config, initialLinesAmount, newLineCallback);
-    this.tail = new Tail(this.config.path, { force: true });
+    this.tail = new Tail(this.config.path, { nLines: initialLinesAmount });
   }
 
   configConnection() {
@@ -27,11 +27,11 @@ class LocalFileSource extends Source {
   }
 
   startReading() {
-    this.tail.start();
+    this.tail.watch();
   }
 
   closeConnection() {
-    this.tail.stop();
+    this.tail.unwatch();
   }
 }
 
