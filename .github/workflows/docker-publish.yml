@@ -47,6 +47,27 @@ jobs:
       - run: npm run lint
       - run: npm run build --if-present
 
+      - name: Upload Linux executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-tail-linux
+          path: dist/web-tail-linux
+          retention-days: 5
+      
+      - name: Upload macOS executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-tail-macos
+          path: dist/web-tail-macos
+          retention-days: 5
+
+      - name: Upload windows executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-tail-win
+          path: dist/web-tail-win.exe
+          retention-days: 5
+
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
