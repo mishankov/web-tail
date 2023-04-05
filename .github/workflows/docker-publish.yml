@@ -53,7 +53,7 @@ jobs:
           name: web-tail-linux
           path: dist/web-tail-linux
           retention-days: 5
-      
+
       - name: Upload macOS executable
         uses: actions/upload-artifact@v3
         with:
