@@ -10,6 +10,7 @@ interface SSHConnectionParams {
   username: string;
   password?: string;
   privateKey?: string;
+  tryKeyboard: boolean;
 }
 
 abstract class SSHSource extends Source {
@@ -56,6 +57,7 @@ abstract class SSHSource extends Source {
       port: this.config.port,
       username: this.config.username,
       password: this.config.password,
+      tryKeyboard: true
     };
 
     if (this.config.privateKeyPath !== undefined) {
