@@ -12,7 +12,6 @@
 </script>
 
 <SimpleRouter routes={routes}/>
-<Logs/>
 
 <style>
     :global(:root) {
