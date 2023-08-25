@@ -38,10 +38,6 @@ jobs:
         with:
           node-version: 16.x
           cache: "npm"
-      - name: Use wasm-pack
-        uses: jetli/wasm-pack-action@v0.3.0
-        with:
-          version: "v0.10.2"
 
       - run: npm ci
       - run: npm run lint
