@@ -1,17 +1,4 @@
-<script lang="ts">
-    import Logs from "./pages/Logs.svelte";
-    // import Settings from "./pages/Settings.svelte";
-    import SimpleRouter from "./components/SimpleRouter.svelte";
-
-    const routes = [
-        {
-            location: "/",
-            component: Logs
-        }
-    ]
-</script>
-
-<SimpleRouter routes={routes}/>
+<slot/>
 
 <style>
     :global(:root) {

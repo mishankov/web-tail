@@ -1,55 +1,41 @@
 {
-  "name": "web-tail",
-  "version": "0.6.0",
-  "private": true,
-  "bin": "dist/index.js",
-  "scripts": {
-    "build:js": "rollup -c",
-    "build:exec": "pkg . --out-path dist",
-    "build:docker": "docker build . -t mishankov/web-tail",
-    "build": "npm run build:js && npm run build:exec && npm run build:docker",
-    "start": "node dist/index.js",
-    "start:docker": "docker run -p 4444:4444 -d mishankov/web-tail",
-    "dev": "rollup -c -w",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "prettier --check .",
-    "format": "prettier --write .",
-    "gen": "node utils/generate_logs.js"
-  },
-  "pkg": {
-    "assets": [
-      "dist/public/**/*"
-    ],
-    "output": "dist"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
-    "@rollup/plugin-run": "^2.1.0",
-    "@rollup/plugin-typescript": "^8.0.0",
-    "@tsconfig/svelte": "^2.0.0",
-    "@types/ssh2": "^0.5.51",
-    "@types/ws": "^8.2.2",
-    "pkg": "^5.5.2",
-    "prettier": "2.5.1",
-    "rollup": "^2.3.4",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-svelte": "^7.0.0",
-    "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.49.0",
-    "svelte-check": "^2.0.0",
-    "svelte-preprocess": "^4.0.0",
-    "tslib": "^2.0.0",
-    "typescript": "^4.0.0"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "express-rate-limit": "^6.2.0",
-    "open": "^8.4.0",
-    "ssh2": "^1.5.0",
-    "tail": "^2.2.4",
-    "toml": "^3.0.0",
-    "ws": "^8.4.2"
-  }
+	"name": "web-tail",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write ."
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-node": "^1.3.1",
+		"@sveltejs/kit": "^1.20.4",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte": "^2.30.0",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.10.1",
+		"svelte": "^4.0.5",
+		"svelte-check": "^3.4.3",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^4.4.2"
+	},
+	"type": "module",
+	"dependencies": {
+		"express": "^4.18.2",
+		"express-rate-limit": "^6.9.0",
+		"open": "^9.1.0",
+		"ssh2": "^1.14.0",
+		"tail": "^2.2.6",
+		"toml": "^3.0.0",
+		"ws": "^8.13.0"
+	}
 }
