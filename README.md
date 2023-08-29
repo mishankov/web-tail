@@ -12,7 +12,7 @@ Download and unpack `web-tail-x.x.x-[platform].zip` from [latest release](https:
 
 ## Configuration
 
-In unpacked folder edit `web-tail.config.json` file
+In unpacked folder edit `web-tail.config.toml` file
 
 - `port` - Port that Web tail will run on. Defaults value is `4444`
 - `openBrowserOnStart` - automatically open tab with Web tail in your default browser on start. Default value is `false`

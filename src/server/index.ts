@@ -9,6 +9,7 @@ const rateLimit = require("express-rate-limit");
 const ws = require("ws");
 const fs = require("fs");
 const open = require("open");
+const toml = require("toml");
 
 const app = express();
 const limiter = rateLimit({
@@ -27,12 +28,12 @@ function getConfig() {
 
   try {
     raw = fs.readFileSync(
-      join(dirname(process.execPath), "web-tail.config.json")
+      join(dirname(process.execPath), "web-tail.config.toml")
     );
   } catch {
-    raw = fs.readFileSync(join(__dirname, "web-tail.config.json"));
+    raw = fs.readFileSync(join(__dirname, "web-tail.config.toml"));
   }
-  const config: Config = JSON.parse(raw);
+  const config: Config = toml.parse(raw);
   return config;
 }
 
@@ -103,11 +104,13 @@ app.get("*", function (request, response) {
 const server = app.listen(PORT, () =>
   console.log(`Web Tail is up => http://localhost:${PORT}`)
 );
+
 server.on("upgrade", (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, (socket) => {
     wss.emit("connection", socket, request);
   });
 });
+
 
 if (getConfig().openBrowserOnStart) {
   open(`http://localhost:${PORT}/`);
