@@ -1,7 +1,7 @@
 <script lang="ts">
-    import fetchSources from "../stores/sources";
-    import { filterLogs, reverseLogs, regexFilter, logWindow, caseSensitive } from "../stores/settings";
-import Toggle from "./Toggle.svelte";
+    import fetchSources from "$lib/stores/sources";
+    import { filterLogs, reverseLogs, regexFilter, logWindow, caseSensitive } from "$lib/stores/settings";
+    import Toggle from "./Toggle.svelte";
 
     const { sources, loadingSources } = fetchSources();
 
