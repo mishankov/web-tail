@@ -4,12 +4,10 @@
   "private": true,
   "bin": "dist/index.js",
   "scripts": {
-    "build:wasm": "node scripts/build_wasm.js && npm run install:wasm",
-    "install:wasm": "npm install src/common/wasm/pkg --no-save",
     "build:js": "rollup -c",
     "build:exec": "pkg . --out-path dist",
     "build:docker": "docker build . -t mishankov/web-tail",
-    "build": "npm run build:wasm && npm run build:js && npm run build:exec && npm run build:docker",
+    "build": "npm run build:js && npm run build:exec && npm run build:docker",
     "start": "node dist/index.js",
     "start:docker": "docker run -p 4444:4444 -d mishankov/web-tail",
     "dev": "rollup -c -w",
@@ -51,6 +49,7 @@
     "open": "^8.4.0",
     "ssh2": "^1.5.0",
     "tail": "^2.2.4",
+    "toml": "^3.0.0",
     "ws": "^8.4.2"
   }
 }
