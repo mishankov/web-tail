@@ -111,7 +111,6 @@ server.on("upgrade", (request, socket, head) => {
   });
 });
 
-
 if (getConfig().openBrowserOnStart) {
   open(`http://localhost:${PORT}/`);
 }
