@@ -68,8 +68,13 @@ wss.on("connection", function connection(ws, req) {
     LogSource.closeConnection();
   });
 
-  LogSource.configConnection();
-  LogSource.startReading();
+  try {
+    LogSource.configConnection();
+    LogSource.startReading();
+  } catch (err) {
+    ws.send(err.toString());
+    ws.close();
+  }
 });
 
 const interval = setInterval(function ping() {
