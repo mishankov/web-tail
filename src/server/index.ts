@@ -50,13 +50,17 @@ wss.on("connection", function connection(ws, req) {
 
   for (const source of getConfig()["sources"]) {
     if (sourceName === source.name) {
-      LogSource = getSourceClassFromConfig(
+      try {
+         LogSource = getSourceClassFromConfig(
         source,
         initialLinesAmount,
         function (line: string) {
           ws.send(line);
         }
       );
+      } catch(err) {
+        console.log(`Unable to determine log source type. Error: ${err.toString()}`)
+      }
     }
   }
 
@@ -64,8 +68,10 @@ wss.on("connection", function connection(ws, req) {
   ws.on("pong", heartbeat);
 
   ws.on("close", function () {
-    console.log("Connection closed");
-    LogSource.closeConnection();
+    if (LogSource !== undefined) {
+      LogSource.closeConnection();
+      console.log("Connection closed");
+    }
   });
 
   try {
