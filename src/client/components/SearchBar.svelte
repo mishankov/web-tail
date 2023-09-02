@@ -1,26 +1,50 @@
 <script lang="ts">
     import { smoothScroll } from "../utils";
-    import { selectedSearchResult } from "../stores/search";
-    import { reverseLogs } from "../stores/settings";
+    import { filteredLogs } from "../stores/logs";
+    import { currentSearchLineId } from "../stores/search";
 
     export let searchString: string;
+
+    $: if (searchString) currentSearchLineId.set("");
     
     function goToSearchResult(direction: "next" | "previous") {
         if (searchString === "") {
             return
         }
 
-        while (true) {
-            let newSelectedSearchResult = 0;
-            if (direction === "next" && $reverseLogs || direction === "previous" && !$reverseLogs) newSelectedSearchResult = selectedSearchResult.previous();
-            if (direction === "previous" && $reverseLogs || direction === "next" && !$reverseLogs) newSelectedSearchResult = selectedSearchResult.next();
-            
-            const elements = document.querySelectorAll(`#search-result-${newSelectedSearchResult}`);
-            if (elements.length === 0) continue;
-            smoothScroll(elements[0]);
-
-            break;
+        if (direction === "next") {
+            if ($currentSearchLineId === ""){ 
+                currentSearchLineId.set($filteredLogs[0].id)
+            } else {
+                $filteredLogs.find((value, index, array) => {
+                    if (value.id === $currentSearchLineId) {
+                        currentSearchLineId.set(array[(index + 1) % array.length].id)
+                        return true
+                    }
+                    return false
+                });
+            }
         }
+
+        if (direction === "previous") {
+            if ($currentSearchLineId === ""){ 
+                currentSearchLineId.set($filteredLogs[$filteredLogs.length - 1].id)
+            } else {
+                $filteredLogs.find((value, index, array) => {
+                    if (value.id === $currentSearchLineId) {
+                        let previousId = index - 1;
+                        if (previousId < 0) previousId = array.length - 1
+                        currentSearchLineId.set(array[previousId].id)
+                        return true
+                    }
+                    return false
+                });
+            }
+        }
+        
+        const elements = document.querySelectorAll(`line-id-${$currentSearchLineId}`);
+        if (elements.length === 0) return;
+        smoothScroll(elements[0]);
     }
 </script>
 <div class:has-value="{searchString.length > 0}">

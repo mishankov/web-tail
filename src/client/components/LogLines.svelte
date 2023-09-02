@@ -1,7 +1,7 @@
 <script lang="ts">
   import LogLine from "./LogLine.svelte";
   import { escapeRegExp } from "../utils";
-  import { logs } from "../stores/logs";
+  import { logs, filteredLogs } from "../stores/logs";
   import {
     filterLogs,
     reverseLogs,
@@ -11,11 +11,10 @@
 
   export let searchString: string;
 
-  let filteredLogs: { id: string; item: string }[] = [];
   let selectRegex: RegExp;
 
   $: {
-    filteredLogs = $logs.toArray().filter((log) => {
+    filteredLogs.set($logs.toArray().filter((log) => {
       let regexFlags = "gi";
 
       if ($caseSensitive) regexFlags = "g";
@@ -33,15 +32,15 @@
       return (
         !$filterLogs || ($filterLogs && log.item.match(selectRegex) !== null)
       );
-    });
+    }));
 
-    if ($reverseLogs) filteredLogs.reverse();
+    if ($reverseLogs) filteredLogs.update(n => n.reverse());
   }
 </script>
 
 <div class="logs">
-  {#each filteredLogs as logLine (logLine.id)}
-    <LogLine line={logLine.item} {selectRegex} />
+  {#each $filteredLogs as logLine (logLine.id)}
+    <LogLine line={logLine} {selectRegex} />
   {/each}
   <div class="scroll-anchor" />
 </div>

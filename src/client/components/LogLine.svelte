@@ -1,28 +1,26 @@
 <script lang="ts">
-  import { lastSearchResult, selectedSearchResult } from "../stores/search";
+  import { currentSearchLineId } from "../stores/search";
 
-  export let line: string;
+  export let line: {id: string, item: string};
   export let selectRegex: RegExp;
-
-  const searchResult = lastSearchResult.next();
   
   let searchResultClass: string;
-  let lineToShow = line;
+  let lineToShow = line.item;
 
-  $: if ($selectedSearchResult === searchResult) {
+  $: if ($currentSearchLineId === line.id) {
     searchResultClass = "selected-log-line selected-search-result"
   } else {
     searchResultClass = "selected-log-line"
   }
 
   $: if ("".match(selectRegex) === null) {
-    lineToShow = line.replaceAll(selectRegex, `<span class="${searchResultClass}" id="search-result-${searchResult}">$&</span>`)
+    lineToShow = line.item.replaceAll(selectRegex, `<span class="${searchResultClass}" id="line-id-${line.id}">$&</span>`)
   } else {
-    lineToShow = line;
+    lineToShow = line.item;
   }
 </script>
 
-<div class="line">
+<div class="line" data-current-search-line-id={$currentSearchLineId} data-line-id={line.id}>
   <span>{@html lineToShow}</span>
 </div>
 

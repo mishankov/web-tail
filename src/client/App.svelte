@@ -1,14 +1,5 @@
 <script lang="ts">
     import Logs from "./pages/Logs.svelte";
-    // import Settings from "./pages/Settings.svelte";
-    // import SimpleRouter from "./components/SimpleRouter.svelte";
-
-    // const routes = [
-    //     {
-    //         location: "/",
-    //         component: Logs
-    //     }
-    // ]
 </script>
 
 <Logs />
@@ -25,8 +16,8 @@
         --color-accent-100: hsl(55, 100%, 68%);
         --color-accent-80: hsl(55, 80%, 68%);
 
-        --color-accent-secondary-100: hsl(263, 100%, 68%);
-        --color-accent-secondary-80: hsl(263, 80%, 68%);
+        --color-accent-secondary-100: hsl(214, 100%, 68%);
+        --color-accent-secondary-80: hsl(214, 80%, 68%);
     }
 
     :global(body) {
