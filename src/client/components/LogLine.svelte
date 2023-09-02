@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { lastSearchResult } from "../stores/search";
+
   export let line: string;
   export let selectRegex: RegExp;
 </script>
@@ -8,7 +10,7 @@
     <span
       >{@html line.replaceAll(
         selectRegex,
-        '<span class="selected-log-line">$&</span>'
+        `<span class="selected-log-line" id="search-result-${lastSearchResult.next()}">$&</span>`
       )}</span
     >
   {:else}
@@ -32,5 +34,9 @@
     padding: 2px;
     border: 1px solid var(--color-dark-100);
     border-radius: 10px;
+  }
+
+  :global(.selected-search-result) {
+    background-color: green;
   }
 </style>
