@@ -23,10 +23,10 @@
         }
     }
 </script>
-<div>
-    <input type="text" placeholder="Search" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
-    <button class="button-left" on:click={() => goToSearchResult("previous")} title="Previous line with search result">&lt;</button>
-    <button class="button-right" on:click={() => goToSearchResult("next")} title="Next line with search result">&gt;</button>
+<div class:has-value="{searchString.length > 0}">
+    <input type="text" placeholder="Search" bind:value={searchString}/>
+    <button class="button-left" disabled={searchString.length === 0} on:click={() => goToSearchResult("previous")} title="Previous line with search result">&lt;</button>
+    <button class="button-right" disabled={searchString.length === 0} on:click={() => goToSearchResult("next")} title="Next line with search result">&gt;</button>
 </div>
 
 <style>
@@ -34,7 +34,6 @@
         width: 100%;
         display: flex;
         align-items: center;
-
         border-radius: 100vh;
     }
 
@@ -47,11 +46,17 @@
         outline: none;
     }
 
+    div.has-value {
+        background-color: var(--color-dark-80);
+    }
+
     input {
         width: 100%;
         color: var(--color-light-100);
         background-color: transparent;
         border: 0;
+        border-top-left-radius: 100vh;
+        border-bottom-left-radius: 100vh;
         font-size: 1.25rem;
         height: 2rem;
         padding: 0;
@@ -68,10 +73,6 @@
         color: transparent;
     }
 
-    .has-value {
-        background-color: var(--color-dark-80);
-    }
-
     button {
         color: var(--color-light-100);
         background-color: transparent; 
@@ -85,13 +86,17 @@
         transition: background-color .1s;
     }
 
-    button:hover {
+    /* button:hover {
         background-color: var(--color-dark-80);
-    }
+    } */
 
-    button:active {
+    button:enabled:active {
         background-color: var(--color-dark-60);
         outline: none;
+    }
+
+    button:disabled {
+        color: var(--color-dark-60);
     }
 
     .button-left {
