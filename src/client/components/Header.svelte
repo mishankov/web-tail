@@ -1,9 +1,10 @@
 <script lang="ts">
     import fetchSources from "../stores/sources";
     import { filterLogs, reverseLogs, regexFilter, logWindow, caseSensitive } from "../stores/settings";
-import Toggle from "./Toggle.svelte";
+    import Toggle from "./Toggle.svelte";
+    import SearchBar from "./SearchBar.svelte";
 
-    const { sources, loadingSources } = fetchSources();
+    const { sources } = fetchSources();
 
     export let source: string;
     export let searchString: string;
@@ -17,7 +18,7 @@ import Toggle from "./Toggle.svelte";
                 <option value="{source}">{source}</option>
             {/each}
         </select>
-        <input type="text" placeholder="Search" class="top-panel-input search-input" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
+        <SearchBar bind:searchString />
         <Toggle label="Filter" bind:value={$filterLogs}/>
         <Toggle title="Regex" label=".*" bind:value={$regexFilter}/>
         <Toggle title="Case sensitive" label="Aa" bind:value={$caseSensitive}/>
@@ -72,15 +73,7 @@ import Toggle from "./Toggle.svelte";
         outline: none;
     }
 
-    .search-input {
-        width: 100%;
-    }
-
     .max-lines-input {
         width: 7ch;
-    }
-
-    .has-value {
-        background-color: var(--color-dark-80);
     }
 </style>
