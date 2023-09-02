@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { lastSearchResult, selectedSearchResult } from "../stores/search";
+  import { lastSearchResult, selectedSearchResult } from "../stores/search";
 
   export let line: string;
   export let selectRegex: RegExp;
@@ -17,6 +17,8 @@
 
   $: if ("".match(selectRegex) === null) {
     lineToShow = line.replaceAll(selectRegex, `<span class="${searchResultClass}" id="search-result-${searchResult}">$&</span>`)
+  } else {
+    lineToShow = line;
   }
 </script>
 
@@ -37,12 +39,12 @@
   :global(.selected-log-line) {
     background-color: var(--color-accent-100);
     color: var(--color-dark-100);
-    padding: 2px;
+    padding: .5px 2px;
     border: 1px solid var(--color-dark-100);
     border-radius: 10px;
   }
 
   :global(.selected-search-result) {
-    background-color: green;
+    background-color: var(--color-accent-secondary-100);
   }
 </style>

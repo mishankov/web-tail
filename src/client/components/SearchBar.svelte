@@ -1,16 +1,19 @@
 <script lang="ts">
     import { smoothScroll } from "../utils";
     import { selectedSearchResult } from "../stores/search";
+    import { reverseLogs } from "../stores/settings";
 
     export let searchString: string;
-
+    
     function goToSearchResult(direction: "next" | "previous") {
-        if (searchString === "") return
+        if (searchString === "") {
+            return
+        }
 
         while (true) {
             let newSelectedSearchResult = 0;
-            if (direction === "next") newSelectedSearchResult = selectedSearchResult.previous();
-            if (direction === "previous") newSelectedSearchResult = selectedSearchResult.next();
+            if (direction === "next" && $reverseLogs || direction === "previous" && !$reverseLogs) newSelectedSearchResult = selectedSearchResult.previous();
+            if (direction === "previous" && $reverseLogs || direction === "next" && !$reverseLogs) newSelectedSearchResult = selectedSearchResult.next();
             
             const elements = document.querySelectorAll(`#search-result-${newSelectedSearchResult}`);
             if (elements.length === 0) continue;
