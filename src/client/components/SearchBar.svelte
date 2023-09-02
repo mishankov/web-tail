@@ -60,9 +60,8 @@
         background-color: var(--color-dark-80);
     }
 
-    div:focus {
-        background-color: var(--color-dark-60);
-        outline: none;
+    div:focus-within {
+        background-color: var(--color-dark-80);
     }
 
     div.has-value {
