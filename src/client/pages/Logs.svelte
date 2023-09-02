@@ -35,9 +35,7 @@
         }
       });
     }
-    // }
 
-    // $: {
     logs.update((buff) => {
       buff.setLength($logWindow);
       return buff;

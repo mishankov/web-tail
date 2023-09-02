@@ -77,7 +77,6 @@
         color: var(--color-light-100);
         background-color: transparent; 
         border: 0;
-        /* border-radius: 100vh; */
         font-size: 1.25rem;
         height: 2rem;
         padding: 0;
@@ -85,10 +84,6 @@
         padding-right: .5rem;
         transition: background-color .1s;
     }
-
-    /* button:hover {
-        background-color: var(--color-dark-80);
-    } */
 
     button:enabled:active {
         background-color: var(--color-dark-60);
