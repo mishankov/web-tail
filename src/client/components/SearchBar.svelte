@@ -23,18 +23,35 @@
         }
     }
 </script>
-
-<input type="text" placeholder="Search" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
-<button on:click={() => goToSearchResult("previous")} title="Previous line with search result">&lt;</button>
-<button on:click={() => goToSearchResult("next")} title="Next line search result">&gt;</button>
+<div>
+    <input type="text" placeholder="Search" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
+    <button class="button-left" on:click={() => goToSearchResult("previous")} title="Previous line with search result">&lt;</button>
+    <button class="button-right" on:click={() => goToSearchResult("next")} title="Next line with search result">&gt;</button>
+</div>
 
 <style>
+    div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        border-radius: 100vh;
+    }
+
+    div:hover {
+        background-color: var(--color-dark-80);
+    }
+
+    div:focus {
+        background-color: var(--color-dark-60);
+        outline: none;
+    }
+
     input {
         width: 100%;
         color: var(--color-light-100);
-        background-color: var(--color-dark-100);
+        background-color: transparent;
         border: 0;
-        border-radius: 100vh;
         font-size: 1.25rem;
         height: 2rem;
         padding: 0;
@@ -43,12 +60,7 @@
         transition: background-color .1s;
     }
 
-    input:hover {
-        background-color: var(--color-dark-80);
-    }
-
     input:focus {
-        background-color: var(--color-dark-60);
         outline: none;
     }
 
@@ -62,9 +74,9 @@
 
     button {
         color: var(--color-light-100);
-        background-color: var(--color-dark-100); 
+        background-color: transparent; 
         border: 0;
-        border-radius: 100vh;
+        /* border-radius: 100vh; */
         font-size: 1.25rem;
         height: 2rem;
         padding: 0;
@@ -80,5 +92,15 @@
     button:active {
         background-color: var(--color-dark-60);
         outline: none;
+    }
+
+    .button-left {
+        border-top-left-radius: 100vh;
+        border-bottom-left-radius: 100vh;
+    }
+
+    .button-right {
+        border-top-right-radius: 100vh;
+        border-bottom-right-radius: 100vh;
     }
 </style>

@@ -28,7 +28,6 @@
 </header>
 
 <style>
-
     .top-panel {
         position: fixed;
         top: 0;
