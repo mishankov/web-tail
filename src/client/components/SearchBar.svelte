@@ -5,29 +5,25 @@
     export let searchString: string;
 
     function goToSearchResult(direction: "next" | "previous") {
+        if (searchString === "") return
+
         while (true) {
             let newSelectedSearchResult = 0;
-            if (direction === "next") newSelectedSearchResult = selectedSearchResult.next();
-            if (direction === "previous") newSelectedSearchResult = selectedSearchResult.previous();
+            if (direction === "next") newSelectedSearchResult = selectedSearchResult.previous();
+            if (direction === "previous") newSelectedSearchResult = selectedSearchResult.next();
+            
             const elements = document.querySelectorAll(`#search-result-${newSelectedSearchResult}`);
             if (elements.length === 0) continue;
-            
-            const allSearchResults = document.querySelectorAll(".selected-log-line");
-            allSearchResults.forEach((element) => element.classList.remove("selected-search-result"));
-            
-            elements.forEach((element) => element.classList.add("selected-search-result"));
-            
             smoothScroll(elements[0]);
 
             break;
         }
-        
     }
 </script>
 
 <input type="text" placeholder="Search" class:has-value="{searchString.length > 0}" bind:value={searchString}/>
-<button on:click={() => goToSearchResult("previous")} title="Previous search result">&lt;</button>
-<button on:click={() => goToSearchResult("next")} title="Next search result">&gt;</button>
+<button on:click={() => goToSearchResult("previous")} title="Previous line with search result">&lt;</button>
+<button on:click={() => goToSearchResult("next")} title="Next line search result">&gt;</button>
 
 <style>
     input {

@@ -1,21 +1,27 @@
 <script lang="ts">
-    import { lastSearchResult } from "../stores/search";
+    import { lastSearchResult, selectedSearchResult } from "../stores/search";
 
   export let line: string;
   export let selectRegex: RegExp;
+
+  const searchResult = lastSearchResult.next();
+  
+  let searchResultClass: string;
+  let lineToShow = line;
+
+  $: if ($selectedSearchResult === searchResult) {
+    searchResultClass = "selected-log-line selected-search-result"
+  } else {
+    searchResultClass = "selected-log-line"
+  }
+
+  $: if ("".match(selectRegex) === null) {
+    lineToShow = line.replaceAll(selectRegex, `<span class="${searchResultClass}" id="search-result-${searchResult}">$&</span>`)
+  }
 </script>
 
 <div class="line">
-  {#if "".match(selectRegex) === null}
-    <span
-      >{@html line.replaceAll(
-        selectRegex,
-        `<span class="selected-log-line" id="search-result-${lastSearchResult.next()}">$&</span>`
-      )}</span
-    >
-  {:else}
-    <span>{line}</span>
-  {/if}
+  <span>{@html lineToShow}</span>
 </div>
 
 <style>
