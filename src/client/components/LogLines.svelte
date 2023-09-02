@@ -12,6 +12,7 @@
   export let searchString: string;
 
   let selectRegex: RegExp;
+  let logsToShow: {id: string, item: string}[];
 
   $: {
     filteredLogs.set($logs.toArray().filter((log) => {
@@ -30,16 +31,23 @@
       }
 
       return (
-        !$filterLogs || ($filterLogs && log.item.match(selectRegex) !== null)
+        log.item.match(selectRegex) !== null
       );
     }));
 
     if ($reverseLogs) filteredLogs.update(n => n.reverse());
   }
+
+  $: if ($filterLogs) {
+    logsToShow = $filteredLogs;
+  } else {
+    logsToShow = $logs.toArray();
+  }
+
 </script>
 
 <div class="logs">
-  {#each $filteredLogs as logLine (logLine.id)}
+  {#each logsToShow as logLine (logLine.id)}
     <LogLine line={logLine} {selectRegex} />
   {/each}
   <div class="scroll-anchor" />

@@ -1,16 +1,19 @@
 <script lang="ts">
   import { currentSearchLineId } from "../stores/search";
+  import { smoothScroll } from "../utils";
 
   export let line: {id: string, item: string};
   export let selectRegex: RegExp;
   
   let searchResultClass: string;
   let lineToShow = line.item;
+  let lineElement: HTMLElement;
 
   $: if ($currentSearchLineId === line.id) {
-    searchResultClass = "selected-log-line selected-search-result"
+    searchResultClass = "selected-log-line selected-search-result";
+    smoothScroll(lineElement);
   } else {
-    searchResultClass = "selected-log-line"
+    searchResultClass = "selected-log-line";
   }
 
   $: if ("".match(selectRegex) === null) {
@@ -20,7 +23,7 @@
   }
 </script>
 
-<div class="line" data-current-search-line-id={$currentSearchLineId} data-line-id={line.id}>
+<div bind:this={lineElement} class="line" data-current-search-line-id={$currentSearchLineId} data-line-id={line.id}>
   <span>{@html lineToShow}</span>
 </div>
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { smoothScroll } from "../utils";
     import { filteredLogs } from "../stores/logs";
     import { currentSearchLineId } from "../stores/search";
 
@@ -41,10 +40,6 @@
                 });
             }
         }
-        
-        const elements = document.querySelectorAll(`line-id-${$currentSearchLineId}`);
-        if (elements.length === 0) return;
-        smoothScroll(elements[0]);
     }
 </script>
 <div class:has-value="{searchString.length > 0}">
