@@ -7,7 +7,7 @@
     $: if (searchString) currentSearchLineId.set("");
     
     function goToSearchResult(direction: "next" | "previous") {
-        if (searchString === "") {
+        if (searchString === "" || $filteredLogs.length === 0) {
             return
         }
 
@@ -44,8 +44,8 @@
 </script>
 <div class:has-value="{searchString.length > 0}">
     <input type="text" placeholder="Search" bind:value={searchString}/>
-    <button class="button-left" disabled={searchString.length === 0} on:click={() => goToSearchResult("previous")} title="Previous line with search result">&lt;</button>
-    <button class="button-right" disabled={searchString.length === 0} on:click={() => goToSearchResult("next")} title="Next line with search result">&gt;</button>
+    <button class="button-left" disabled={searchString.length === 0 || $filteredLogs.length === 0} on:click={() => goToSearchResult("previous")} title="Previous line with search result">&lt;</button>
+    <button class="button-right" disabled={searchString.length === 0 || $filteredLogs.length === 0} on:click={() => goToSearchResult("next")} title="Next line with search result">&gt;</button>
 </div>
 
 <style>
