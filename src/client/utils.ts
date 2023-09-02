@@ -5,8 +5,8 @@ function escapeRegExp(string) {
 function smoothScroll(element: Element) {
   element.scrollIntoView({
     behavior: "smooth",
-    block: "center"
-  })
+    block: "center",
+  });
 }
 
 export { escapeRegExp, smoothScroll };

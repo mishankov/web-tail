@@ -51,15 +51,17 @@ wss.on("connection", function connection(ws, req) {
   for (const source of getConfig()["sources"]) {
     if (sourceName === source.name) {
       try {
-         LogSource = getSourceClassFromConfig(
-        source,
-        initialLinesAmount,
-        function (line: string) {
-          ws.send(line);
-        }
-      );
-      } catch(err) {
-        console.log(`Unable to determine log source type. Error: ${err.toString()}`)
+        LogSource = getSourceClassFromConfig(
+          source,
+          initialLinesAmount,
+          function (line: string) {
+            ws.send(line);
+          }
+        );
+      } catch (err) {
+        console.log(
+          `Unable to determine log source type. Error: ${err.toString()}`
+        );
       }
     }
   }
