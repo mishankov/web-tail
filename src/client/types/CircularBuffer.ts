@@ -2,7 +2,7 @@ function getUniqueId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
-export type CircularBufferItem<ItemType> = { id: string; item: ItemType }
+export type CircularBufferItem<ItemType> = { id: string; item: ItemType };
 
 export class CircularBuffer<ItemType> {
   length: number;
