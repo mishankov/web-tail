@@ -27,7 +27,7 @@
   }
 </script>
 
-<div bind:this={lineElement} class="line" data-current-search-line-id={$currentSearchLineId} data-line-id={line.id}>
+<div bind:this={lineElement} class="line">
   <span>{@html lineToShow}</span>
 </div>
 
