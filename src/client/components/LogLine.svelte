@@ -1,19 +1,34 @@
 <script lang="ts">
-  export let line: string;
+  import { currentSearchLineId } from "../stores/search";
+  import { smoothScroll } from "../utils";
+
+  export let line: {id: string, item: string};
   export let selectRegex: RegExp;
+  
+  let searchResultClass: string;
+  let lineToShow = line.item;
+  let lineElement: HTMLElement;
+
+  function onSearchLineIdChange(newLineId: string) {
+    if (newLineId === line.id) {
+      searchResultClass = "selected-log-line selected-search-result";
+      smoothScroll(lineElement);
+    } else {
+      searchResultClass = "selected-log-line";
+    }
+  }
+
+  $: onSearchLineIdChange($currentSearchLineId);
+
+  $: if ("".match(selectRegex) === null) {
+    lineToShow = line.item.replaceAll(selectRegex, `<span class="${searchResultClass}" id="line-id-${line.id}">$&</span>`)
+  } else {
+    lineToShow = line.item;
+  }
 </script>
 
-<div class="line">
-  {#if "".match(selectRegex) === null}
-    <span
-      >{@html line.replaceAll(
-        selectRegex,
-        '<span class="selected-log-line">$&</span>'
-      )}</span
-    >
-  {:else}
-    <span>{line}</span>
-  {/if}
+<div bind:this={lineElement} class="line" data-current-search-line-id={$currentSearchLineId} data-line-id={line.id}>
+  <span>{@html lineToShow}</span>
 </div>
 
 <style>
@@ -29,8 +44,12 @@
   :global(.selected-log-line) {
     background-color: var(--color-accent-100);
     color: var(--color-dark-100);
-    padding: 2px;
+    padding: .5px 2px;
     border: 1px solid var(--color-dark-100);
     border-radius: 10px;
+  }
+
+  :global(.selected-search-result) {
+    background-color: var(--color-accent-secondary-100);
   }
 </style>
