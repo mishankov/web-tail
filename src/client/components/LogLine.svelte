@@ -9,12 +9,16 @@
   let lineToShow = line.item;
   let lineElement: HTMLElement;
 
-  $: if ($currentSearchLineId === line.id) {
-    searchResultClass = "selected-log-line selected-search-result";
-    smoothScroll(lineElement);
-  } else {
-    searchResultClass = "selected-log-line";
+  function onSearchLineIdChange(newLineId: string) {
+    if (newLineId === line.id) {
+      searchResultClass = "selected-log-line selected-search-result";
+      smoothScroll(lineElement);
+    } else {
+      searchResultClass = "selected-log-line";
+    }
   }
+
+  $: onSearchLineIdChange($currentSearchLineId);
 
   $: if ("".match(selectRegex) === null) {
     lineToShow = line.item.replaceAll(selectRegex, `<span class="${searchResultClass}" id="line-id-${line.id}">$&</span>`)
