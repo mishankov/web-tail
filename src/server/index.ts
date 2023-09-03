@@ -36,19 +36,24 @@ function getConfig() {
   const config: Config = toml.parse(raw);
 
   config.sources.forEach((value, sourceIndex) => {
-    if (value.serverName){
+    if (value.serverName) {
       const serverName = value.serverName;
-      config.servers.forEach((value) =>{
+      config.servers.forEach((value) => {
         if (value.name === serverName) {
-          config.sources[sourceIndex].host = config.sources[sourceIndex].host || value.host;
-          config.sources[sourceIndex].port = config.sources[sourceIndex].port || value.port;
-          config.sources[sourceIndex].username = config.sources[sourceIndex].username || value.username;
-          config.sources[sourceIndex].password = config.sources[sourceIndex].password || value.password;
-          config.sources[sourceIndex].privateKeyPath = config.sources[sourceIndex].privateKeyPath || value.privateKeyPath;
+          config.sources[sourceIndex].host =
+            config.sources[sourceIndex].host || value.host;
+          config.sources[sourceIndex].port =
+            config.sources[sourceIndex].port || value.port;
+          config.sources[sourceIndex].username =
+            config.sources[sourceIndex].username || value.username;
+          config.sources[sourceIndex].password =
+            config.sources[sourceIndex].password || value.password;
+          config.sources[sourceIndex].privateKeyPath =
+            config.sources[sourceIndex].privateKeyPath || value.privateKeyPath;
         }
-      })
+      });
     }
-  })
+  });
 
   return config;
 }

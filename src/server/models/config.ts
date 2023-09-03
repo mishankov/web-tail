@@ -6,7 +6,7 @@ interface Config {
 }
 
 interface ServerConfig {
-  name: string
+  name: string;
   host?: string;
   port?: number;
   username?: string;
