@@ -48,12 +48,8 @@
     logsToShow = $logs.toArray();
   }
 
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   $: if (source) {
-    sleep(100).then(() => { smoothScroll(scrollAnchor); });
+    setTimeout(() => { smoothScroll(scrollAnchor); }, 100);
   }
 
 </script>
