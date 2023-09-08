@@ -8,7 +8,6 @@
     regexFilter,
     caseSensitive,
   } from "../stores/settings";
-    import { onMount } from "svelte";
 
   export let searchString: string;
   export let source: string;
