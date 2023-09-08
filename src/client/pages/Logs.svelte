@@ -50,5 +50,5 @@
 <Header bind:source bind:searchString />
 
 <main>
-  <LogLines {searchString} />
+  <LogLines {searchString} {source} />
 </main>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import LogLine from "./LogLine.svelte";
-  import { escapeRegExp } from "../utils";
+  import { escapeRegExp, smoothScroll } from "../utils";
   import { logs, filteredLogs } from "../stores/logs";
   import {
     filterLogs,
@@ -8,11 +8,15 @@
     regexFilter,
     caseSensitive,
   } from "../stores/settings";
+    import { onMount } from "svelte";
 
   export let searchString: string;
+  export let source: string;
 
   let selectRegex: RegExp;
   let logsToShow: {id: string, item: string}[];
+
+  let scrollAnchor: HTMLElement;
 
   $: {
     filteredLogs.set($logs.toArray().filter((log) => {
@@ -44,13 +48,21 @@
     logsToShow = $logs.toArray();
   }
 
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  $: if (source) {
+    sleep(100).then(() => { smoothScroll(scrollAnchor); });
+  }
+
 </script>
 
 <div class="logs">
   {#each logsToShow as logLine (logLine.id)}
     <LogLine line={logLine} {selectRegex} />
   {/each}
-  <div class="scroll-anchor" />
+  <div class="scroll-anchor" bind:this={scrollAnchor} />
 </div>
 
 <style>
