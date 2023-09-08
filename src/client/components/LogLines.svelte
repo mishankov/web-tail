@@ -48,7 +48,7 @@
     logsToShow = $logs.toArray();
   }
 
-  $: if (source) {
+  $: if (source && !$reverseLogs) {
     setTimeout(() => { smoothScroll(scrollAnchor); }, 100);
   }
 
