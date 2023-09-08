@@ -44,7 +44,7 @@
   :global(.selected-log-line) {
     background-color: var(--color-accent-100);
     color: var(--color-dark-100);
-    padding: .5px 2px;
+    padding: 1px 2px;
     border: 1px solid var(--color-dark-100);
     border-radius: 10px;
   }
