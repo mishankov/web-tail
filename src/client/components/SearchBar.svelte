@@ -54,6 +54,7 @@
         display: flex;
         align-items: center;
         border-radius: 100vh;
+        transition: background-color .1s;
     }
 
     div:hover {
@@ -80,7 +81,6 @@
         padding: 0;
         padding-left: .5rem;
         padding-right: .5rem;
-        transition: background-color .1s;
     }
 
     input:focus {
