@@ -30,7 +30,6 @@ abstract class SSHSource extends Source {
     this.connection
       .on("ready", () => {
         this.connection.exec(`${this.tailCommand}`, (err, stream) => {
-          // if (err) throw err;
           stream
             .on("close", (code, signal) => {
               console.log(
@@ -45,6 +44,9 @@ abstract class SSHSource extends Source {
               this.newLineCallback(data.toString());
             });
         });
+      })
+      .on("error", (data) => {
+        this.newLineCallback(data.toString());
       })
       .on("keyboard-interactive", function (name, descr, lang, promts, finish) {
         return finish([this.config.password]);
