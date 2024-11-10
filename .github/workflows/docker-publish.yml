@@ -44,21 +44,21 @@ jobs:
       - run: npm run build --if-present
 
       - name: Upload Linux executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-tail-linux
           path: dist/web-tail-linux
           retention-days: 5
 
       - name: Upload macOS executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-tail-macos
           path: dist/web-tail-macos
           retention-days: 5
 
       - name: Upload windows executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-tail-win
           path: dist/web-tail-win.exe
