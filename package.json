@@ -28,8 +28,8 @@
     "@rollup/plugin-run": "^2.1.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^2.0.0",
-    "@types/ssh2": "^0.5.51",
-    "@types/ws": "^8.2.2",
+    "@types/ssh2": "^1.15.1",
+    "@types/ws": "^8.5.13",
     "pkg": "^5.5.2",
     "prettier": "2.5.1",
     "rollup": "^2.3.4",
@@ -44,12 +44,12 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "express-rate-limit": "^6.2.0",
-    "open": "^8.4.0",
-    "ssh2": "^1.5.0",
-    "tail": "^2.2.4",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
+    "open": "^10.1.0",
+    "ssh2": "^1.16.0",
+    "tail": "^2.2.6",
     "toml": "^3.0.0",
-    "ws": "^8.17.1"
+    "ws": "^8.18.0"
   }
 }
