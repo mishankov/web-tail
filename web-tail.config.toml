@@ -1,4 +1,0 @@
-[[sources]]
-name = "myfile"
-type = "local:file"
-path = "myfile.log"
