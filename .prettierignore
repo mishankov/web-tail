@@ -1,2 +1,5 @@
 dist
 web-tail-*/
+.github/*
+server/*
+pkg/*
