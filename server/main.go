@@ -11,10 +11,6 @@ import (
 
 var logger = logging.NewLogger("handlers")
 
-func healthcheck(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Time: %v", time.Now())
-}
-
 func handleSources(w http.ResponseWriter, req *http.Request) {
 	config, err := getConfig()
 	if err != nil {
@@ -44,10 +40,13 @@ func main() {
 	}
 	logger.Infof("Config loaded. Sources amount: %v. Severs amount: %v", len(config.Sources), len(config.Servers))
 
-	http.HandleFunc("/healthcheck", healthcheck)
+	http.HandleFunc("/healthcheck", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "Time: %v", time.Now()) })
 	http.HandleFunc("/sources", handleSources)
+	http.Handle("/", http.FileServer(http.Dir("public")))
 
 	logger.Infof("Starting server: http://localhost:%v", config.Port)
 
-	http.ListenAndServe(":"+strconv.Itoa(int(config.Port)), nil)
+	if err := http.ListenAndServe(":"+strconv.Itoa(int(config.Port)), nil); err != nil {
+		logger.Fatal("Can't start server:", err)
+	}
 }
