@@ -6,6 +6,8 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
+type port int32
+
 type SourceConfig struct {
 	Name string
 	Type string
@@ -13,7 +15,7 @@ type SourceConfig struct {
 
 	ServerName     string
 	Host           string
-	Port           int16
+	Port           port
 	Username       string
 	Password       string
 	PrivateKeyPath string
@@ -24,7 +26,7 @@ type SourceConfig struct {
 type ServerConfig struct {
 	Name           string
 	Host           string
-	Port           int16
+	Port           port
 	Username       string
 	Password       string
 	PrivateKeyPath string
@@ -34,7 +36,7 @@ type Config struct {
 	Sources            []SourceConfig
 	Servers            []ServerConfig
 	OpenBrowserOnStart bool
-	Port               int16
+	Port               port
 }
 
 func getConfig() (Config, error) {
@@ -61,6 +63,10 @@ func getConfig() (Config, error) {
 				}
 			}
 		}
+	}
+
+	if config.Port == 0 {
+		config.Port = 4444
 	}
 
 	return config, nil
