@@ -9,6 +9,7 @@ import (
 	"web-tail/pkg/logging"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/gorilla/websocket"
 )
 
 var logger = logging.NewLogger("handlers")
@@ -37,11 +38,39 @@ func handleSources(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
+
+func handleLogStream(w http.ResponseWriter, req *http.Request) {
+	// TODO: may neek keepalive messages
+
+	source := chi.URLParam(req, "source")
+	window, err := strconv.Atoi(chi.URLParam(req, "window"))
+	if err != nil {
+		logger.Error("Error converting window to int:", err)
+		w.WriteHeader(400)
+		return
+	}
+
+	logger.Infof("Logs requested for %v. Window: %v", source, window)
+
+	conn, err := upgrader.Upgrade(w, req, nil)
+	if err != nil {
+		logger.Error("Error upgrading to ws:", err)
+		return
+	}
+
+	conn.WriteMessage(1, []byte(source+" "+strconv.Itoa(window)))
+}
+
 func router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/healthcheck", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "Time: %v", time.Now()) })
 	r.Get("/sources", handleSources)
+	r.Get("/logstream/{source}/{window}", handleLogStream)
 
 	r.Handle("/*", http.FileServer(http.Dir("public")))
 
