@@ -77,7 +77,12 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	for line := range tailer.Tail() {
+	lineIterator, err := tailer.Tail()
+	if err != nil {
+		return
+	}
+
+	for line := range lineIterator {
 		if strings.TrimSpace(line) != "" {
 			conn.WriteMessage(1, []byte(line))
 		}

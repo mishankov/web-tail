@@ -8,7 +8,7 @@ import (
 )
 
 type Tailer interface {
-	Tail() iter.Seq[string]
+	Tail() (iter.Seq[string], error)
 }
 
 type BaseTailer struct {
@@ -29,16 +29,16 @@ type LocalFile struct {
 	filePath string
 }
 
-func (lf LocalFile) Tail() iter.Seq[string] {
+func (lf LocalFile) Tail() (iter.Seq[string], error) {
 	t, err := tail.TailFile(lf.filePath, tail.Config{Poll: true, Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: io.SeekEnd}})
 	if err != nil {
-		// TODO: got to be better than that
-		panic(err)
+		logger.Error("Error setuping tail file:", err)
+		return nil, err
 	}
 
 	return func(yield func(string) bool) {
 		for line := range t.Lines {
 			yield(line.Text)
 		}
-	}
+	}, nil
 }
