@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 	"web-tail/pkg/logging"
 
@@ -72,12 +73,12 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 
 	for _, source := range config.Sources {
 		if source.Name == sourceName {
-			tailer = NewTailerFromSource(source)
+			tailer = NewTailerFromSource(source, window)
 		}
 	}
 
 	for line := range tailer.Tail() {
-		if line != "" {
+		if strings.TrimSpace(line) != "" {
 			conn.WriteMessage(1, []byte(line))
 		}
 	}
