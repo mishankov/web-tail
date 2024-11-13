@@ -44,9 +44,9 @@ var upgrader = websocket.Upgrader{
 }
 
 func handleLogStream(w http.ResponseWriter, req *http.Request) {
-	// TODO: may neek keepalive messages
+	// TODO: may need keepalive messages
 
-	source := chi.URLParam(req, "source")
+	sourceName := chi.URLParam(req, "source")
 	window, err := strconv.Atoi(chi.URLParam(req, "window"))
 	if err != nil {
 		logger.Error("Error converting window to int:", err)
@@ -54,7 +54,7 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	logger.Infof("Logs requested for %v. Window: %v", source, window)
+	logger.Infof("Logs requested for %v. Window: %v", sourceName, window)
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
@@ -62,7 +62,25 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	conn.WriteMessage(1, []byte(source+" "+strconv.Itoa(window)))
+	var tailer Tailer
+
+	config, err := getConfig()
+	if err != nil {
+		logger.Error("Error getting config:", err)
+		return
+	}
+
+	for _, source := range config.Sources {
+		if source.Name == sourceName {
+			tailer = NewTailerFromSource(source)
+		}
+	}
+
+	for line := range tailer.Tail() {
+		if line != "" {
+			conn.WriteMessage(1, []byte(line))
+		}
+	}
 }
 
 func router() chi.Router {
