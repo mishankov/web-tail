@@ -60,3 +60,8 @@ Options from left to right:
 - `Aa` toggle. If enabled makes search case sensitive
 - `Reverse` toggle. If enabled latest lines shown on top
 - Max lines field. How much lines will be shown
+
+
+## Development
+
+Set environment variable `ASSETS=dist/public` before doing `go run ./server` to user preemtively compiled assets

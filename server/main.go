@@ -96,7 +96,7 @@ func router() chi.Router {
 	r.Get("/sources", handleSources)
 	r.Get("/logstream/{source}/{window}", handleLogStream)
 
-	r.Handle("/*", http.FileServer(http.Dir("public")))
+	r.Handle("/*", http.FileServer(http.Dir(assetsPath)))
 
 	return r
 }
