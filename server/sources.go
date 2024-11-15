@@ -122,7 +122,13 @@ func (r Remote) Tail() (iter.Seq[string], error) {
 	auth := []ssh.AuthMethod{
 		ssh.Password(r.password),
 		ssh.KeyboardInteractive(func(name, instruction string, questions []string, echos []bool) (answers []string, err error) {
-			return []string{r.password}, nil
+			answers = make([]string, len(questions))
+
+			for i := range questions {
+				answers[i] = r.password
+			}
+
+			return answers, nil
 		}),
 	}
 
