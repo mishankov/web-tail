@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"iter"
+	"os"
 	"os/exec"
 	"strconv"
 
@@ -16,7 +17,6 @@ type Tailer interface {
 	Tail() (iter.Seq[string], error)
 }
 
-// TODO: delete BaseTailer and make Tail take initial amount arg
 type BaseTailer struct {
 	initialAmount int
 }
@@ -27,10 +27,26 @@ func NewTailerFromSource(source SourceConfig, initialAmount int) Tailer {
 		return LocalFile{filePath: source.Path, BaseTailer: BaseTailer{initialAmount: initialAmount}}
 	case "local:docker":
 		return LocalDocker{containerId: source.ContainerId, BaseTailer: BaseTailer{initialAmount: initialAmount}}
+	case "ssh:file":
+		return Remote{
+			host:           source.Host,
+			port:           source.Port,
+			username:       source.Username,
+			password:       source.Password,
+			privateKeyPath: source.PrivateKeyPath,
+			command:        fmt.Sprintf("tail -f -n %v %v", strconv.Itoa(initialAmount), source.Path),
+			BaseTailer:     BaseTailer{initialAmount: initialAmount},
+		}
 	case "ssh:docker":
-		// TODO: create and use NewRemote
-		// TODO: command may be determined in Tail, because initial amount would be passed to it. But Tail does not know about type
-		return Remote{host: source.Host, port: source.Port, username: source.Username, password: source.Password, privateKeyPath: source.PrivateKeyPath, command: fmt.Sprintf("docker logs -f -n %v %v", strconv.Itoa(initialAmount), source.ContainerId), BaseTailer: BaseTailer{initialAmount: initialAmount}}
+		return Remote{
+			host:           source.Host,
+			port:           source.Port,
+			username:       source.Username,
+			password:       source.Password,
+			privateKeyPath: source.PrivateKeyPath,
+			command:        fmt.Sprintf("docker logs -f -n %v %v", strconv.Itoa(initialAmount), source.ContainerId),
+			BaseTailer:     BaseTailer{initialAmount: initialAmount},
+		}
 	default:
 		return nil
 	}
@@ -103,9 +119,27 @@ func (r Remote) hostAndPort() string {
 func (r Remote) Tail() (iter.Seq[string], error) {
 	logger.Debug("Start of Tail. Command:", r.command)
 
+	auth := []ssh.AuthMethod{ssh.Password(r.password)}
+
+	if r.privateKeyPath != "" {
+		key, err := os.ReadFile(r.privateKeyPath)
+		if err != nil {
+			logger.Error("Error reading private key file:", err)
+			return nil, err
+		}
+
+		signer, err := ssh.ParsePrivateKey(key)
+		if err != nil {
+			logger.Error("Error parsing private key:", err)
+			return nil, err
+		}
+
+		auth = []ssh.AuthMethod{ssh.PublicKeys(signer)}
+	}
+
 	sshConfig := &ssh.ClientConfig{
 		User: r.username,
-		Auth: []ssh.AuthMethod{ssh.Password(r.password)}, //TODO: implement auth with key
+		Auth: auth,
 	}
 	sshConfig.HostKeyCallback = ssh.InsecureIgnoreHostKey()
 

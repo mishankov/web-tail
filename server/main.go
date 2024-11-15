@@ -45,8 +45,6 @@ var upgrader = websocket.Upgrader{
 }
 
 func handleLogStream(w http.ResponseWriter, req *http.Request) {
-	// TODO: may need keepalive messages
-
 	sourceName := chi.URLParam(req, "source")
 	window, err := strconv.Atoi(chi.URLParam(req, "window"))
 	if err != nil {
