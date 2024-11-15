@@ -1,5 +1,6 @@
 # Web tail
 
+[![CI](https://github.com/mishankov/web-tail/actions/workflows/ci.yml/badge.svg)](https://github.com/mishankov/web-tail/actions/workflows/ci.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/mishankov/web-tail/badge)](https://www.codefactor.io/repository/github/mishankov/web-tail)
 
 Web application to view lines from file on local system or on remote server built with [Svelte](https://github.com/sveltejs/svelte)
@@ -9,6 +10,8 @@ Web application to view lines from file on local system or on remote server buil
 ## Installation
 
 Download and unpack `web-tail-x.x.x-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest)
+
+Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail)
 
 ## Configuration
 
