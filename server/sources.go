@@ -16,7 +16,7 @@ type Tailer interface {
 	Tail() (iter.Seq[string], error)
 }
 
-// TODO: refactor to Tail take initial amount arg
+// TODO: delete BaseTailer and make Tail take initial amount arg
 type BaseTailer struct {
 	initialAmount int
 }
@@ -28,6 +28,8 @@ func NewTailerFromSource(source SourceConfig, initialAmount int) Tailer {
 	case "local:docker":
 		return LocalDocker{containerId: source.ContainerId, BaseTailer: BaseTailer{initialAmount: initialAmount}}
 	case "ssh:docker":
+		// TODO: create and use NewRemote
+		// TODO: command may be determined in Tail, because initial amount would be passed to it. But Tail does not know about type
 		return Remote{host: source.Host, port: source.Port, username: source.Username, password: source.Password, privateKeyPath: source.PrivateKeyPath, command: fmt.Sprintf("docker logs -f -n %v %v", strconv.Itoa(initialAmount), source.ContainerId), BaseTailer: BaseTailer{initialAmount: initialAmount}}
 	default:
 		return nil
