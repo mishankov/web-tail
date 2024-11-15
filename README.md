@@ -9,7 +9,9 @@ Web application to view lines from file on local system or on remote server buil
 
 ## Installation
 
-Download and unpack `web-tail-x.x.x-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest)
+Download and unpack `web-tail-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest)
+
+Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail)
 
 Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail)
 
@@ -18,7 +20,6 @@ Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs
 In unpacked folder edit `web-tail.config.toml` file
 
 - `port` - Port that Web tail will run on. Defaults value is `4444`
-- `openBrowserOnStart` - automatically open tab with Web tail in your default browser on start. Default value is `false`
 - `servers` - reusable servers configuration
   - `name` - name of server to use in `sources` configs
   - `host` - host of remote server. Mandatory field for source types `ssh:*`
@@ -37,18 +38,6 @@ In unpacked folder edit `web-tail.config.toml` file
   - `username` - username for ssh connection to remote server. Mandatory for source types `ssh:*`
   - `password` - password to authenticate on remote server. Either this or `privateKeyPath` is mandatory for source types `ssh:*`
   - `privateKeyPath` - path to file with private key to authenticate on remote server. Either this or `password` is mandatory for source types `ssh:*`
-
-## Run
-
-Launch executable for your platform: macOS, Windows or Linux
-
-Or you can download source code and run commands
-
-```console
-npm install
-npm run build
-npm run start
-```
 
 ## Usage
 
