@@ -37,18 +37,6 @@ In unpacked folder edit `web-tail.config.toml` file
   - `password` - password to authenticate on remote server. Either this or `privateKeyPath` is mandatory for source types `ssh:*`
   - `privateKeyPath` - path to file with private key to authenticate on remote server. Either this or `password` is mandatory for source types `ssh:*`
 
-## Run
-
-Launch executable for your platform: macOS, Windows or Linux
-
-Or you can download source code and run commands
-
-```console
-npm install
-npm run build
-npm run start
-```
-
 ## Usage
 
 ![](images/image-2.png)
