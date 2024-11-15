@@ -6,5 +6,6 @@
 *.log
 web-tail-*/
 src/common/wasm/target/*
+web-tail.config.toml
 
 .DS_Store

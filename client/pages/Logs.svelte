@@ -18,7 +18,7 @@
       logs.update((buff) => {
         return new CircularBuffer<string>($logWindow);
       });
-      socket = new WebSocket(`ws://${location.host}/${source}/${$logWindow}`);
+      socket = new WebSocket(`ws://${location.host}/logstream/${source}/${$logWindow}`);
 
       socket.addEventListener("open", function (event) {
         console.log("Socket opened", source);

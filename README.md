@@ -1,5 +1,6 @@
 # Web tail
 
+[![CI](https://github.com/mishankov/web-tail/actions/workflows/ci.yml/badge.svg)](https://github.com/mishankov/web-tail/actions/workflows/ci.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/mishankov/web-tail/badge)](https://www.codefactor.io/repository/github/mishankov/web-tail)
 
 Web application to view lines from file on local system or on remote server built with [Svelte](https://github.com/sveltejs/svelte)
@@ -9,6 +10,8 @@ Web application to view lines from file on local system or on remote server buil
 ## Installation
 
 Download and unpack `web-tail-x.x.x-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest)
+
+Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail)
 
 ## Configuration
 
@@ -60,3 +63,8 @@ Options from left to right:
 - `Aa` toggle. If enabled makes search case sensitive
 - `Reverse` toggle. If enabled latest lines shown on top
 - Max lines field. How much lines will be shown
+
+
+## Development
+
+Set environment variable `ASSETS=dist/public` before doing `go run ./server` to user preemtively compiled assets

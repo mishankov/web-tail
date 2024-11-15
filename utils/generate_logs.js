@@ -8,7 +8,7 @@ async function run() {
 
     console.log(logLine);
 
-    fs.writeFile("myfile.log", logLine, { flag: "a+" }, (err) => {});
+    fs.writeFile("dist/myfile.log", logLine, { flag: "a+" }, (err) => {});
   }
 }
 

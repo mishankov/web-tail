@@ -1,9 +1,19 @@
-FROM node:16
+FROM golang:1.23 AS buildgo
+WORKDIR /app
+COPY . .
+RUN CGO_ENABLED=0 go build -o ./build/server ./server
 
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
-COPY dist ./dist
 
+FROM node:22 AS buildjs
+WORKDIR /app
+COPY . .
+RUN npm ci
+RUN npm run build:js
+
+
+FROM alpine:3
+WORKDIR /app
+COPY --from=buildgo /app/build/server /app/server
+COPY --from=buildjs /app/dist /app/dist
 EXPOSE 4444
-CMD [ "npm", "run", "start" ]
+ENTRYPOINT ["/app/server"]
