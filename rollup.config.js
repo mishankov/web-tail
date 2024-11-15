@@ -1,6 +1,5 @@
 import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
-import run from "@rollup/plugin-run";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
@@ -11,16 +10,7 @@ const production = !process.env.ROLLUP_WATCH;
 
 export default [
   {
-    input: ["src/server-js/index.ts"],
-    output: [{ file: "dist/index.js", format: "cjs" }],
-    plugins: [
-      resolve(),
-      typescript({ sourceMap: false, moduleResolution: "node" }),
-      !production && run(),
-    ],
-  },
-  {
-    input: "src/client/main.ts",
+    input: "client/main.ts",
     output: {
       sourcemap: true,
       format: "cjs",

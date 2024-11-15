@@ -2,13 +2,9 @@
   "name": "web-tail",
   "version": "0.6.0",
   "private": true,
-  "bin": "dist/index.js",
   "scripts": {
     "build:js": "rollup -c",
-    "build:exec": "pkg . --out-path dist",
     "build:docker": "docker build . -t mishankov/web-tail",
-    "build": "npm run build:js && npm run build:exec && npm run build:docker",
-    "start": "node dist/index.js",
     "start:docker": "docker run -p 4444:4444 -d mishankov/web-tail",
     "dev": "rollup -c -w",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -16,21 +12,12 @@
     "format": "prettier --write .",
     "gen": "node utils/generate_logs.js"
   },
-  "pkg": {
-    "assets": [
-      "dist/public/**/*"
-    ],
-    "output": "dist"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "@rollup/plugin-run": "^2.1.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^2.0.0",
-    "@types/ssh2": "^0.5.51",
     "@types/ws": "^8.2.2",
-    "pkg": "^5.5.2",
     "prettier": "2.5.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
@@ -42,14 +29,5 @@
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
     "typescript": "^4.0.0"
-  },
-  "dependencies": {
-    "express": "^4.19.2",
-    "express-rate-limit": "^6.2.0",
-    "open": "^8.4.0",
-    "ssh2": "^1.5.0",
-    "tail": "^2.2.4",
-    "toml": "^3.0.0",
-    "ws": "^8.17.1"
   }
 }
