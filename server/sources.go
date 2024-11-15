@@ -119,7 +119,18 @@ func (r Remote) hostAndPort() string {
 func (r Remote) Tail() (iter.Seq[string], error) {
 	logger.Debug("Start of Tail. Command:", r.command)
 
-	auth := []ssh.AuthMethod{ssh.Password(r.password)}
+	auth := []ssh.AuthMethod{
+		ssh.Password(r.password),
+		ssh.KeyboardInteractive(func(name, instruction string, questions []string, echos []bool) (answers []string, err error) {
+			answers = make([]string, len(questions))
+
+			for i := range questions {
+				answers[i] = r.password
+			}
+
+			return answers, nil
+		}),
+	}
 
 	if r.privateKeyPath != "" {
 		key, err := os.ReadFile(r.privateKeyPath)
