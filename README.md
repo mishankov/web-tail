@@ -56,4 +56,4 @@ Options from left to right:
 
 ## Development
 
-Set environment variable `ASSETS=dist/public` before doing `go run ./server` to user preemtively compiled assets
+Set environment variable `ASSETS=dist/public` before doing `go run ./server` to use preemtively compiled assets
