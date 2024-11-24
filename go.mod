@@ -8,6 +8,7 @@ require github.com/go-chi/chi/v5 v5.1.0
 
 require (
 	github.com/gorilla/websocket v1.5.3
+	github.com/icza/backscanner v0.0.0-20240328210400-b40c3a86dec5
 	github.com/mishankov/go-utlz v0.0.3
 	github.com/nxadm/tail v1.4.11
 	golang.org/x/crypto v0.29.0

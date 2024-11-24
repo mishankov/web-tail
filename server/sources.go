@@ -7,8 +7,10 @@ import (
 	"iter"
 	"os"
 	"os/exec"
+	"slices"
 	"strconv"
 
+	"github.com/icza/backscanner"
 	"github.com/nxadm/tail"
 	"golang.org/x/crypto/ssh"
 )
@@ -58,6 +60,39 @@ type LocalFile struct {
 }
 
 func (lf LocalFile) Tail() (iter.Seq[string], error) {
+	initialLines := []string{}
+
+	file, err := os.Open(lf.filePath)
+	if err != nil {
+		logger.Error("Error opening local file:", err)
+		return nil, err
+	}
+
+	fileStatus, err := file.Stat()
+	if err != nil {
+		logger.Error("Error getting stat of local file:", err)
+		return nil, err
+	}
+	defer file.Close()
+
+	scanner := backscanner.New(file, int(fileStatus.Size()))
+	for {
+		line, _, err := scanner.LineBytes()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+		}
+
+		initialLines = append(initialLines, string(line))
+
+		if len(initialLines) >= lf.initialAmount {
+			break
+		}
+	}
+
+	slices.Reverse(initialLines)
+
 	t, err := tail.TailFile(lf.filePath, tail.Config{Poll: true, Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: io.SeekEnd}})
 	if err != nil {
 		logger.Error("Error setuping tail file:", err)
@@ -65,6 +100,9 @@ func (lf LocalFile) Tail() (iter.Seq[string], error) {
 	}
 
 	return func(yield func(string) bool) {
+		for _, line := range initialLines {
+			yield(line)
+		}
 		for line := range t.Lines {
 			yield(line.Text)
 		}
