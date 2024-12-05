@@ -104,7 +104,7 @@ func main() {
 	if err != nil {
 		logger.Fatal("Error getting config:", err)
 	}
-	logger.Infof("Config loaded. Sources amount: %v. Severs amount: %v", len(config.Sources), len(config.Servers))
+	logger.Infof("Config loaded. Sources amount: %v. Servers amount: %v", len(config.Sources), len(config.Servers))
 
 	r := router()
 
