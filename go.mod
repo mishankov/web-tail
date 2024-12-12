@@ -11,11 +11,11 @@ require (
 	github.com/icza/backscanner v0.0.0-20240328210400-b40c3a86dec5
 	github.com/mishankov/go-utlz v0.0.3
 	github.com/nxadm/tail v1.4.11
-	golang.org/x/crypto v0.29.0
+	golang.org/x/crypto v0.31.0
 )
 
 require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
-	golang.org/x/sys v0.27.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )
