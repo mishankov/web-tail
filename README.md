@@ -13,8 +13,6 @@ Download and unpack `web-tail-[platform].zip` from [latest release](https://gith
 
 Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail)
 
-Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail)
-
 ## Configuration
 
 In unpacked folder edit `web-tail.config.toml` file
