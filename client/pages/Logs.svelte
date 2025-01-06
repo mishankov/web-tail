@@ -9,6 +9,10 @@
   let source = "";
   let socket: WebSocket;
 
+  function getWebSocketProtocol(): string {
+    return location.protocol === 'https:' ? 'wss:' : 'ws:';
+  }
+
   $: {
     if (socket !== undefined) {
       socket.close();
@@ -18,7 +22,7 @@
       logs.update((buff) => {
         return new CircularBuffer<string>($logWindow);
       });
-      socket = new WebSocket(`ws://${location.host}/logstream/${source}/${$logWindow}`);
+      socket = new WebSocket(`${wsProtocol}://${location.host}/logstream/${source}/${$logWindow}`);
 
       socket.addEventListener("open", function (event) {
         console.log("Socket opened", source);
