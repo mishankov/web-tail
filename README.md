@@ -18,6 +18,7 @@ Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs
 In unpacked folder edit `web-tail.config.toml` file
 
 - `port` - Port that Web tail will run on. Defaults value is `4444`
+- `allowedOrigins` - List of allowed origins for WebSocket connections. Defaults value is ["http://localhost:4444", "http://127.0.0.1:4444"]
 - `servers` - reusable servers configuration
   - `name` - name of server to use in `sources` configs
   - `host` - host of remote server. Mandatory field for source types `ssh:*`

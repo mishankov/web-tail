@@ -37,6 +37,7 @@ type Config struct {
 	Servers            []ServerConfig
 	OpenBrowserOnStart bool
 	Port               port
+	AllowedOrigins     []string
 }
 
 func getConfig() (Config, error) {

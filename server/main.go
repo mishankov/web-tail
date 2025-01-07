@@ -39,9 +39,14 @@ func handleSources(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+var allowedOrigins = make(map[string]bool)
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		origin := r.Header.Get("Origin")
+		return allowedOrigins[origin]
+	},
 }
 
 func handleLogStream(w http.ResponseWriter, req *http.Request) {
@@ -99,12 +104,24 @@ func router() chi.Router {
 	return r
 }
 
+func getDefaultOrigins(port port) []string {
+	return []string{
+		fmt.Sprintf("http://localhost:%v", port),
+		fmt.Sprintf("http://127.0.0.1:%v", port),
+	}
+}
+
 func main() {
 	config, err := getConfig()
 	if err != nil {
 		logger.Fatal("Error getting config:", err)
 	}
 	logger.Infof("Config loaded. Sources amount: %v. Servers amount: %v", len(config.Sources), len(config.Servers))
+
+	// Add all configured origins and default local origins to the map
+	for _, origin := range append(getDefaultOrigins(config.Port), config.AllowedOrigins...) {
+		allowedOrigins[origin] = true
+	}
 
 	r := router()
 
