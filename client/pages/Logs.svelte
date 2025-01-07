@@ -22,7 +22,8 @@
       logs.update((buff) => {
         return new CircularBuffer<string>($logWindow);
       });
-      socket = new WebSocket(`${wsProtocol}://${location.host}/logstream/${source}/${$logWindow}`);
+      const wsProtocol = getWebSocketProtocol();
+      socket = new WebSocket(`${wsProtocol}//${location.host}/logstream/${source}/${$logWindow}`);
 
       socket.addEventListener("open", function (event) {
         console.log("Socket opened", source);
