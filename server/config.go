@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"slices"
 
 	"github.com/BurntSushi/toml"
 )
@@ -32,12 +33,18 @@ type ServerConfig struct {
 	PrivateKeyPath string
 }
 
+type allowedOrigins []string
+
+func (ao allowedOrigins) Match(origin string) bool {
+	return slices.Contains(ao, origin) || slices.Contains(ao, "*")
+}
+
 type Config struct {
 	Sources            []SourceConfig
 	Servers            []ServerConfig
 	OpenBrowserOnStart bool
 	Port               port
-	AllowedOrigins     []string
+	AllowedOrigins     allowedOrigins
 }
 
 func getConfig() (Config, error) {
@@ -68,6 +75,10 @@ func getConfig() (Config, error) {
 
 	if config.Port == 0 {
 		config.Port = 4444
+	}
+
+	if len(config.AllowedOrigins) == 0 {
+		config.AllowedOrigins = allowedOrigins{"*"}
 	}
 
 	return config, nil
