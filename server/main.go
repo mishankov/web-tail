@@ -55,6 +55,17 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 
 	logger.Infof("Logs requested for %v. Window: %v", sourceName, window)
 
+	config, err := getConfig()
+	if err != nil {
+		logger.Error("Error getting config:", err)
+		return
+	}
+
+	upgrader.CheckOrigin = func(r *http.Request) bool {
+		origin := r.Header.Get("Origin")
+		return config.AllowedOrigins.Match(origin)
+	}
+
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		logger.Error("Error upgrading to ws:", err)
@@ -62,12 +73,6 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 	}
 
 	var tailer Tailer
-
-	config, err := getConfig()
-	if err != nil {
-		logger.Error("Error getting config:", err)
-		return
-	}
 
 	for _, source := range config.Sources {
 		if source.Name == sourceName {
@@ -104,7 +109,7 @@ func main() {
 	if err != nil {
 		logger.Fatal("Error getting config:", err)
 	}
-	logger.Infof("Config loaded. Sources amount: %v. Servers amount: %v", len(config.Sources), len(config.Servers))
+	logger.Infof("Config loaded. Sources amount: %v. Servers amount: %v. Allowed origins: %v", len(config.Sources), len(config.Servers), config.AllowedOrigins)
 
 	r := router()
 
