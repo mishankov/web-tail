@@ -13,6 +13,7 @@ RUN npm run build:js
 
 FROM alpine:3
 WORKDIR /app
+ENV ASSETS=/app/dist/public
 COPY --from=buildgo /app/build/server /app/server
 COPY --from=buildjs /app/dist /app/dist
 EXPOSE 4444
