@@ -1,4 +1,4 @@
-FROM golang:1.23 AS buildgo
+FROM golang:1.24 AS buildgo
 WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=0 go build -o ./build/server ./server
