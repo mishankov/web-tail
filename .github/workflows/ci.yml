@@ -25,7 +25,7 @@ jobs:
       - run: npm run build:js
 
       - name: Upload Linux executable
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: public
           path: dist
@@ -44,7 +44,7 @@ jobs:
       - run: go build -o ./build/ -v ./server
 
       - name: Upload Linux executable
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: web-tail-${{ matrix.os }}
           path: build
