@@ -4,12 +4,13 @@
     label: string;
     title?: string;
     value: boolean;
+    onToggle: (next: boolean) => void;
   }
 
-  let { label, title = "", value = $bindable(false) }: Props = $props();
+  let { label, title = "", value, onToggle }: Props = $props();
 
   function toggle() {
-    value = !value;
+    onToggle(!value);
   }
 </script>
 

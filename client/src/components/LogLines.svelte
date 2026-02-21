@@ -1,7 +1,7 @@
 
 <script lang="ts">
-  import { filteredLogs, logs } from "../stores/logs";
-  import { caseSensitive, filterLogs, regexFilter, reverseLogs } from "../stores/settings";
+  import { logsState, setFilteredLogs } from "../state/logs.svelte";
+  import { settingsState } from "../state/settings.svelte";
   import type { CircularBufferItem } from "../types/CircularBuffer";
   import { escapeRegExp, smoothScroll } from "../utils";
   import LogLine from "./LogLine.svelte";
@@ -17,15 +17,15 @@
   let scrollAnchor = $state<HTMLElement | null>(null);
 
   const logsToShow = $derived(
-    $filterLogs ? $filteredLogs : $logs.toArray()
+    settingsState.filterLogs ? logsState.filtered : logsState.all
   );
 
   $effect(() => {
-    const sourceLogs = $logs.toArray();
-    const regexFlags = $caseSensitive ? "g" : "gi";
+    const sourceLogs = logsState.all;
+    const regexFlags = settingsState.caseSensitive ? "g" : "gi";
 
     let nextRegex: RegExp;
-    if ($regexFilter) {
+    if (settingsState.regexFilter) {
       try {
         nextRegex = new RegExp(searchString, regexFlags);
       } catch {
@@ -41,15 +41,15 @@
       (log) => log.item.match(nextRegex) !== null
     );
 
-    if ($reverseLogs) {
+    if (settingsState.reverseLogs) {
       nextFiltered = [...nextFiltered].reverse();
     }
 
-    filteredLogs.set(nextFiltered);
+    setFilteredLogs(nextFiltered);
   });
 
   $effect(() => {
-    if (!source || $reverseLogs || !scrollAnchor) {
+    if (!source || settingsState.reverseLogs || !scrollAnchor) {
       return;
     }
 

@@ -1,9 +1,8 @@
 <script lang="ts">
     import Header from "../components/Header.svelte";
     import LogLines from "../components/LogLines.svelte";
-    import { logs } from "../stores/logs";
-    import { logWindow } from "../stores/settings";
-    import { CircularBuffer } from "../types/CircularBuffer";
+    import { appendLogChunk, resetLogs, resizeLogWindow } from "../state/logs.svelte";
+    import { settingsState } from "../state/settings.svelte";
 
     let searchString = $state("");
     let source = $state("");
@@ -14,9 +13,9 @@
 
     $effect(() => {
         const currentSource = source;
-        const windowSize = $logWindow;
+        const windowSize = settingsState.logWindow;
 
-        logs.set(new CircularBuffer<string>(windowSize));
+        resetLogs(windowSize);
 
         if (currentSource === "") {
             return;
@@ -33,14 +32,7 @@
 
         socket.addEventListener("message", (event) => {
             if (typeof event.data === "string" && event.data.length > 0) {
-                logs.update((buffer) => {
-                    for (const line of event.data.split("\n")) {
-                        if (line.length > 0) {
-                            buffer.push(line);
-                        }
-                    }
-                    return buffer;
-                });
+                appendLogChunk(event.data);
             }
         });
 
@@ -50,11 +42,7 @@
     });
 
     $effect(() => {
-        const windowSize = $logWindow;
-        logs.update((buffer) => {
-            buffer.setLength(windowSize);
-            return buffer;
-        });
+        resizeLogWindow(settingsState.logWindow);
     });
 </script>
 

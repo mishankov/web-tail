@@ -1,6 +1,6 @@
 
 <script lang="ts">
-  import { currentSearchLineId } from "../stores/search";
+  import { searchState } from "../state/search.svelte";
   import { smoothScroll } from "../utils";
 
   interface Props {
@@ -15,7 +15,7 @@
   let lineElement = $state<HTMLElement | null>(null);
 
   $effect(() => {
-    if ($currentSearchLineId === line.id) {
+    if (searchState.currentLineId === line.id) {
       searchResultClass = "selected-log-line selected-search-result";
       if (lineElement) {
         smoothScroll(lineElement);

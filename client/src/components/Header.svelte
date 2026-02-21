@@ -1,13 +1,7 @@
 
 <script lang="ts">
-  import fetchSources from "../stores/sources";
-  import {
-    caseSensitive,
-    filterLogs,
-    logWindow,
-    regexFilter,
-    reverseLogs,
-  } from "../stores/settings";
+  import { setSetting, settingsState } from "../state/settings.svelte";
+  import { loadSources, sourcesState } from "../state/sources.svelte";
   import SearchBar from "./SearchBar.svelte";
   import Toggle from "./Toggle.svelte";
 
@@ -16,37 +10,57 @@
     searchString: string;
   }
 
-  const { sources } = fetchSources();
-
   let {
     source = $bindable(""),
     searchString = $bindable(""),
   }: Props = $props();
+
+  void loadSources();
+
+  function updateLogWindow(event: Event): void {
+    const input = event.currentTarget as HTMLInputElement;
+    setSetting("logWindow", Number(input.value));
+  }
 </script>
 
 <header>
   <nav class="top-panel">
     <select class="source-select" bind:value={source}>
       <option value="">Select source</option>
-      {#each $sources as sourceName (sourceName)}
+      {#each sourcesState.items as sourceName (sourceName)}
         <option value={sourceName}>{sourceName}</option>
       {/each}
     </select>
     <SearchBar bind:searchString />
-    <Toggle label="Filter" bind:value={$filterLogs} />
-    <Toggle title="Regex" label=".*" bind:value={$regexFilter} />
+    <Toggle
+      label="Filter"
+      value={settingsState.filterLogs}
+      onToggle={(next) => setSetting("filterLogs", next)}
+    />
+    <Toggle
+      title="Regex"
+      label=".*"
+      value={settingsState.regexFilter}
+      onToggle={(next) => setSetting("regexFilter", next)}
+    />
     <Toggle
       title="Case sensitive"
       label="Aa"
-      bind:value={$caseSensitive}
+      value={settingsState.caseSensitive}
+      onToggle={(next) => setSetting("caseSensitive", next)}
     />
-    <Toggle label="Reverse" bind:value={$reverseLogs} />
+    <Toggle
+      label="Reverse"
+      value={settingsState.reverseLogs}
+      onToggle={(next) => setSetting("reverseLogs", next)}
+    />
     <input
       title="Max Lines"
       type="number"
       placeholder="Max lines"
       class="top-panel-input max-lines-input"
-      bind:value={$logWindow}
+      value={settingsState.logWindow}
+      oninput={updateLogWindow}
     />
   </nav>
 </header>

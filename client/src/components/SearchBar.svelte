@@ -1,7 +1,7 @@
 
 <script lang="ts">
-  import { filteredLogs } from "../stores/logs";
-  import { currentSearchLineId } from "../stores/search";
+  import { logsState } from "../state/logs.svelte";
+  import { searchState } from "../state/search.svelte";
 
   interface Props {
     searchString: string;
@@ -11,22 +11,22 @@
 
   $effect(() => {
     if (searchString) {
-      currentSearchLineId.set("");
+      searchState.currentLineId = "";
     }
   });
 
   function goToSearchResult(direction: "next" | "previous") {
-    if (searchString === "" || $filteredLogs.length === 0) {
+    if (searchString === "" || logsState.filtered.length === 0) {
       return;
     }
 
     if (direction === "next") {
-      if ($currentSearchLineId === "") {
-        currentSearchLineId.set($filteredLogs[0].id);
+      if (searchState.currentLineId === "") {
+        searchState.currentLineId = logsState.filtered[0].id;
       } else {
-        $filteredLogs.find((value, index, array) => {
-          if (value.id === $currentSearchLineId) {
-            currentSearchLineId.set(array[(index + 1) % array.length].id);
+        logsState.filtered.find((value, index, array) => {
+          if (value.id === searchState.currentLineId) {
+            searchState.currentLineId = array[(index + 1) % array.length].id;
             return true;
           }
           return false;
@@ -35,16 +35,16 @@
     }
 
     if (direction === "previous") {
-      if ($currentSearchLineId === "") {
-        currentSearchLineId.set($filteredLogs[$filteredLogs.length - 1].id);
+      if (searchState.currentLineId === "") {
+        searchState.currentLineId = logsState.filtered[logsState.filtered.length - 1].id;
       } else {
-        $filteredLogs.find((value, index, array) => {
-          if (value.id === $currentSearchLineId) {
+        logsState.filtered.find((value, index, array) => {
+          if (value.id === searchState.currentLineId) {
             let previousId = index - 1;
             if (previousId < 0) {
               previousId = array.length - 1;
             }
-            currentSearchLineId.set(array[previousId].id);
+            searchState.currentLineId = array[previousId].id;
             return true;
           }
           return false;
@@ -58,12 +58,12 @@
   <input type="text" placeholder="Search" bind:value={searchString} />
   <button
     class="button-left"
-    disabled={searchString.length === 0 || $filteredLogs.length === 0}
+    disabled={searchString.length === 0 || logsState.filtered.length === 0}
     onclick={() => goToSearchResult("previous")}
     title="Previous line with search result">&lt;</button>
   <button
     class="button-right"
-    disabled={searchString.length === 0 || $filteredLogs.length === 0}
+    disabled={searchString.length === 0 || logsState.filtered.length === 0}
     onclick={() => goToSearchResult("next")}
     title="Next line with search result">&gt;</button>
 </div>
