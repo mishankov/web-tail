@@ -29,6 +29,8 @@ func NewTailerFromSource(source SourceConfig, initialAmount int) Tailer {
 		return LocalFile{filePath: source.Path, BaseTailer: BaseTailer{initialAmount: initialAmount}}
 	case "local:docker":
 		return LocalDocker{containerId: source.ContainerId, BaseTailer: BaseTailer{initialAmount: initialAmount}}
+	case "local:openclaw":
+		return LocalOpenClaw{BaseTailer: BaseTailer{initialAmount: initialAmount}}
 	case "ssh:file":
 		return Remote{
 			host:           source.Host,
@@ -47,6 +49,16 @@ func NewTailerFromSource(source SourceConfig, initialAmount int) Tailer {
 			password:       source.Password,
 			privateKeyPath: source.PrivateKeyPath,
 			command:        fmt.Sprintf("docker logs -f -n %v %v", strconv.Itoa(initialAmount), source.ContainerId),
+			BaseTailer:     BaseTailer{initialAmount: initialAmount},
+		}
+	case "ssh:openclaw":
+		return Remote{
+			host:           source.Host,
+			port:           source.Port,
+			username:       source.Username,
+			password:       source.Password,
+			privateKeyPath: source.PrivateKeyPath,
+			command:        fmt.Sprintf("/home/user/.npm-global/bin/openclaw logs --follow --limit %v", strconv.Itoa(initialAmount)),
 			BaseTailer:     BaseTailer{initialAmount: initialAmount},
 		}
 	default:
@@ -137,6 +149,36 @@ func (ld LocalDocker) Tail() (iter.Seq[string], error) {
 		}
 
 		logger.Infof("Container %v stopped", ld.containerId)
+	}, nil
+}
+
+type LocalOpenClaw struct {
+	BaseTailer
+}
+
+func (loc LocalOpenClaw) Tail() (iter.Seq[string], error) {
+	cmd := exec.Command("openclaw", "logs", "--follow", "--limit", strconv.Itoa(loc.initialAmount))
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		logger.Error("Error conneting to stdout:", err)
+		return nil, err
+	}
+
+	return func(yield func(string) bool) {
+		logger.Debug("Begin of yield")
+
+		scanner := bufio.NewScanner(stdout)
+		logger.Debug("Scanner created")
+
+		if err := cmd.Start(); err != nil {
+			logger.Error(err)
+		}
+
+		for scanner.Scan() {
+			yield(scanner.Text())
+		}
+
+		logger.Info("OpenClaw logs stream stopped")
 	}, nil
 }
 

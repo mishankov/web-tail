@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -14,6 +15,9 @@ import (
 )
 
 var logger = logging.NewLogger("handlers")
+
+var errSourceNotFound = errors.New("source not found")
+var errUnsupportedSourceType = errors.New("unsupported source type")
 
 func handleSources(w http.ResponseWriter, req *http.Request) {
 	config, err := getConfig()
@@ -44,6 +48,21 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
+func getTailerForSource(config Config, sourceName string, window int) (Tailer, error) {
+	for _, source := range config.Sources {
+		if source.Name == sourceName {
+			tailer := NewTailerFromSource(source, window)
+			if tailer == nil {
+				return nil, fmt.Errorf("%w: %v", errUnsupportedSourceType, source.Type)
+			}
+
+			return tailer, nil
+		}
+	}
+
+	return nil, fmt.Errorf("%w: %v", errSourceNotFound, sourceName)
+}
+
 func handleLogStream(w http.ResponseWriter, req *http.Request) {
 	sourceName := chi.URLParam(req, "source")
 	window, err := strconv.Atoi(chi.URLParam(req, "window"))
@@ -61,6 +80,17 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	tailer, err := getTailerForSource(config, sourceName, window)
+	if err != nil {
+		logger.Error("Error creating tailer:", err)
+		status := http.StatusBadRequest
+		if errors.Is(err, errSourceNotFound) {
+			status = http.StatusNotFound
+		}
+		http.Error(w, err.Error(), status)
+		return
+	}
+
 	upgrader.CheckOrigin = func(r *http.Request) bool {
 		origin := r.Header.Get("Origin")
 		return config.AllowedOrigins.Match(origin)
@@ -70,14 +100,6 @@ func handleLogStream(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		logger.Error("Error upgrading to ws:", err)
 		return
-	}
-
-	var tailer Tailer
-
-	for _, source := range config.Sources {
-		if source.Name == sourceName {
-			tailer = NewTailerFromSource(source, window)
-		}
 	}
 
 	lineIterator, err := tailer.Tail()

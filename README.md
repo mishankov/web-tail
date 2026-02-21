@@ -28,7 +28,7 @@ In unpacked folder edit `web-tail.config.toml` file
   - `privateKeyPath` - path to file with private key to authenticate on remote server. Either this or `password` is mandatory for source types `ssh:*`
 - `sources` - list of sources to tail lines from
   - `name` - name of source. Mandatory field
-  - `type` - type of source. Possible values: `local:file`, `local:docker`, `ssh:file`, `ssh:docker`. Mandatory field
+  - `type` - type of source. Possible values: `local:file`, `local:docker`, `local:openclaw`, `ssh:file`, `ssh:docker`, `ssh:openclaw`. Mandatory field
   - `path` - path to file. Mandatory field for source types `*:file`
   - `serverName` - name of a server from `servers` list
   - `containerId` - Docker container ID. Mandatory field for source types `*:docker`
