@@ -12,7 +12,7 @@
 
         --color-light-100: hsl(195, 10%, 84%);
         --color-light-80: hsl(195, 10%, 74%);
-        
+
         --color-accent-100: hsl(55, 100%, 68%);
         --color-accent-80: hsl(55, 80%, 68%);
 

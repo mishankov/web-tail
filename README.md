@@ -3,22 +3,22 @@
 [![CI](https://github.com/mishankov/web-tail/actions/workflows/ci.yml/badge.svg)](https://github.com/mishankov/web-tail/actions/workflows/ci.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/mishankov/web-tail/badge)](https://www.codefactor.io/repository/github/mishankov/web-tail)
 
-Web application to view lines from file on local system or on remote server built with [Svelte](https://github.com/sveltejs/svelte)
+Web application to view lines from file on local system or on remote server built with [Svelte](https://github.com/sveltejs/svelte).
 
 ![](images/image-1.png)
 
 ## Installation
 
-Download and unpack `web-tail-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest)
+Download and unpack `web-tail-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest).
 
-Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail)
+Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail).
 
 ## Configuration
 
-In unpacked folder edit `web-tail.config.toml` file
+In unpacked folder edit `web-tail.config.toml` file.
 
-- `port` - port that Web tail will run on. Defaults value is `4444`
-- `allowedOrigins` - list of allowed origins for WebSocket connections. Defaults value is ["*"] which allows all origins
+- `port` - port that Web tail will run on. Default value is `4444`
+- `allowedOrigins` - list of allowed origins for WebSocket connections. Default value is `["*"]`
 - `servers` - reusable servers configuration
   - `name` - name of server to use in `sources` configs
   - `host` - host of remote server. Mandatory field for source types `ssh:*`
@@ -52,7 +52,20 @@ Options from left to right:
 - `Reverse` toggle. If enabled latest lines shown on top
 - Max lines field. How much lines will be shown
 
-
 ## Development
 
-Set environment variable `ASSETS=dist/public` before doing `go run ./server` to use preemtively compiled assets
+Frontend app lives in `/client` and uses Bun + Vite.
+
+1. Install frontend dependencies:
+   - `cd client && bun install`
+2. Build frontend assets for Go embed:
+   - `cd client && bun run build`
+3. Run backend:
+   - `go run ./server`
+
+For frontend HMR in development, run both services:
+
+- `go run ./server`
+- `cd client && bun run dev`
+
+Vite dev server proxies `/sources` and `/logstream` to `http://localhost:4444`.

@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	webclient "web-tail/client"
 	"web-tail/pkg/logging"
 
 	"github.com/go-chi/chi/v5"
@@ -121,7 +122,12 @@ func router() chi.Router {
 	r.Get("/sources", handleSources)
 	r.Get("/logstream/{source}/{window}", handleLogStream)
 
-	r.Handle("/*", http.FileServer(http.Dir(assetsPath)))
+	assetsFS, err := webclient.EmbeddedAssets()
+	if err != nil {
+		logger.Fatal("Error loading embedded frontend assets:", err)
+	}
+
+	r.Handle("/*", http.FileServer(http.FS(assetsFS)))
 
 	return r
 }

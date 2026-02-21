@@ -1,30 +1,41 @@
+
 <script lang="ts">
   import { currentSearchLineId } from "../stores/search";
   import { smoothScroll } from "../utils";
 
-  export let line: {id: string, item: string};
-  export let selectRegex: RegExp;
-  
-  let searchResultClass: string;
-  let lineToShow = line.item;
-  let lineElement: HTMLElement;
+  interface Props {
+    line: { id: string; item: string };
+    selectRegex: RegExp;
+  }
 
-  function onSearchLineIdChange(newLineId: string) {
-    if (newLineId === line.id) {
+  let { line, selectRegex }: Props = $props();
+
+  let searchResultClass = $state("selected-log-line");
+  let lineToShow = $state("");
+  let lineElement = $state<HTMLElement | null>(null);
+
+  $effect(() => {
+    if ($currentSearchLineId === line.id) {
       searchResultClass = "selected-log-line selected-search-result";
-      smoothScroll(lineElement);
+      if (lineElement) {
+        smoothScroll(lineElement);
+      }
     } else {
       searchResultClass = "selected-log-line";
     }
-  }
+  });
 
-  $: onSearchLineIdChange($currentSearchLineId);
+  $effect(() => {
+    if ("".match(selectRegex) === null) {
+      lineToShow = line.item.replaceAll(
+        selectRegex,
+        `<span class="${searchResultClass}" id="line-id-${line.id}">$&</span>`
+      );
+      return;
+    }
 
-  $: if ("".match(selectRegex) === null) {
-    lineToShow = line.item.replaceAll(selectRegex, `<span class="${searchResultClass}" id="line-id-${line.id}">$&</span>`)
-  } else {
     lineToShow = line.item;
-  }
+  });
 </script>
 
 <div bind:this={lineElement} class="line">

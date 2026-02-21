@@ -16,17 +16,40 @@ const defaultSettings: Settings = {
   logWindow: 100,
 };
 
+function normalizeSettings(value: unknown): Settings {
+  if (typeof value !== "object" || value === null) {
+    return defaultSettings;
+  }
+
+  const partial = value as Partial<Settings>;
+  return {
+    filterLogs: typeof partial.filterLogs === "boolean" ? partial.filterLogs : defaultSettings.filterLogs,
+    regexFilter: typeof partial.regexFilter === "boolean" ? partial.regexFilter : defaultSettings.regexFilter,
+    caseSensitive: typeof partial.caseSensitive === "boolean" ? partial.caseSensitive : defaultSettings.caseSensitive,
+    reverseLogs: typeof partial.reverseLogs === "boolean" ? partial.reverseLogs : defaultSettings.reverseLogs,
+    logWindow: typeof partial.logWindow === "number" ? partial.logWindow : defaultSettings.logWindow,
+  };
+}
+
 function getSettingsFromStorage(): Settings {
-  const settings = JSON.parse(localStorage.getItem("WebTailSettings"));
-  if (settings === null) {
+  const rawSettings = localStorage.getItem("WebTailSettings");
+  if (!rawSettings) {
     localStorage.setItem("WebTailSettings", JSON.stringify(defaultSettings));
-    return getSettingsFromStorage();
-  } else {
-    return settings;
+    return defaultSettings;
+  }
+
+  try {
+    return normalizeSettings(JSON.parse(rawSettings));
+  } catch {
+    localStorage.setItem("WebTailSettings", JSON.stringify(defaultSettings));
+    return defaultSettings;
   }
 }
 
-function saveSettingsToStorage(name: string, value: number | boolean) {
+function saveSettingsToStorage<K extends keyof Settings>(
+  name: K,
+  value: Settings[K]
+) {
   const settings = getSettingsFromStorage();
   settings[name] = value;
   localStorage.setItem("WebTailSettings", JSON.stringify(settings));
