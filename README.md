@@ -15,7 +15,7 @@ Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs
 
 ## Configuration
 
-Create `web-tail.config.toml` file.
+Configuaration is done with `web-tail.config.toml` file. Following keys are available:
 
 - `port` - port that Web tail will run on. Default value is `4444`
 - `allowedOrigins` - list of allowed origins for WebSocket connections. Default value is `["*"]`
