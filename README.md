@@ -9,13 +9,13 @@ Web application to view lines from file on local system or on remote server buil
 
 ## Installation
 
-Download and unpack `web-tail-[platform].zip` from [latest release](https://github.com/mishankov/web-tail/releases/latest).
+Download executable for your platform from [latest release](https://github.com/mishankov/web-tail/releases/latest).
 
 Docker image is also available [here](https://github.com/mishankov/web-tail/pkgs/container/web-tail).
 
 ## Configuration
 
-In unpacked folder edit `web-tail.config.toml` file.
+Create `web-tail.config.toml` file.
 
 - `port` - port that Web tail will run on. Default value is `4444`
 - `allowedOrigins` - list of allowed origins for WebSocket connections. Default value is `["*"]`
