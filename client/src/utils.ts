@@ -9,4 +9,7 @@ function smoothScroll(element: Element): void {
   });
 }
 
-export { escapeRegExp, smoothScroll };
+export {
+  escapeRegExp,
+  smoothScroll,
+};

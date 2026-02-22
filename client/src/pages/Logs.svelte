@@ -22,8 +22,9 @@
         }
 
         const wsProtocol = getWebSocketProtocol();
+        const encodedSource = encodeURIComponent(currentSource);
         const socket = new WebSocket(
-            `${wsProtocol}//${location.host}/logstream/${currentSource}/${windowSize}`,
+            `${wsProtocol}//${location.host}/logstream/${encodedSource}/${windowSize}`,
         );
 
         socket.addEventListener("open", () => {

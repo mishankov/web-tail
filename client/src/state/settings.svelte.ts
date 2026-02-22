@@ -1,3 +1,5 @@
+import { DEFAULT_LOG_WINDOW_SIZE } from "../types/CircularBuffer";
+
 export interface Settings {
   filterLogs: boolean;
   regexFilter: boolean;
@@ -13,7 +15,7 @@ const defaultSettings: Settings = {
   regexFilter: false,
   caseSensitive: false,
   reverseLogs: false,
-  logWindow: 100,
+  logWindow: DEFAULT_LOG_WINDOW_SIZE,
 };
 
 function normalizeSettings(value: unknown): Settings {

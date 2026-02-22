@@ -4,13 +4,26 @@ function getUniqueId(): string {
 
 export type CircularBufferItem<ItemType> = { id: string; item: ItemType };
 
+export const DEFAULT_LOG_WINDOW_SIZE = 100;
+export const MIN_LOG_WINDOW_SIZE = 1;
+export const MAX_LOG_WINDOW_SIZE = 10000;
+
+function normalizeWindowSize(value: number): number {
+  if (!Number.isFinite(value)) {
+    return DEFAULT_LOG_WINDOW_SIZE;
+  }
+
+  const integer = Math.floor(value);
+  return Math.min(MAX_LOG_WINDOW_SIZE, Math.max(MIN_LOG_WINDOW_SIZE, integer));
+}
+
 export class CircularBuffer<ItemType> {
   length: number;
   items: CircularBufferItem<ItemType>[] = [];
   lastPosition = -1;
 
   constructor(length: number) {
-    this.length = Math.max(0, Math.floor(length));
+    this.length = normalizeWindowSize(length);
   }
 
   push(item: ItemType): void {
@@ -44,17 +57,9 @@ export class CircularBuffer<ItemType> {
   }
 
   setLength(newLength: number): void {
-    const normalizedLength = Math.max(0, Math.floor(newLength));
-
-    if (normalizedLength > 0) {
-      this.items = this.toArray().slice(0, normalizedLength);
-      this.lastPosition = this.items.length - 1;
-      this.length = normalizedLength;
-      return;
-    }
-
-    this.items = [];
-    this.lastPosition = -1;
-    this.length = 0;
+    const normalizedLength = normalizeWindowSize(newLength);
+    this.items = this.toArray().slice(0, normalizedLength);
+    this.lastPosition = this.items.length - 1;
+    this.length = normalizedLength;
   }
 }

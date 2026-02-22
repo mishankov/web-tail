@@ -1,11 +1,10 @@
 import {
   CircularBuffer,
+  DEFAULT_LOG_WINDOW_SIZE,
   type CircularBufferItem,
 } from "../types/CircularBuffer";
 
-const DEFAULT_LOG_WINDOW = 20;
-
-let buffer = new CircularBuffer<string>(DEFAULT_LOG_WINDOW);
+let buffer = new CircularBuffer<string>(DEFAULT_LOG_WINDOW_SIZE);
 
 export const logsState = $state({
   all: buffer.toArray() as CircularBufferItem<string>[],

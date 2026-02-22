@@ -3,6 +3,11 @@
   import { searchState } from "../state/search.svelte";
   import { smoothScroll } from "../utils";
 
+  interface LinePart {
+    matched: boolean;
+    text: string;
+  }
+
   interface Props {
     line: { id: string; item: string };
     selectRegex: RegExp;
@@ -10,36 +15,66 @@
 
   let { line, selectRegex }: Props = $props();
 
-  let searchResultClass = $state("selected-log-line");
-  let lineToShow = $state("");
+  let lineParts = $state<LinePart[]>([]);
   let lineElement = $state<HTMLElement | null>(null);
+  const isCurrentSearchResult = $derived(searchState.currentLineId === line.id);
 
   $effect(() => {
-    if (searchState.currentLineId === line.id) {
-      searchResultClass = "selected-log-line selected-search-result";
-      if (lineElement) {
-        smoothScroll(lineElement);
-      }
-    } else {
-      searchResultClass = "selected-log-line";
+    if (isCurrentSearchResult && lineElement) {
+      smoothScroll(lineElement);
     }
   });
 
-  $effect(() => {
-    if ("".match(selectRegex) === null) {
-      lineToShow = line.item.replaceAll(
-        selectRegex,
-        `<span class="${searchResultClass}" id="line-id-${line.id}">$&</span>`
-      );
-      return;
+  function splitLineByMatches(text: string, regex: RegExp): LinePart[] {
+    if ("".match(regex) !== null) {
+      return [{ matched: false, text }];
     }
 
-    lineToShow = line.item;
+    const parts: LinePart[] = [];
+    const pattern = new RegExp(regex.source, regex.flags);
+    let cursor = 0;
+
+    for (const match of text.matchAll(pattern)) {
+      const matchValue = match[0];
+      const index = match.index ?? 0;
+
+      if (index > cursor) {
+        parts.push({ matched: false, text: text.slice(cursor, index) });
+      }
+
+      if (matchValue.length > 0) {
+        parts.push({ matched: true, text: matchValue });
+      }
+
+      cursor = index + matchValue.length;
+    }
+
+    if (cursor < text.length) {
+      parts.push({ matched: false, text: text.slice(cursor) });
+    }
+
+    if (parts.length === 0) {
+      return [{ matched: false, text }];
+    }
+
+    return parts;
+  }
+
+  $effect(() => {
+    lineParts = splitLineByMatches(line.item, selectRegex);
   });
 </script>
 
 <div bind:this={lineElement} class="line">
-  <span>{@html lineToShow}</span>
+  {#each lineParts as part, index (`${line.id}-${index}`)}
+    {#if part.matched}
+      <span class="selected-log-line" class:selected-search-result={isCurrentSearchResult}>
+        {part.text}
+      </span>
+    {:else}
+      <span>{part.text}</span>
+    {/if}
+  {/each}
 </div>
 
 <style>
@@ -52,7 +87,7 @@
     overflow-anchor: none;
   }
 
-  :global(.selected-log-line) {
+  .selected-log-line {
     background-color: var(--color-accent-100);
     color: var(--color-dark-100);
     padding: 1px 2px;
@@ -60,7 +95,7 @@
     border-radius: 10px;
   }
 
-  :global(.selected-search-result) {
+  .selected-search-result {
     background-color: var(--color-accent-secondary-100);
   }
 </style>

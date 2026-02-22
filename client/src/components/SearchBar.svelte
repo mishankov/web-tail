@@ -5,12 +5,35 @@
 
   interface Props {
     searchString: string;
+    source: string;
   }
 
-  let { searchString = $bindable("") }: Props = $props();
+  let {
+    searchString = $bindable(""),
+    source,
+  }: Props = $props();
 
   $effect(() => {
     if (searchString) {
+      searchState.currentLineId = "";
+    }
+  });
+
+  $effect(() => {
+    source;
+    searchState.currentLineId = "";
+  });
+
+  $effect(() => {
+    if (searchState.currentLineId === "") {
+      return;
+    }
+
+    const hasCurrent = logsState.filtered.some(
+      (line) => line.id === searchState.currentLineId,
+    );
+
+    if (!hasCurrent) {
       searchState.currentLineId = "";
     }
   });
@@ -20,50 +43,48 @@
       return;
     }
 
+    const currentIndex = logsState.filtered.findIndex(
+      (line) => line.id === searchState.currentLineId,
+    );
+
     if (direction === "next") {
-      if (searchState.currentLineId === "") {
+      if (currentIndex === -1) {
         searchState.currentLineId = logsState.filtered[0].id;
       } else {
-        logsState.filtered.find((value, index, array) => {
-          if (value.id === searchState.currentLineId) {
-            searchState.currentLineId = array[(index + 1) % array.length].id;
-            return true;
-          }
-          return false;
-        });
+        searchState.currentLineId =
+          logsState.filtered[(currentIndex + 1) % logsState.filtered.length].id;
       }
     }
 
     if (direction === "previous") {
-      if (searchState.currentLineId === "") {
+      if (currentIndex === -1) {
         searchState.currentLineId = logsState.filtered[logsState.filtered.length - 1].id;
       } else {
-        logsState.filtered.find((value, index, array) => {
-          if (value.id === searchState.currentLineId) {
-            let previousId = index - 1;
-            if (previousId < 0) {
-              previousId = array.length - 1;
-            }
-            searchState.currentLineId = array[previousId].id;
-            return true;
-          }
-          return false;
-        });
+        const previousIndex =
+          (currentIndex - 1 + logsState.filtered.length) % logsState.filtered.length;
+        searchState.currentLineId = logsState.filtered[previousIndex].id;
       }
     }
   }
 </script>
 
 <div class:has-value={searchString.length > 0}>
-  <input type="text" placeholder="Search" bind:value={searchString} />
+  <input
+    type="text"
+    placeholder="Search"
+    aria-label="Search logs"
+    bind:value={searchString}
+  />
   <button
     class="button-left"
     disabled={searchString.length === 0 || logsState.filtered.length === 0}
+    aria-label="Previous search result"
     onclick={() => goToSearchResult("previous")}
     title="Previous line with search result">&lt;</button>
   <button
     class="button-right"
     disabled={searchString.length === 0 || logsState.filtered.length === 0}
+    aria-label="Next search result"
     onclick={() => goToSearchResult("next")}
     title="Next line with search result">&gt;</button>
 </div>
@@ -105,6 +126,11 @@
     outline: none;
   }
 
+  input:focus-visible {
+    outline: 2px solid var(--color-accent-100);
+    outline-offset: -2px;
+  }
+
   input:focus::placeholder {
     color: transparent;
   }
@@ -122,6 +148,11 @@
   button:enabled:active {
     background-color: var(--color-dark-60);
     outline: none;
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--color-accent-100);
+    outline-offset: -2px;
   }
 
   button:disabled {

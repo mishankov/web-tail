@@ -2,6 +2,7 @@
 <script lang="ts">
   import { setSetting, settingsState } from "../state/settings.svelte";
   import { loadSources, sourcesState } from "../state/sources.svelte";
+  import { MAX_LOG_WINDOW_SIZE, MIN_LOG_WINDOW_SIZE } from "../types/CircularBuffer";
   import SearchBar from "./SearchBar.svelte";
   import Toggle from "./Toggle.svelte";
 
@@ -25,13 +26,17 @@
 
 <header>
   <nav class="top-panel">
-    <select class="source-select" bind:value={source}>
+    <select
+      class="source-select"
+      aria-label="Source"
+      bind:value={source}
+    >
       <option value="">Select source</option>
       {#each sourcesState.items as sourceName (sourceName)}
         <option value={sourceName}>{sourceName}</option>
       {/each}
     </select>
-    <SearchBar bind:searchString />
+    <SearchBar bind:searchString {source} />
     <Toggle
       label="Filter"
       value={settingsState.filterLogs}
@@ -55,11 +60,15 @@
       onToggle={(next) => setSetting("reverseLogs", next)}
     />
     <input
+      aria-label="Max lines"
       title="Max Lines"
       type="number"
       placeholder="Max lines"
       class="top-panel-input max-lines-input"
       value={settingsState.logWindow}
+      min={MIN_LOG_WINDOW_SIZE}
+      max={MAX_LOG_WINDOW_SIZE}
+      step="1"
       oninput={updateLogWindow}
     />
   </nav>
@@ -92,6 +101,11 @@
 
   .top-panel > *:hover {
     background-color: var(--color-dark-80);
+  }
+
+  .top-panel > *:focus-visible {
+    outline: 2px solid var(--color-accent-100);
+    outline-offset: 1px;
   }
 
   .top-panel-input:focus {
