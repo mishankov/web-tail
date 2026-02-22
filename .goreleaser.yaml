@@ -35,6 +35,10 @@ archives:
     format_overrides:
       - goos: windows
         formats: [zip]
+    files:
+      - README*
+      - LICENSE*
+      - web-tail.config.toml
 
 changelog:
   sort: asc
