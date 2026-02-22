@@ -79,23 +79,54 @@
 
 <style>
   .line {
-    font-family: monospace;
-    font-size: 1rem;
-    padding: 0.3em;
-    color: var(--color-light-100);
-    border-bottom: 1px solid var(--color-dark-100);
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    line-height: 1.35;
+    padding: 0.375rem 0.625rem;
+    color: var(--text-0);
+    border-bottom: 1px solid hsl(153 20% 20% / 0.7);
+    background-color: transparent;
+    transition:
+      background-color var(--transition-fast) ease,
+      border-color var(--transition-fast) ease;
     overflow-anchor: none;
   }
 
+  .line:nth-child(even) {
+    background-color: hsl(168 18% 14% / 0.34);
+  }
+
+  .line:hover {
+    background-color: hsl(150 20% 18% / 0.68);
+    border-bottom-color: hsl(145 24% 28% / 0.9);
+  }
+
   .selected-log-line {
-    background-color: var(--color-accent-100);
-    color: var(--color-dark-100);
-    padding: 1px 2px;
-    border: 1px solid var(--color-dark-100);
-    border-radius: 10px;
+    background-color: var(--match-amber);
+    color: var(--match-amber-text);
+    padding: 0.02rem 0.17rem;
+    border: 1px solid hsl(45 90% 34%);
+    border-radius: 0.35rem;
+    box-shadow: inset 0 1px 0 hsl(49 90% 75% / 0.4);
   }
 
   .selected-search-result {
-    background-color: var(--color-accent-secondary-100);
+    background-color: var(--active-result);
+    color: hsl(173 34% 10%);
+    border-color: hsl(188 64% 33%);
+    box-shadow: 0 0 0 1px hsl(188 73% 44%);
+  }
+
+  @media (max-width: 699px) {
+    .line {
+      font-size: 0.875rem;
+      padding: 0.35rem 0.55rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .line {
+      transition-duration: 1ms;
+    }
   }
 </style>

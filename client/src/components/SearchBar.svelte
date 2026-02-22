@@ -68,7 +68,11 @@
   }
 </script>
 
-<div class:has-value={searchString.length > 0}>
+<div
+  class="search-shell"
+  class:has-value={searchString.length > 0}
+  class:has-results={searchString.length > 0 && logsState.filtered.length > 0}
+>
   <input
     type="text"
     placeholder="Search"
@@ -90,45 +94,63 @@
 </div>
 
 <style>
-  div {
+  .search-shell {
     width: 100%;
     display: flex;
     align-items: center;
-    border-radius: 100vh;
-    transition: background-color 0.1s;
+    min-width: 0;
+    height: var(--control-height);
+    border-radius: var(--radius-pill);
+    border: 1px solid hsl(154 22% 27% / 0.75);
+    background-color: var(--glass-bg-strong);
+    box-shadow: inset 0 1px 0 hsl(150 30% 80% / 0.04);
+    transition:
+      border-color var(--transition-fast) ease,
+      background-color var(--transition-fast) ease,
+      box-shadow var(--transition-fast) ease;
   }
 
-  div:hover {
-    background-color: var(--color-dark-80);
+  .search-shell:hover {
+    border-color: hsl(152 25% 35% / 0.9);
+    background-color: hsl(172 18% 16% / 0.95);
   }
 
-  div:focus-within {
-    background-color: var(--color-dark-80);
+  .search-shell:focus-within {
+    border-color: hsl(144 53% 48% / 0.95);
+    box-shadow:
+      inset 0 1px 0 hsl(150 30% 80% / 0.04),
+      0 0 0 2px hsl(144 58% 48% / 0.2);
   }
 
-  div.has-value {
-    background-color: var(--color-dark-80);
+  .search-shell.has-value {
+    background-color: hsl(172 18% 16% / 0.95);
+  }
+
+  .search-shell.has-results {
+    border-color: hsl(144 54% 40% / 0.95);
   }
 
   input {
     width: 100%;
-    color: var(--color-light-100);
+    min-width: 0;
+    color: var(--text-0);
     background-color: transparent;
     border: 0;
-    border-top-left-radius: 100vh;
-    border-bottom-left-radius: 100vh;
-    font-size: 1.25rem;
-    height: 2rem;
-    padding: 0 0.5rem;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    line-height: 1;
+    height: 100%;
+    padding: 0 0.75rem;
+    border-top-left-radius: var(--radius-pill);
+    border-bottom-left-radius: var(--radius-pill);
   }
 
   input:focus {
     outline: none;
   }
 
-  input:focus-visible {
-    outline: 2px solid var(--color-accent-100);
-    outline-offset: -2px;
+  input::placeholder {
+    color: var(--text-1);
   }
 
   input:focus::placeholder {
@@ -136,36 +158,55 @@
   }
 
   button {
-    color: var(--color-light-100);
+    width: 2rem;
+    color: var(--text-0);
     background-color: transparent;
     border: 0;
-    font-size: 1.25rem;
-    height: 2rem;
-    padding: 0 0.5rem;
-    transition: background-color 0.1s;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-ui);
+    height: 100%;
+    padding: 0;
+    transition:
+      color var(--transition-fast) ease,
+      background-color var(--transition-fast) ease;
+  }
+
+  button:hover:enabled {
+    color: hsl(145 65% 82%);
+    background-color: hsl(154 25% 23% / 0.9);
   }
 
   button:enabled:active {
-    background-color: var(--color-dark-60);
-    outline: none;
+    background-color: hsl(152 26% 20%);
   }
 
   button:focus-visible {
-    outline: 2px solid var(--color-accent-100);
+    outline: 2px solid hsl(144 58% 48% / 0.8);
     outline-offset: -2px;
   }
 
   button:disabled {
-    color: var(--color-dark-60);
+    color: hsl(155 10% 42%);
+    cursor: not-allowed;
   }
 
   .button-left {
-    border-top-left-radius: 100vh;
-    border-bottom-left-radius: 100vh;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
   }
 
   .button-right {
-    border-top-right-radius: 100vh;
-    border-bottom-right-radius: 100vh;
+    border-top-right-radius: var(--radius-pill);
+    border-bottom-right-radius: var(--radius-pill);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-shell,
+    button {
+      transition-duration: 1ms;
+    }
   }
 </style>
