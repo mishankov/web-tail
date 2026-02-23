@@ -53,8 +53,12 @@ func getConfig() (Config, error) {
 		return Config{}, err
 	}
 
+	return parseConfig(data)
+}
+
+func parseConfig(data []byte) (Config, error) {
 	var config Config
-	_, err = toml.Decode(string(data), &config)
+	_, err := toml.Decode(string(data), &config)
 	if err != nil {
 		return Config{}, err
 	}
@@ -71,6 +75,10 @@ func getConfig() (Config, error) {
 				}
 			}
 		}
+	}
+
+	if err := resolveEnvPlaceholders(&config); err != nil {
+		return Config{}, err
 	}
 
 	if config.Port == 0 {
