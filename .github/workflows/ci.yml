@@ -57,7 +57,6 @@ jobs:
           retention-days: 5
 
   docker:
-    needs: [build-backend]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -92,3 +91,17 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  notify-completion:
+    name: Notify completion
+    if: ${{ always() }}
+    needs: [build-backend, docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            CI finished in ${{ github.repository }}!
