@@ -38,6 +38,28 @@ Configuaration is done with `web-tail.config.toml` file. Following keys are avai
   - `password` - password to authenticate on remote server. Either this or `privateKeyPath` is mandatory for source types `ssh:*`
   - `privateKeyPath` - path to file with private key to authenticate on remote server. Either this or `password` is mandatory for source types `ssh:*`
 
+String fields support environment placeholders in the exact form `${VAR_NAME}`.
+If a placeholder is used and the environment variable is not set, `web-tail` fails to start with a config error.
+Only exact placeholders are expanded, so values like `prefix-${VAR_NAME}` stay unchanged.
+
+Example:
+
+```toml
+[[servers]]
+name = "production"
+host = "${SSH_HOST}"
+port = 22
+username = "${SSH_USER}"
+password = "${SSH_PASSWORD}"
+privateKeyPath = "${SSH_PRIVATE_KEY_PATH}"
+
+[[sources]]
+name = "app-log"
+type = "ssh:file"
+path = "/var/log/app.log"
+serverName = "production"
+```
+
 ## Usage
 
 ![](images/image-2.png)
