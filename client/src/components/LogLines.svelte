@@ -16,8 +16,12 @@
   let selectRegex = $state(new RegExp("", "gi"));
   let scrollAnchor = $state<HTMLElement | null>(null);
 
-  const logsToShow = $derived(
+  const baseLogsToShow = $derived(
     settingsState.filterLogs ? logsState.filtered : logsState.all
+  );
+
+  const logsToShow = $derived(
+    settingsState.reverseLogs ? [...baseLogsToShow].reverse() : baseLogsToShow
   );
 
   $effect(() => {
@@ -40,10 +44,6 @@
     let nextFiltered: CircularBufferItem<string>[] = sourceLogs.filter(
       (log) => log.item.match(nextRegex) !== null
     );
-
-    if (settingsState.reverseLogs) {
-      nextFiltered = [...nextFiltered].reverse();
-    }
 
     setFilteredLogs(nextFiltered);
   });
