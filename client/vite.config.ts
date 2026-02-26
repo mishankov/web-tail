@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     svelte(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
       includeAssets: ["favicon.png"],
       manifest: {
         name: "Web Tail - Log viewer",
