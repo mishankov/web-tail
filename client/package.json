@@ -10,14 +10,14 @@
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@sveltejs/vite-plugin-svelte": "^7.2.0",
     "@tsconfig/svelte": "^5.0.6",
-    "@types/node": "^25.9.1",
+    "@types/node": "^26.1.2",
     "pwa-asset-generator": "^8.1.5",
-    "svelte": "^5.56.1",
-    "svelte-check": "^4.5.0",
-    "typescript": "~6.0.3",
-    "vite": "^8.0.16",
+    "svelte": "^5.56.8",
+    "svelte-check": "^4.7.4",
+    "typescript": "~7.0.2",
+    "vite": "^8.1.5",
     "vite-plugin-pwa": "^1.3.0",
     "workbox-window": "^7.4.1"
   }
