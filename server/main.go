@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -66,6 +67,15 @@ func getTailerForSource(config Config, sourceName string, window int) (Tailer, e
 
 func handleLogStream(w http.ResponseWriter, req *http.Request) {
 	sourceName := chi.URLParam(req, "source")
+	// Chi routes against RawPath when present; otherwise Path is already decoded.
+	if req.URL.RawPath != "" {
+		var err error
+		sourceName, err = url.PathUnescape(sourceName)
+		if err != nil {
+			http.Error(w, "Invalid source name encoding", http.StatusBadRequest)
+			return
+		}
+	}
 	window, err := strconv.Atoi(chi.URLParam(req, "window"))
 	if err != nil {
 		logger.Error("Error converting window to int:", err)
