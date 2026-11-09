@@ -5,7 +5,7 @@ RUN bun install --frozen-lockfile
 COPY client/ ./
 RUN bun run build
 
-FROM golang:1.24 AS buildgo
+FROM golang:1.27 AS buildgo
 WORKDIR /app
 COPY . .
 COPY --from=buildjs /app/client/dist /app/client/dist
