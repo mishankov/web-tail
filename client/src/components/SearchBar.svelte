@@ -101,9 +101,9 @@
     min-width: 0;
     height: var(--control-height);
     border-radius: var(--radius-pill);
-    border: 1px solid hsl(154 22% 27% / 0.75);
+    border: 1px solid var(--control-border);
     background-color: var(--glass-bg-strong);
-    box-shadow: inset 0 1px 0 hsl(150 30% 80% / 0.04);
+    box-shadow: var(--control-inset);
     transition:
       border-color var(--transition-fast) ease,
       background-color var(--transition-fast) ease,
@@ -111,23 +111,23 @@
   }
 
   .search-shell:hover {
-    border-color: hsl(152 25% 35% / 0.9);
-    background-color: hsl(172 18% 16% / 0.95);
+    border-color: var(--control-hover-border);
+    background-color: var(--control-hover-bg);
   }
 
   .search-shell:focus-within {
-    border-color: hsl(144 53% 48% / 0.95);
+    border-color: var(--focus-border);
     box-shadow:
-      inset 0 1px 0 hsl(150 30% 80% / 0.04),
-      0 0 0 2px hsl(144 58% 48% / 0.2);
+      var(--control-inset),
+      0 0 0 2px var(--focus-ring);
   }
 
   .search-shell.has-value {
-    background-color: hsl(172 18% 16% / 0.95);
+    background-color: var(--control-hover-bg);
   }
 
   .search-shell.has-results {
-    border-color: hsl(144 54% 40% / 0.95);
+    border-color: var(--green-accent);
   }
 
   input {
@@ -173,21 +173,21 @@
   }
 
   button:hover:enabled {
-    color: hsl(145 65% 82%);
-    background-color: hsl(154 25% 23% / 0.9);
+    color: var(--button-hover-text);
+    background-color: var(--button-hover-bg);
   }
 
   button:enabled:active {
-    background-color: hsl(152 26% 20%);
+    background-color: var(--control-active-bg);
   }
 
   button:focus-visible {
-    outline: 2px solid hsl(144 58% 48% / 0.8);
+    outline: 2px solid var(--focus-border);
     outline-offset: -2px;
   }
 
   button:disabled {
-    color: hsl(155 10% 42%);
+    color: var(--disabled-text);
     cursor: not-allowed;
   }
 

@@ -2,6 +2,8 @@
 /client/node_modules/
 /dist/
 /client/dist/
+/client/test-results/
+/client/playwright-report/
 *.zip
 *.log
 web-tail-*/

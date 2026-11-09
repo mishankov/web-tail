@@ -1,10 +1,12 @@
 
 <script lang="ts">
+  import { onMount } from "svelte";
   import { setSetting, settingsState } from "../state/settings.svelte";
   import { loadSources, sourcesState } from "../state/sources.svelte";
   import { MAX_LOG_WINDOW_SIZE, MIN_LOG_WINDOW_SIZE } from "../types/CircularBuffer";
   import SearchBar from "./SearchBar.svelte";
   import Toggle from "./Toggle.svelte";
+  import { isThemePreference } from "../theme";
 
   interface Props {
     source: string;
@@ -18,13 +20,31 @@
 
   void loadSources();
 
+  let headerElement: HTMLElement;
+
+  onMount(() => {
+    // Keep the log panel below the controls as they wrap or text is enlarged.
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        "--layout-top-offset", `${headerElement.offsetHeight + 8}px`,
+      );
+    });
+    observer.observe(headerElement);
+    return () => observer.disconnect();
+  });
+
+  function updateTheme(event: Event): void {
+    const value = (event.currentTarget as HTMLSelectElement).value;
+    if (isThemePreference(value)) setSetting("theme", value);
+  }
+
   function updateLogWindow(event: Event): void {
     const input = event.currentTarget as HTMLInputElement;
     setSetting("logWindow", Number(input.value));
   }
 </script>
 
-<header class="header-shell">
+<header class="header-shell" bind:this={headerElement}>
   <nav class="top-panel" aria-label="Log controls">
     <div class="source-group">
       <select
@@ -68,30 +88,42 @@
       />
     </div>
 
-    <div class="window-group">
-      <label class="window-label" for="max-lines-input">Lines</label>
-      <input
-        id="max-lines-input"
-        aria-label="Max lines"
-        title="Max Lines"
-        type="number"
-        placeholder="1000"
-        class="top-panel-input max-lines-input"
-        value={settingsState.logWindow}
-        min={MIN_LOG_WINDOW_SIZE}
-        max={MAX_LOG_WINDOW_SIZE}
-        step="1"
-        oninput={updateLogWindow}
-      />
+    <div class="preferences-group">
+      <div class="window-group">
+        <label class="window-label" for="max-lines-input">Lines</label>
+        <input
+          id="max-lines-input"
+          aria-label="Max lines"
+          title="Max Lines"
+          type="number"
+          placeholder="1000"
+          class="top-panel-input max-lines-input"
+          value={settingsState.logWindow}
+          min={MIN_LOG_WINDOW_SIZE}
+          max={MAX_LOG_WINDOW_SIZE}
+          step="1"
+          oninput={updateLogWindow}
+        />
+      </div>
+      <div class="theme-group">
+        <label class="window-label" for="theme-select">Theme</label>
+        <select
+          id="theme-select"
+          class="top-panel-input theme-select"
+          value={settingsState.theme}
+          onchange={updateTheme}
+          title="Theme: System follows your device. Use arrow keys to change."
+        >
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
     </div>
   </nav>
 </header>
 
 <style>
-  :global(:root) {
-    --layout-top-offset: 5.1rem;
-  }
-
   .header-shell {
     position: sticky;
     top: 0;
@@ -101,13 +133,13 @@
 
   .top-panel {
     display: grid;
-    grid-template-columns: minmax(12rem, 17rem) minmax(15rem, 1fr) auto auto;
+    grid-template-columns: minmax(10rem, 15rem) minmax(10rem, 1fr) auto auto;
     align-items: center;
     gap: 0.55rem;
     padding: 0.5rem;
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, hsl(169 24% 10% / 0.9), hsl(173 30% 8% / 0.75));
+    background: var(--panel-bg);
     box-shadow: var(--shadow-soft);
     backdrop-filter: blur(13px) saturate(130%);
     animation: dock-in 220ms cubic-bezier(0.18, 0.88, 0.32, 1) both;
@@ -116,7 +148,7 @@
   .source-group,
   .search-group,
   .toggle-group,
-  .window-group {
+  .preferences-group {
     min-width: 0;
   }
 
@@ -134,7 +166,7 @@
   .top-panel-input {
     width: 100%;
     height: var(--control-height);
-    border: 1px solid hsl(154 22% 27% / 0.75);
+    border: 1px solid var(--control-border);
     border-radius: var(--radius-pill);
     background-color: var(--glass-bg-strong);
     color: var(--text-0);
@@ -154,8 +186,8 @@
 
   .source-select:hover,
   .top-panel-input:hover {
-    background-color: hsl(172 18% 16% / 0.92);
-    border-color: hsl(152 25% 35% / 0.9);
+    background-color: var(--control-hover-bg);
+    border-color: var(--control-hover-border);
   }
 
   .source-select:focus,
@@ -165,19 +197,31 @@
 
   .source-select:focus-visible,
   .top-panel-input:focus-visible {
-    border-color: hsl(144 53% 48% / 0.95);
-    box-shadow: 0 0 0 2px hsl(144 58% 48% / 0.2);
+    border-color: var(--focus-border);
+    box-shadow: 0 0 0 2px var(--focus-ring);
   }
 
   .top-panel-input::placeholder {
     color: var(--text-1);
   }
 
-  .window-group {
+  .preferences-group,
+  .window-group,
+  .theme-group {
     display: flex;
     justify-self: end;
     align-items: center;
     gap: 0.45rem;
+  }
+
+  .preferences-group {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .theme-select {
+    width: 7.5rem;
+    cursor: pointer;
   }
 
   .window-label {
@@ -202,11 +246,7 @@
     margin: 0;
   }
 
-  @media (max-width: 1099px) {
-    :global(:root) {
-      --layout-top-offset: 7.55rem;
-    }
-
+  @media (max-width: 1199px) {
     .top-panel {
       grid-template-columns: minmax(11rem, 1fr) minmax(12rem, 1fr) auto;
       align-items: start;
@@ -224,46 +264,38 @@
       grid-column: 1 / 3;
     }
 
-    .window-group {
+    .preferences-group {
       grid-column: 3 / 4;
       align-self: center;
     }
   }
 
-  @media (max-width: 699px) {
-    :global(:root) {
-      --layout-top-offset: 9.6rem;
-    }
-
+  @media (max-width: 899px) {
     .header-shell {
       padding: 0.5rem 0.5rem 0.35rem;
     }
 
     .top-panel {
-      grid-template-columns: minmax(7.25rem, 0.9fr) minmax(9rem, 1.1fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 0.45rem;
     }
 
     .source-group {
-      grid-column: 1 / 2;
+      grid-column: 1;
     }
 
     .search-group {
-      grid-column: 2 / 3;
+      grid-column: 1;
     }
 
     .toggle-group {
-      grid-column: 1 / 2;
+      grid-column: 1;
     }
 
-    .window-group {
-      grid-column: 2 / 3;
+    .preferences-group {
+      grid-column: 1;
       justify-self: stretch;
-      justify-content: flex-end;
-    }
-
-    .window-label {
-      display: none;
+      justify-content: space-between;
     }
   }
 

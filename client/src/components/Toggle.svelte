@@ -22,7 +22,7 @@
   button {
     color: var(--text-0);
     background-color: var(--glass-bg-strong);
-    border: 1px solid hsl(154 22% 27% / 0.75);
+    border: 1px solid var(--control-border);
     border-radius: var(--radius-pill);
     font-size: 0.92rem;
     font-weight: 550;
@@ -43,22 +43,21 @@
   }
 
   button:hover {
-    border-color: hsl(152 25% 35% / 0.9);
-    background-color: hsl(172 18% 16% / 0.95);
+    border-color: var(--control-hover-border);
+    background-color: var(--control-hover-bg);
   }
 
   button:active {
-    background-color: hsl(152 26% 20%);
+    background-color: var(--control-active-bg);
   }
 
   .selected {
-    color: hsl(146 82% 92%);
-    border-color: hsl(145 52% 40% / 0.95);
+    color: var(--selected-text);
+    border-color: var(--selected-border);
     background:
-      linear-gradient(135deg, hsl(145 42% 25%), hsl(152 50% 20%));
+      var(--selected-bg);
     box-shadow:
-      inset 0 1px 0 hsl(142 42% 65% / 0.2),
-      0 0 0 1px hsl(145 57% 30% / 0.4);
+      var(--selected-shadow);
   }
 
   button:focus {
@@ -66,8 +65,8 @@
   }
 
   button:focus-visible {
-    border-color: hsl(144 53% 48% / 0.95);
-    box-shadow: 0 0 0 2px hsl(144 58% 48% / 0.2);
+    border-color: var(--focus-border);
+    box-shadow: 0 0 0 2px var(--focus-ring);
   }
 
   @media (prefers-reduced-motion: reduce) {

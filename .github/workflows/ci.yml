@@ -23,6 +23,15 @@ jobs:
       - name: Build frontend
         working-directory: ./client
         run: bun run build
+      - name: Check frontend
+        working-directory: ./client
+        run: bun run check
+      - name: Install test browser
+        working-directory: ./client
+        run: bunx playwright install --with-deps chromium
+      - name: Test frontend
+        working-directory: ./client
+        run: bun run test:e2e
       - name: Upload frontend build
         uses: actions/upload-artifact@v7
         with:
