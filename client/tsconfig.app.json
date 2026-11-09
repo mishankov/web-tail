@@ -5,7 +5,7 @@
     "target": "ES2022",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "types": ["svelte", "vite/client"],
+    "types": ["svelte", "vite/client", "vite-plugin-pwa/client"],
     "noEmit": true,
     /**
      * Typecheck JS in `.svelte` and `.js` files by default.

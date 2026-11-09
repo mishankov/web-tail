@@ -1,5 +1,6 @@
 /node_modules/
 /client/node_modules/
+/client/.svelte-check/
 /dist/
 /client/dist/
 /client/test-results/

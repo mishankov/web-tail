@@ -76,14 +76,23 @@ Options from left to right:
 
 ## Development
 
-Frontend app lives in `/client` and uses Bun + Vite.
+Use Go 1.27 and Bun 1.4.4. The frontend app lives in `/client` and uses Vite.
 
 1. Install frontend dependencies:
-   - `cd client && bun install`
-2. Build frontend assets for Go embed:
+   - `cd client && bun install --frozen-lockfile`
+2. Check frontend types:
+   - `cd client && bun run check`
+3. Build frontend assets for Go embed:
    - `cd client && bun run build`
-3. Run backend:
+4. Run backend:
    - `go run ./server`
+
+Type checks use TypeScript 7 through the `@typescript/native` alias. TypeScript 6
+is also installed because Svelte Check requires its JavaScript API. CI, releases,
+and Docker run the same type checks before building.
+
+The frontend overrides `glob` and `minimatch` to their patched versions while
+Workbox and the asset generator still request older major versions.
 
 For frontend HMR in development, run both services:
 

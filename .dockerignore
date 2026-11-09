@@ -1,4 +1,7 @@
 node_modules
 client/node_modules
+client/.svelte-check
+client/test-results
+client/playwright-report
 client/dist
 npm-debug.log
