@@ -81,22 +81,22 @@
     top: var(--layout-top-offset);
     bottom: 0.6rem;
     border-radius: var(--radius-lg);
-    border: 1px solid hsl(154 23% 24% / 0.9);
+    border: 1px solid var(--log-border);
     background:
       repeating-linear-gradient(
         0deg,
         transparent 0,
         transparent 22px,
-        hsl(144 22% 62% / 0.02) 22px,
-        hsl(144 22% 62% / 0.02) 23px
+        var(--log-stripe) 22px,
+        var(--log-stripe) 23px
       ),
-      linear-gradient(180deg, hsl(173 24% 12%), hsl(171 18% 10%));
+      var(--log-bg);
     box-shadow:
-      inset 0 1px 0 hsl(145 28% 70% / 0.04),
-      0 1.1rem 2.3rem hsl(170 33% 4% / 0.45);
+      var(--log-inset),
+      var(--log-shadow);
     overflow: auto;
     overflow-wrap: break-word;
-    scrollbar-color: hsl(145 33% 35%) hsl(171 20% 12%);
+    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
     scrollbar-width: thin;
   }
 
@@ -106,17 +106,17 @@
   }
 
   .logs::-webkit-scrollbar-track {
-    background: hsl(171 20% 12%);
+    background: var(--scroll-track);
   }
 
   .logs::-webkit-scrollbar-thumb {
-    border: 3px solid hsl(171 20% 12%);
+    border: 3px solid var(--scroll-track);
     border-radius: 999px;
-    background: linear-gradient(180deg, hsl(146 33% 41%), hsl(146 32% 29%));
+    background: linear-gradient(180deg, var(--scroll-thumb), var(--scroll-thumb-end));
   }
 
   .logs::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, hsl(146 37% 47%), hsl(146 34% 33%));
+    background: linear-gradient(180deg, var(--scroll-hover), var(--scroll-hover-end));
   }
 
   .scroll-anchor {

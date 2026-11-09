@@ -1,0 +1,146 @@
+/* Light is the fallback; index.html resolves the saved/system theme before paint. */
+:root {
+    color-scheme: light;
+    --bg-0: hsl(150 16% 97%);
+    --bg-1: hsl(150 18% 99%);
+    --bg-2: hsl(150 15% 94%);
+    --line: hsl(155 14% 84%);
+    --text-0: hsl(168 24% 14%);
+    --text-1: hsl(163 12% 35%);
+    --green-accent: hsl(148 65% 29%);
+    --green-accent-soft: hsl(145 35% 89%);
+    --glass-bg-strong: hsl(150 20% 100% / 0.94);
+    --glass-border: hsl(155 16% 77% / 0.8);
+    --panel-bg: linear-gradient(135deg, hsl(150 25% 100% / 0.94), hsl(155 22% 96% / 0.9));
+    --page-bg: radial-gradient(120% 140% at -10% -20%, hsl(146 45% 83% / 0.3), transparent 45%),
+        radial-gradient(100% 120% at 105% 0%, hsl(173 40% 86% / 0.3), transparent 48%),
+        linear-gradient(145deg, var(--bg-0), hsl(155 18% 95%));
+    --texture: hsl(145 20% 40% / 0.015);
+    --control-border: hsl(155 16% 74% / 0.9);
+    --control-hover-bg: hsl(150 22% 94%);
+    --control-hover-border: hsl(152 22% 58%);
+    --control-active-bg: hsl(150 25% 89%);
+    --control-inset: inset 0 1px 0 hsl(0 0% 100% / 0.7);
+    --focus-border: hsl(148 65% 32%);
+    --focus-ring: hsl(148 65% 32% / 0.24);
+    --selected-text: hsl(150 64% 20%);
+    --selected-border: hsl(148 40% 51%);
+    --selected-bg: linear-gradient(135deg, hsl(145 40% 88%), hsl(152 38% 84%));
+    --selected-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.5), 0 0 0 1px hsl(145 35% 65% / 0.2);
+    --button-hover-text: hsl(150 64% 20%);
+    --button-hover-bg: hsl(148 30% 88%);
+    --disabled-text: hsl(155 8% 51%);
+    --log-border: hsl(155 14% 81%);
+    --log-bg: linear-gradient(180deg, hsl(150 20% 99%), hsl(150 15% 97%));
+    --log-stripe: hsl(144 22% 42% / 0.025);
+    --log-inset: inset 0 1px 0 hsl(0 0% 100% / 0.8);
+    --row-border: hsl(153 14% 87% / 0.8);
+    --row-even: hsl(150 20% 92% / 0.4);
+    --row-hover: hsl(150 28% 88% / 0.75);
+    --row-hover-border: hsl(145 24% 72%);
+    --scroll-track: hsl(150 15% 94%);
+    --scroll-thumb: hsl(150 16% 63%);
+    --scroll-thumb-end: hsl(150 16% 53%);
+    --scroll-hover: hsl(150 24% 49%);
+    --scroll-hover-end: hsl(150 24% 41%);
+    --match-amber: hsl(45 100% 77%);
+    --match-amber-text: hsl(35 65% 17%);
+    --match-border: hsl(42 76% 49%);
+    --match-shadow: inset 0 1px 0 hsl(49 90% 90% / 0.5);
+    --active-result: hsl(188 75% 81%);
+    --active-result-text: hsl(190 65% 15%);
+    --active-result-border: hsl(188 64% 36%);
+    --active-result-ring: hsl(188 73% 38%);
+    --selection-bg: hsl(45 100% 72% / 0.85);
+    --shadow-soft: 0 0.75rem 2.2rem hsl(160 20% 25% / 0.1);
+    --log-shadow: 0 1.1rem 2.3rem hsl(160 20% 25% / 0.1);
+
+    --control-height: 2.25rem;
+    --radius-lg: 1rem;
+    --radius-md: 0.75rem;
+    --radius-pill: 999px;
+    --transition-fast: 140ms;
+    --transition-mid: 170ms;
+    --layout-top-offset: 5rem;
+    --font-ui: "Avenir Next", "Segoe UI", "SF Pro Text", "Helvetica Neue", sans-serif;
+    --font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg-0: hsl(168 22% 7%);
+    --bg-1: hsl(171 20% 10%);
+    --bg-2: hsl(173 18% 14%);
+    --line: hsl(165 26% 20%);
+    --text-0: hsl(150 24% 90%);
+    --text-1: hsl(153 14% 72%);
+    --green-accent: hsl(144 58% 48%);
+    --green-accent-soft: hsl(144 44% 24%);
+    --glass-bg-strong: hsl(171 24% 11% / 0.9);
+    --glass-border: hsl(153 22% 30% / 0.6);
+    --panel-bg: linear-gradient(135deg, hsl(169 24% 10% / 0.9), hsl(173 30% 8% / 0.75));
+    --page-bg: radial-gradient(120% 140% at -10% -20%, hsl(146 57% 20% / 0.25), transparent 45%),
+        radial-gradient(100% 120% at 105% 0%, hsl(173 76% 14% / 0.33), transparent 48%),
+        linear-gradient(145deg, var(--bg-0), hsl(172 24% 8%));
+    --texture: hsl(145 20% 70% / 0.02);
+    --control-border: hsl(154 22% 27% / 0.75);
+    --control-hover-bg: hsl(172 18% 16% / 0.95);
+    --control-hover-border: hsl(152 25% 35% / 0.9);
+    --control-active-bg: hsl(152 26% 20%);
+    --control-inset: inset 0 1px 0 hsl(150 30% 80% / 0.04);
+    --focus-border: hsl(144 53% 48% / 0.95);
+    --focus-ring: hsl(144 58% 48% / 0.2);
+    --selected-text: hsl(146 82% 92%);
+    --selected-border: hsl(145 52% 40% / 0.95);
+    --selected-bg: linear-gradient(135deg, hsl(145 42% 25%), hsl(152 50% 20%));
+    --selected-shadow: inset 0 1px 0 hsl(142 42% 65% / 0.2), 0 0 0 1px hsl(145 57% 30% / 0.4);
+    --button-hover-text: hsl(145 65% 82%);
+    --button-hover-bg: hsl(154 25% 23% / 0.9);
+    --disabled-text: hsl(155 10% 42%);
+    --log-border: hsl(154 23% 24% / 0.9);
+    --log-bg: linear-gradient(180deg, hsl(173 24% 12%), hsl(171 18% 10%));
+    --log-stripe: hsl(144 22% 62% / 0.02);
+    --log-inset: inset 0 1px 0 hsl(145 28% 70% / 0.04);
+    --row-border: hsl(153 20% 20% / 0.7);
+    --row-even: hsl(168 18% 14% / 0.34);
+    --row-hover: hsl(150 20% 18% / 0.68);
+    --row-hover-border: hsl(145 24% 28% / 0.9);
+    --scroll-track: hsl(171 20% 12%);
+    --scroll-thumb: hsl(146 33% 41%);
+    --scroll-thumb-end: hsl(146 32% 29%);
+    --scroll-hover: hsl(146 37% 47%);
+    --scroll-hover-end: hsl(146 34% 33%);
+    --match-amber: hsl(45 100% 62%);
+    --match-amber-text: hsl(170 30% 8%);
+    --match-border: hsl(45 90% 34%);
+    --match-shadow: inset 0 1px 0 hsl(49 90% 75% / 0.4);
+    --active-result: hsl(188 70% 58%);
+    --active-result-text: hsl(173 34% 10%);
+    --active-result-border: hsl(188 64% 33%);
+    --active-result-ring: hsl(188 73% 44%);
+    --selection-bg: hsl(45 100% 62% / 0.85);
+    --shadow-soft: 0 0.75rem 2.2rem hsl(170 30% 4% / 0.42);
+    --log-shadow: 0 1.1rem 2.3rem hsl(170 33% 4% / 0.45);
+}
+
+body {
+    color: var(--text-0);
+    background: var(--page-bg);
+    font-family: var(--font-ui);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent 0, transparent 2px, var(--texture) 2px, var(--texture) 3px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+::selection {
+    color: var(--match-amber-text);
+    background: var(--selection-bg);
+}
+
+main { height: 100%; }

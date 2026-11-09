@@ -72,6 +72,7 @@ Options from left to right:
 - `Aa` toggle. If enabled makes search case sensitive
 - `Reverse` toggle. If enabled latest lines shown on top
 - Max lines field. How much lines will be shown
+- Theme selector: `System` (default), `Light`, or `Dark`. System follows your device's appearance and updates when it changes. Your choice is saved in this browser alongside the other preferences. Use Tab to focus the selector and arrow keys to choose a theme.
 
 ## Development
 
@@ -90,3 +91,12 @@ For frontend HMR in development, run both services:
 - `cd client && bun run dev`
 
 Vite dev server proxies `/sources` and `/logstream` to `http://localhost:4444`.
+
+To check the frontend, run `cd client && bun run check`. Browser tests use a
+production build with sample sources and log streams, so no backend is needed:
+
+```sh
+cd client
+bunx playwright install chromium
+bun run test:e2e
+```

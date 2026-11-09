@@ -84,7 +84,7 @@
     line-height: 1.35;
     padding: 0.375rem 0.625rem;
     color: var(--text-0);
-    border-bottom: 1px solid hsl(153 20% 20% / 0.7);
+    border-bottom: 1px solid var(--row-border);
     background-color: transparent;
     transition:
       background-color var(--transition-fast) ease,
@@ -93,28 +93,28 @@
   }
 
   .line:nth-child(even) {
-    background-color: hsl(168 18% 14% / 0.34);
+    background-color: var(--row-even);
   }
 
   .line:hover {
-    background-color: hsl(150 20% 18% / 0.68);
-    border-bottom-color: hsl(145 24% 28% / 0.9);
+    background-color: var(--row-hover);
+    border-bottom-color: var(--row-hover-border);
   }
 
   .selected-log-line {
     background-color: var(--match-amber);
     color: var(--match-amber-text);
     padding: 0.02rem 0.17rem;
-    border: 1px solid hsl(45 90% 34%);
+    border: 1px solid var(--match-border);
     border-radius: 0.35rem;
-    box-shadow: inset 0 1px 0 hsl(49 90% 75% / 0.4);
+    box-shadow: var(--match-shadow);
   }
 
   .selected-search-result {
     background-color: var(--active-result);
-    color: hsl(173 34% 10%);
-    border-color: hsl(188 64% 33%);
-    box-shadow: 0 0 0 1px hsl(188 73% 44%);
+    color: var(--active-result-text);
+    border-color: var(--active-result-border);
+    box-shadow: 0 0 0 1px var(--active-result-ring);
   }
 
   @media (max-width: 699px) {

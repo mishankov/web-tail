@@ -9,6 +9,22 @@
     <!-- PWA Meta Tags -->
     <meta name="description" content="View log files from local system or remote servers in your browser" />
     <meta name="theme-color" content="#ffffff" />
+    <!-- Resolve appearance before loading theme styles to avoid a theme flash. -->
+    <script>
+      (() => {
+        let preference = "system";
+        try {
+          const saved = JSON.parse(localStorage.getItem("WebTailSettings") || "null");
+          if (saved?.theme === "light" || saved?.theme === "dark") preference = saved.theme;
+        } catch { /* Use the system preference when storage is unavailable or invalid. */ }
+        const theme = preference === "system"
+          ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : preference;
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#0e1614" : "#f6f9f7";
+      })();
+    </script>
+    <link rel="stylesheet" href="/themes.css" />
     <link rel="apple-touch-icon" href="/apple-icon-180.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
 

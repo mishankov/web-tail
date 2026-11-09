@@ -1,6 +1,8 @@
 import { DEFAULT_LOG_WINDOW_SIZE } from "../types/CircularBuffer";
+import { isThemePreference, type ThemePreference } from "../theme";
 
 export interface Settings {
+  theme: ThemePreference;
   filterLogs: boolean;
   regexFilter: boolean;
   caseSensitive: boolean;
@@ -11,6 +13,7 @@ export interface Settings {
 const STORAGE_KEY = "WebTailSettings";
 
 const defaultSettings: Settings = {
+  theme: "system",
   filterLogs: false,
   regexFilter: false,
   caseSensitive: false,
@@ -25,6 +28,7 @@ function normalizeSettings(value: unknown): Settings {
 
   const partial = value as Partial<Settings>;
   return {
+    theme: isThemePreference(partial.theme) ? partial.theme : defaultSettings.theme,
     filterLogs:
       typeof partial.filterLogs === "boolean"
         ? partial.filterLogs
@@ -50,6 +54,7 @@ function normalizeSettings(value: unknown): Settings {
 
 function currentSettingsSnapshot(): Settings {
   return {
+    theme: settingsState.theme,
     filterLogs: settingsState.filterLogs,
     regexFilter: settingsState.regexFilter,
     caseSensitive: settingsState.caseSensitive,
@@ -59,27 +64,19 @@ function currentSettingsSnapshot(): Settings {
 }
 
 function saveSettingsToStorage(settings: Settings): void {
-  if (typeof localStorage === "undefined") {
-    return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  } catch {
+    // Preferences still work for this session when browser storage is unavailable.
   }
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 }
 
 export function loadSettings(): Settings {
-  if (typeof localStorage === "undefined") {
-    return { ...defaultSettings };
-  }
-
-  const rawSettings = localStorage.getItem(STORAGE_KEY);
-  if (!rawSettings) {
-    const settings = { ...defaultSettings };
-    saveSettingsToStorage(settings);
-    return settings;
-  }
-
   try {
-    const settings = normalizeSettings(JSON.parse(rawSettings));
+    const rawSettings = localStorage.getItem(STORAGE_KEY);
+    const settings = rawSettings
+      ? normalizeSettings(JSON.parse(rawSettings))
+      : { ...defaultSettings };
     saveSettingsToStorage(settings);
     return settings;
   } catch {
