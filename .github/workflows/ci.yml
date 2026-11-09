@@ -17,15 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
       - name: Install frontend deps
         working-directory: ./client
         run: bun install --frozen-lockfile
+      - name: Check frontend types
+        working-directory: ./client
+        run: bun run check
       - name: Build frontend
         working-directory: ./client
         run: bun run build
-      - name: Check frontend
-        working-directory: ./client
-        run: bun run check
       - name: Install test browser
         working-directory: ./client
         run: bunx playwright install --with-deps chromium

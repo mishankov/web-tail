@@ -1,9 +1,9 @@
-FROM oven/bun:1 AS buildjs
+FROM oven/bun:1.4.4 AS buildjs
 WORKDIR /app/client
 COPY client/package.json client/bun.lock ./
 RUN bun install --frozen-lockfile
 COPY client/ ./
-RUN bun run build
+RUN bun run check && bun run build
 
 FROM golang:1.27 AS buildgo
 WORKDIR /app
